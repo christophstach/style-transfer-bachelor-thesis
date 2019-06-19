@@ -74,9 +74,9 @@ criterion = PerceptualLoss(
     content_layers=['relu3_3'],
     style_layers=['relu1_2', 'relu2_2', 'relu3_3', 'relu4_3'],
     style_image=style_image,    
-    content_weigH=10,
-    style_weigH=1e7,
-    total_variation_weigH=1e-5,
+    content_weigth=10,
+    style_weigth=1e7,
+    total_variation_weigth=1e-5,
 )
 
 optimizer = optim.LBFGS([output_image]) if USE_LBFGS else optim.Adam([output_image], lr=1e-1)
