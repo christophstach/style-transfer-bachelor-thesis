@@ -1,0 +1,177 @@
+\chapter{Tests und Experimente}
+\label{cha:tests}
+
+Im Kapitel Tests und Experimente werden unterschiedliche Hyperparameter-Konfigurationen auf ihre Auswirkungen getestet. Außerdem wird mit unterschiedlichen
+Netzwerk-Architekturen die Performanz auf Geräten mit leistungsarmer Hardware gemessen.
+
+\section{Auswirkungen der Hyperparameter}
+
+Im Folgenden werden unterschiedliche Kombinationen der Gewichtungsparameter Content-Weight $ \alpha $, Style-Weight $ \beta $ und Total-Variation-Weight $ \gamma $ getestet. Dabei wird als Inhaltsbild  eine eigene Abbildung der HTW-Berlin benutzt. Als Stilbild wird das Kunstwerk \textit{Starry Night} des Künstlers Vincent Van Gogh und The Scream von Edvard Munch verwendet. Die generierten Bilder entsprechen einer Größe von 768 * 768 Pixeln. Die restlichen Hyperparameter werden aus dem Kapitel Methodologie \ref{sec:method_neural_style_transfer} übernommen.
+
+\pagebreak
+
+\subsection{Experiment 1: Starry Night}
+
+In diesem Experiment wird das Stilbild Starry Night von Vincent Van Gogh verwendet.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[h]{0.20\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{resources/content/content/htw-768x768.jpg}
+    \end{subfigure}
+    \begin{subfigure}[h]{0.20\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{resources/content/style/starry_night.jpg}
+    \end{subfigure}
+    \caption{HTW kombiniert mit Starry Night}
+\end{figure}
+
+In der ersten Abbildungen werden verschiedene die verschiedenen  \\
+Stil-Gewichtungen $ \beta = 10^{6} $, $ \beta = 10^{7} $, $ \beta = 10^{8} $ getestet.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[h]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{resources/content/output/neural-style/htw-test-1-1.jpg}
+    \end{subfigure}
+    \begin{subfigure}[h]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{resources/content/output/neural-style/htw-test-1-2.jpg}
+    \end{subfigure}
+    \begin{subfigure}[h]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{resources/content/output/neural-style/htw-test-1-3.jpg}
+    \end{subfigure}
+    \caption{$ \alpha = 1 $, $ \beta = 10^{6} - 10^{8} $, $ \gamma = 0 $}
+\end{figure}
+
+In der zweiten Abbildungen werden verschiedene die verschiedenen Total-Variation-Gewichtungen $ \beta = 10^{-3} $, $ \beta = 10^{-4} $, $ \beta = 10^{-5} $ getestet.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[h]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{resources/content/output/neural-style/htw-test-1-4.jpg}
+    \end{subfigure}
+    \begin{subfigure}[h]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{resources/content/output/neural-style/htw-test-1-5.jpg}
+    \end{subfigure}
+    \begin{subfigure}[h]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{resources/content/output/neural-style/htw-test-1-6.jpg}
+    \end{subfigure}
+    \caption{$ \alpha = 1 $, $ \beta = 10^{8} $, $ \gamma = 10^{-5} - 10^{-3} $}
+\end{figure}
+
+\subsection{Experiment 2: The Scream}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[h]{0.20\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{resources/content/content/htw-768x768.jpg}
+    \end{subfigure}
+    \begin{subfigure}[h]{0.20\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{resources/content/style/the_scream.jpg}
+    \end{subfigure}
+    \caption{HTW kombiniert mit The Scream}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[h]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{resources/content/output/neural-style/htw-test-2-1.jpg}
+    \end{subfigure}
+    \begin{subfigure}[h]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{resources/content/output/neural-style/htw-test-2-2.jpg}
+    \end{subfigure}
+    \begin{subfigure}[h]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{resources/content/output/neural-style/htw-test-2-3.jpg}
+    \end{subfigure}
+    \caption{$ \alpha = 1 $, $ \beta = 10^{6} - 10^{8} $, $ \gamma = 0 $}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[h]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{resources/content/output/neural-style/htw-test-1-4.jpg}
+    \end{subfigure}
+    \begin{subfigure}[h]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{resources/content/output/neural-style/htw-test-1-5.jpg}
+    \end{subfigure}
+    \begin{subfigure}[h]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{resources/content/output/neural-style/htw-test-1-6.jpg}
+    \end{subfigure}
+    \caption{$ \alpha = 1 $, $ \beta = 10^{8} $, $ \gamma = 10^{-5} - 10^{-3} $}
+\end{figure}
+
+\pagebreak
+
+\section{Auswirkungen der Netzwerkarchitekturen}
+
+Es werden im Folgenden Experimente mit drei unterschiedlichen Bildgrößen auf unterschiedlichen Geräten durchgeführt.
+Getest wird die Berechnungsgeschwindigkeit beim Forward-Pass durch das Netzwerk, sowie der benötigte Grafik- / Arbeitsspeicher. 
+
+Ein bereits erster Indikator für die Performanz eines Neurolen Netzwerks ist die Anzahl der lernbaren Parameter, die bei der Trainingsphase optimiert werden.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ |c|c|c|c| }
+        \hline
+        \textbf{Name} & \textbf{Bottleneck Size $ s $} & \textbf{Multiplkator $ m $} & \textbf{Anzahl lernbarer Parameter} \\ \hline
+        Netzwerk 1 & 5 & 32 & 2.006.931 \\ \hline
+        Netzwerk 2 & 5 & 16 & 506.835 \\ \hline
+        Netzwerk 3 & 5 & 8  & 129.267 \\ \hline
+
+        Netzwerk 4 & 4 & 32 & 1.711.250 \\ \hline
+        Netzwerk 5 & 4 & 16 & 432.722 \\ \hline
+        Netzwerk 6 & 4 & 8  & 110.642 \\ \hline
+
+        Netzwerk 7 & 3 & 32 & 1.415.569 \\ \hline
+        Netzwerk 8 & 3 & 16 & 358.609 \\ \hline
+        Netzwerk 9 & 3 & 8  & 92.017 \\ \hline
+    \end{tabular}
+    \caption{Unterschiedliche Netzwerkgrößen und ihre Parameter}
+    \label{tab:networks}
+\end{table}
+
+
+
+\begin{table}[h]
+
+    
+    \centering
+    \begin{tabular}{ |c|c|c| }
+        \hline
+        \textbf{Name} & \textbf{XPS 15} & \textbf{Auto}   \\ \hline
+        Netzwerk 1 & 1 sec & 1 sec \\ \hline
+        Netzwerk 2 & 1 sec & 1 sec \\ \hline
+        Netzwerk 3  & 1 sec & 1 sec \\ \hline
+
+        Netzwerk 4 & 1 sec & 1 sec \\ \hline
+        Netzwerk 5 & 1 sec & 1 sec \\ \hline
+        Netzwerk 6  & 1 sec & 1 sec \\ \hline
+
+        Netzwerk 7 & 1 sec & 1 sec \\ \hline
+        Netzwerk 8 & 1 sec & 1 sec \\ \hline
+        Netzwerk 9 & 1 sec & 1 sec \\ \hline
+    \end{tabular}
+    \caption{Berechnungsgeschwindigkeit und Arbeitsspeicherbedarf für Bilder der Größe 1024 * 768 Pixel}
+    \label{tab:1024x768}
+\end{table}
+
+640 * 480
+
+
+320 * 240
+

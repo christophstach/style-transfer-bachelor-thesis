@@ -1,0 +1,18 @@
+\chapter{Anforderungen}
+
+Das Kapitel beleuchtet die Anforderungen an diese Arbeit und beschreibt den generellen Aufbau.
+
+\section{Motivation}
+
+Style Transfer ist ein intressantes Forschungsobjekt und erfordert die intensive Auseinandersetzung mit Convolutional Neural Networks \cite{lecun-gradientbased-learning-applied-1998} und dem Backpropagation Algorithmus \cite{doi:10.1162/neco.1989.1.4.541}. Außerdem müssen benutzerdefinierte Loss-Functions, die nicht in Problemstellungen der Bildklassifizierung verwendet werden, benutzt werden.
+
+\section{Zielsetzung}
+
+Ziel des Projektes ist ein Softwaresystem zu erstellen, das in der Lage ist, Style Transfer auf Geräten mit leistungsarmer Hardware zu ermöglichen. Dabei sollen Mechanismen des Style Transfer untersucht werden und sukzessiv verbessert werden.
+
+\section{Vorgehensweise und Aufbau der Arbeit}
+
+Nach der Einarbeitung in die Grundlagen von Style Transfer \cite{DBLP:journals/corr/GatysEB15a, DBLP:journals/corr/JohnsonAL16} Methoden, müssen entsprechende Algorithmen gefunden werden. Da es sich um die Manipulation von Bildern handelt, werden Convolutional Neural Networks \cite{lecun-gradientbased-learning-applied-1998} zum Einsatz kommen, die sich dazu eignen, Features aus Bildern zu extrahieren. Im nächsten Schritt muss ein Datensatz wie ImageNet \cite{imagenet_cvpr09} oder Coco \cite{DBLP:journals/corr/LinMBHPRDZ14} benutzt oder in entsprechender Größe generiert werden, mit dem ein solches Netzwerk trainiert werden kann. Letztendlich muss das Netzwerk auf den verwendeten Datensatz durch Backpropagation \cite{doi:10.1162/neco.1989.1.4.541} optimiert werden. Die Implementierung des Models in den Prototypen eines Softwaresystems soll der Veranschaulichung der Ergebnisse dienen.
+
+Abschließend werden umfangereiche Experimente mit verschiedenen Einstellungen und Netzwerkarchitekturen durchgeführt.
+Die Ergebnisse werden verglichen, in einem Fazit kritisch betrachtet und eine Schlussfolgerungen gezogen.

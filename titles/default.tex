@@ -1,0 +1,72 @@
+\definecolor{htwgruen}{RGB}{118, 185, 0}
+\definecolor{htwblau}{RGB}{0, 130, 209}
+\definecolor{htworange}{RGB}{255, 95, 0}
+\definecolor{htwgrau}{RGB}{175, 175, 175}
+
+\newcommand*{\gradeType}[1]{\gdef\thegradetype{#1}}
+\newcommand*{\firstExaminer}[1]{\gdef\thefirstexaminer{#1}}
+\newcommand*{\secondExaminer}[1]{\gdef\thesecondexaminer{#1}}
+\newcommand*{\matrikelnr}[1]{\gdef\thematrikelnr{#1}}
+\newcommand*{\submitDate}[1]{\gdef\thesubmitdate{#1}}
+
+\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+\let\endchangemargin=\endlist
+
+\renewcommand*{\maketitle}{
+    \begin{titlepage}
+        % Logo
+        
+        \begin{changemargin}{-0.5cm}{0.0cm}
+            \includegraphics[width=0.50\textwidth]{resources/title/Q01_HTW_Berlin_Logo_quer_pos_FARBIG_CMYK.eps}
+        \end{changemargin}
+        
+    
+        % Abstand nach logo
+        \vspace{2.0cm}
+    
+        % Textkörper
+        \begin{changemargin}{0.5cm}{0.0cm}
+            % Dokumenttyp
+            \color{htwgrau}
+            \normalsize
+            \textsf{\noindent\MakeUppercase{Title}} \vspace{-20pt}\\
+            % Horizontale Linie
+            \noindent\rule{\textwidth}{0.5pt}\vspace{-4pt}
+            % Title
+            \color{black}
+            \huge
+            \textsf{\thetitle}
+            \vspace{12pt}
+    
+            % Author
+            \color{htwgrau}
+            \normalsize
+            \textsf{\MakeUppercase{Autor}}\\
+            \color{black}
+            \large
+            \textsf{\theauthor}
+    
+            
+    
+            % Am Ende der Seite
+            \vfill
+    
+            % Firma
+            \color{htwgrau}
+            \normalsize
+            \textsf{\MakeUppercase{1. Prüfer}}\\
+            \color{black}
+            \large
+            \textsf{\firstExaminer}
+    
+            % Dozent
+            \color{htwgrau}
+            \normalsize
+            \textsf{\MakeUppercase{2. Prüfer}}\\
+            \color{black}
+            \large
+            \textsf{\secondExaminer}
+            % \vspace{-120pt}
+        \end{changemargin}
+    \end{titlepage}
+}
