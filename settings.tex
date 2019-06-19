@@ -14,7 +14,7 @@
 \usepackage{hyperref}
 \usepackage[ngerman]{babel}
 \usepackage{csquotes}
-\usepackage[style=alphabetic, backend=biber, bibencoding=utf8]{biblatex}
+\usepackage[style=alphabetic, backend=biber, bibencoding=utf8, sorting=ynt]{biblatex}
 \usepackage[toc, acronym]{glossaries}
 \usepackage[onehalfspacing]{setspace}
 \usepackage[stretch=10]{microtype}
@@ -28,7 +28,7 @@
 
 \addbibresource{references/images.bib}
 \addbibresource{references/online.bib}
-% \addbibresource{references/repositories.bib}
+\addbibresource{references/repos.bib}
 \addbibresource{references/scientific.bib}
 
 \makenoidxglossaries
@@ -46,3 +46,4 @@
 	\renewcommand*{\glsgroupskip}{}%
 }
 
+\loadglsentries{glossary.tex}
