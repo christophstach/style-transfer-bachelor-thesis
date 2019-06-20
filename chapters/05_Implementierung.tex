@@ -379,7 +379,12 @@ class TransformerNet(nn.Module):
 
 \subsection{Weitere Implementierungen}
 
-Zusätzlich zu den bereits vorgestellten Implementierungen wurden viele Hilfsscripte und Jupyter Notebooks zum Testen implementiert.
-Außerdem wurde eine Trainer-Klasse entworfen die in der Lage ist Einstellungen für Trainingsläufe aus einer Konfiguration Dateizulesen und somit 
-ein aufeinanderfolgendes Training mehrerer Modelle zu benötigen. Auf diese Arte ist es möglich viele unterschiedliche Parametereinstellungen zu testen.
-Die Scripte wurden dieser Arbeit nicht angefügt, jedoch sind sie im entsprechenden GitHub-Repository unter \url{https://github.com/christophstach/these/project} öffentlich einsehbar.
+Zusätzlich zu den bereits vorgestellten Implementierungen wurden viele Hilfsscripte und Jupyter Notebooks zum Testen erstellt.
+Außerdem wurde eine Trainer-Klasse entworfen die in der Lage ist Einstellungen für Trainingsläufe aus einer Konfiguration Datei zu lesen und somit 
+ein aufeinanderfolgendes Training mehrerer Modelle zu ermöglichen. Auf diese Arte ist es möglich viele unterschiedliche Parametereinstellungen zu testen.
+
+Zur Realisierung eines Prototypens wurde eine JSON-API mit dem Framworks Flask\footnote{Flask: \url{http://flask.pocoo.org/}} erstellt. Die API stellt einen Endpunkt zur verfügung welche den Style Transfer mit einem gewünschten Modell durchführt. Sie außerdem in einen Docker\footnote{Docker: \url{https://www.docker.com/}}-Container überführt um Hosting auf unterschiedlichen Geräten zu erleichtern.
+
+Um die Ergebnisse zu visualisieren wurde eine Frontend-Applikation mit dem Framework Angular\footnote{Angular: \url{https://angular.io/}} erstellt. Diese kann Bilder über die Webcam eines Handys oder eines Computers aufnehmen und Sie an die Flask-API schicken, welche das geschossene Bild in einen vorher ausgewählten Stil überführt.
+
+Skripte, Frontend-Applikationen und JSON-API sind nicht bestandteil dieser Arbeit und befinden sich in einem Protypischen Zustand. Der komplette Code zu diesem Projekt ist unter \url{https://github.com/christophstach/style-transfer-project} öffentlich einsehbar. Der Code des Frontends unter \url{https://github.com/christophstach/style-transfer-frontend}. Ein gehosteter Prototyp zum Testen des Style Transfers ist unter \url{https://stylized.christophstach.me/} verfügbar.
