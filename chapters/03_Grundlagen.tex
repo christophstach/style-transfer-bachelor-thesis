@@ -7,7 +7,7 @@ Im Kapitel Grundlagen werden die erfordentlichen Grundlagen erleutert, die notwe
 
 Feedforward Neural Networks werden im Bereich des Deep Learning eingesetzt. Dabei werden unteschiedliche Arten von Layern zu einem Neuronalen Netzwerk zusammen gesetzt. Je nach Aufgabenstellung sind unteschiedliche Arten von Layer-Kombination sinnvoll.
 
-Ein Feedforward Neural Network definiert eine Abildung von $ y = f(x; \phi) $ wobei $ \phi $ (auch mit $ w $ notiert) Gewichtungsparameter des Netzwerk sind. Es nennt sich so, da die Informationen $ x $ von vorne nach hinten durch die einzelnen Layer des Networks fließen und am Ende $ y $ ausgeben. Die Layer des Netzwerk sind dabei wiederum Unterfunktionen die in einer Kettenstruktur ineinander übergehen. Bei einem Neuronalen Netzwerk mit den drei Layern $ f^{(1)} $, $ f^{(2)} $, $ f^{(2)} $ ergibt sich der Aufbau $ f(x) = f^{(3)}(f^{(2)}(f^{(1)}(x))) $. Der erste Layer eines nennt sich \textit{Input-Layer}, der letzte \textit{Output-Layer}. Alle zwischenliegenden Layer nennen sich \textit{Hidden-Layer}. Je mehr Layer ein Netzwerk besitzt desto komplexere mathematische Funktionen kann es abbilden und desto tiefer ist es. Daher rührt auch Name \textit{Deep Neural Network} und \textit{Deep Learning} \cite[164-165]{Goodfellow-et-al-2016}.
+Ein Feedforward Neural Network definiert eine Abildung von $ y = f(x; \phi) $ wobei $ \phi $ (auch mit $ w $ notiert) Gewichtungsparameter des Netzwerk sind. Es wird Feedforward genannt, da die Informationen $ x $ von vorne nach hinten durch die einzelnen Layer des Networks fließen und am Ende $ y $ ausgeben. Die Layer des Netzwerk sind dabei wiederum Unterfunktionen die in einer Kettenstruktur ineinander übergehen. Bei einem Neuronalen Netzwerk mit den drei Layern $ f^{(1)} $, $ f^{(2)} $, $ f^{(2)} $ ergibt sich der Aufbau $ f(x) = f^{(3)}(f^{(2)}(f^{(1)}(x))) $. Der erste Layer eines nennt sich \textit{Input-Layer}, der letzte \textit{Output-Layer}. Alle zwischenliegenden Layer werden \textit{Hidden-Layer} genannt. Je mehr Layer ein Netzwerk besitzt, desto komplexere mathematische Funktionen kann es abbilden und desto tiefer ist es. Daher rührt auch Name \textit{Deep Neural Network} und \textit{Deep Learning} \cite[164-165]{Goodfellow-et-al-2016}.
 
 \pagebreak
 
@@ -141,8 +141,6 @@ Visualisiert besitzen beide Aktiverungsfunktionen folgende Form:
 	\label{img:prelu_activation_function}
 \end{figure}
 
-\pagebreak
-
 \subsection{Hardtanh}
 
 Die Hardtanh Funktion wird in dieser Arbeit als abschliesende Aktiverungsfunktion genutzt \cite{DBLP:journals/corr/abs-1811-03378, Collobert:2011:NLP:1953048.2078186}.
@@ -157,6 +155,8 @@ Die Hardtanh Funktion wird in dieser Arbeit als abschliesende Aktiverungsfunktio
 	 }
 \end{equation}
 
+\pagebreak
+
 Sie ist in der Lage die Ergebnisse auf einen festgelegten Bereich zu beschränken.
 
 \begin{figure}[H]
@@ -169,8 +169,8 @@ Sie ist in der Lage die Ergebnisse auf einen festgelegten Bereich zu beschränke
 \section{Convolutional Neural Network}
 \label{sec:conv_networks}
 
-Ein in der Artchitektur einfaches Convolutional Neural Network, nachfolgen CNN genannt, besteht aus mehreren aufeinanderfolgenden Convolutional-Layern, sowie
-abschließend beliebig vielen Fully-Connected-Layern (siehe \ref{img:cnn_example_network}). Convolutional-Layer dienen der Feature-Extraction. Die Fully-Connected-Layer sind für Klassifizierung zuständig. Nachfolgend wird das Prinzip einer Convolution (zu dt. Faltung) erleutert.
+Ein Convolutional Neural Network, nachfolgen CNN genannt, besteht aus mehreren aufeinanderfolgenden Convolutional-Layern, sowie
+abschließend beliebig vielen Fully-Connected-Layern (siehe \ref{img:cnn_example_network}). Convolutional-Layer dienen der Feature-Extraktion. Die Fully-Connected-Layer sind für Klassifizierung zuständig. Nachfolgend wird das Prinzip einer Convolution (zu dt. Faltung) erleutert.
 
 \begin{figure}[H]
 	\centering
@@ -195,6 +195,8 @@ Ein Convolutional-Layer akzeptiert Daten in Form eines Bildes $ I $ in den Dimen
 \end{figure}
 
 Die Ergebnisse nach Durchlauf eines Convolutional-Layer werden Feature Maps oder \gls{activation_map}s genannt. Im trainierten CNN erkennen frühe Convolutional-Layer Kanten, Kurven und feine Muster. Spätere Layer erkennen komplette geometrische Figuren bis hin zu komplexen Mustern sowie Schemen von reellen Objekten und Gegenständen.
+
+\pagebreak
 
 \section{Backprogation}
 \label{sec:backpropagation}
