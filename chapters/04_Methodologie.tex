@@ -1,6 +1,6 @@
 \chapter{Methodologie}
 
-Im Kapitel Methodologie wird das allgemeine Vorgehen beschrieben, welches notwendig ist um die vorgestellten Algorithmen zu implementieren.
+Im Kapitel Methodologie wird das allgemeine Vorgehen beschrieben, welches notwendig ist um die in \ref{cha:fundamentals} vorgestellten Algorithmen zu implementieren.
 
 \section{Vorherige Arbeiten}
 
@@ -13,9 +13,9 @@ Der Fast Neural Style Transfer \ref{sec:fast_neural_style_transfer} orientiert s
 \section{Neural Style Transfer}
 \label{sec:method_neural_style_transfer}
 
-Als ersten Schritt wird die Loss-Funktion entwickelt. Da das Loss aus drei Teilen besteht eignet es sich dieses als Klasse zu realisieren. Das Style-Loss, Content-Loss sowie Total-Variation-Loss können als einzelne Methoden dieser Klasse implementiert werden und als Gesamt-Loss mit Gewichtung zusammengefasst werden. Außerdem können die notwendingen Hyperparameter des Perceptual-Loss der Klasse bei Instanziierung übergeben werden. Desweiteren werden unterschiedliche Hilfsfunktionen benötigt um die Grammatrix zu berechnen, sowie das Laden und Speichern von Bilder und deren Umwandlung in und von Tensoren\footnote{Als \gls{tensor}en werden Matrizen/Vektoren jeglicher Dimensionen bezeichnet} zu ermöglichen.
+Als ersten Schritt wird die Loss-Funktion entwickelt. Da das Loss aus drei Teilen besteht eignet es sich dieses als Klasse zu realisieren. Das Style-Loss, Content-Loss sowie Total-Variation-Loss können als einzelne Methoden dieser Klasse implementiert werden und als Gesamt-Loss mit Gewichtung zusammengefasst werden. Außerdem können die notwendingen Hyperparameter des Perceptual-Loss der Klasse bei Instanziierung übergeben werden. Desweiteren werden unterschiedliche Hilfsfunktionen benötigt um die Gram-Matrix zu berechnen, sowie das Laden und Speichern von Bilder und deren Umwandlung in und von Tensoren\footnote{Als \gls{tensor}en werden Matrizen/Vektoren jeglicher Dimensionen bezeichnet} zu ermöglichen.
 
-Um mathematischen Operationen durchzuführen, die bei Berechung der Grammatrix oder des Loss verwendet werden, benötigt man außerdem unterschiedliche Funktionen die das Rechnen mit Vektoren und Matrizen ermöglichen.
+Um mathematischen Operationen durchzuführen, die bei Berechung der Gram-Matrix oder des Loss verwendet werden, benötigt man außerdem unterschiedliche Funktionen die das Rechnen mit Vektoren und Matrizen ermöglichen.
 
 
 % https://drive.google.com/file/d/1gn8Q9fPT6ZOsA8DkEg-lpwexMV28C-Px/view?usp=sharing

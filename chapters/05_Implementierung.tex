@@ -29,7 +29,6 @@ def extract_activation_map(image, model, layer):
             self.activation = outpt
 
     sam = SaveActionMap()
-
     handle = model[layer].register_forward_hook(sam.hook)
     model(image.unsqueeze(0))
     handle.remove()
@@ -39,24 +38,18 @@ def extract_activation_map(image, model, layer):
 \captionof{lstlisting}{Extrahierung Activation-Maps mit PyTorch}
 \end{listing}
 
-\pagebreak
-
 \subsection{Content-Loss}
 
 Um das Content-Loss zu bilden wird mit der zuvor definierten Funktion auf die Zwischenergebnisse der Hidden-Layer zugegriffen.
-Das Ergebnis ist das \gls{mse_loss} aller Zwischenergebnisse der Eingangsdaten (Ausgangsbild) vergliechen mit den Zwischenergebnisse der Ausgangsdaten (generierte Bilder), vgl. Kapitel \ref{sec:content_loss}.
+Das Ergebnis ist das \gls{mse_loss} aller Zwischenergebnisse der Eingangsdaten (Inhaltsbild) vergliechen mit den Zwischenergebnisse der Ausgangsdaten (generierte Bilder), vgl. Kapitel \ref{sec:content_loss}.
 
 \begin{listing}[H]
 \begin{minted}{python}
 def content_loss(self, y, x):
     y = extract_activation_maps(y, self.model, self.c_layers)
     x = extract_activation_maps(x, self.model, self.c_layers, detach=True)
-
     return sum([
-        F.mse_loss(
-            generated_feature,
-            input_feature
-        )
+        F.mse_loss(generated_feature, input_feature)
         for generated_feature, input_feature in zip(y, x)
     ])
 \end{minted}
@@ -65,7 +58,7 @@ def content_loss(self, y, x):
 
 \subsection{Style-Loss}
 
-Für das Style-Loss wird eine Funktion benötigt um die Gram-Matrix eines Tensors zu bilden. Die Anzahl der Dimensionen des Eingangstensors wird auf zwei Dimensionen geflächt. Diese Matrix wird seiner der von sich selbst transponierten Version multipliziert. Danach wird das Ergebnis über die das Produkt der Anzahl der Channel, Höhe und Breite des Eingangstensors normalisiert.
+Für das Style-Loss wird eine Funktion benötigt um die Gram-Matrix eines Tensors zu bilden. Die Anzahl der Dimensionen des Eingangstensors wird auf zwei Dimensionen geflächt. Diese Matrix wird seiner von sich selbst transponierten Version multipliziert. Danach wird das Ergebnis über das Produkt der Anzahl der Channel, Höhe und Breite des Eingangstensors normalisiert.
 
 \begin{listing}[H]
 \begin{minted}{python}
@@ -82,25 +75,17 @@ def gram_matrix(tensor):
 \captionof{lstlisting}{Berechnung der Gram-Matrix, vgl. Gleichungen \eqref{eq:gram_matrix_1} u. \eqref{eq:gram_matrix_2}}
 \end{listing}
 
-\pagebreak
-
-Die Gram-Matrix-Funktion wird dazu benutzt das Style-Loss zu berechnen. Wie beim Content-Loss wird das \gls{mse_loss} gebildet. Dieses mal werden vorher die Gram-Matrizen aller \gls{activation_map}s berechnet. Auf diese Weise wird das berechnete Ausgangsbild mit dem vorher eingestellten Style-Bild verglichen.
-In dieser Implementierung wurde die Gewichtung der einzelnen Layer nicht berücksichtigt. Die Implementierung weicht daher geringfügig von der in Analyse verwendeten Gleichung \eqref{eq:style_loss} ab.
+Die Gram-Matrix-Funktion wird dazu benutzt das Style-Loss zu berechnen. Wie beim Content-Loss wird das \gls{mse_loss} gebildet. Dieses mal werden vorher die Gram-Matrizen aller \gls{activation_map}s berechnet. Auf diese Weise wird das berechnete Ausgangsbild mit dem vorher eingestellten Stilbild verglichen.
+In dieser Implementierung wurde die Gewichtung der einzelnen Layer nicht berücksichtigt. Die Implementierung weicht daher geringfügig von der in den Grundlagen verwendeten Gleichung \eqref{eq:style_loss} ab.
 
 \begin{listing}[H]
 \begin{minted}{python}
 def style_loss(self, y):
     y = extract_activation_maps(y, self.model, self.s_layers)
-    y_grams = [
-        gram_matrix(row)
-        for row in y
-    ]
+    y_grams = [gram_matrix(row) for row in y]
 
     return sum([
-        F.mse_loss(
-            y_gram,
-            style_gram
-        )
+        F.mse_loss(y_gram, style_gram)
         for y_gram, style_gram in zip(y_grams, self.style_grams)
     ])
 \end{minted}
@@ -189,8 +174,6 @@ Der COCO-Datensatz liegt in Form vieler verschiedener JPEG-Bilder vor.
 Um nicht alle Bilder gleichzeitig laden zu müssen, bietet PyTorch die Möglichkeit einen Dataloader\footnote{Weitere Information zum PyTorch-Dataloader: \url{https://pytorch.org/tutorials/beginner/data_loading_tutorial.html}}
 zu nutzen, welcher die Bilder in der gewünschten Batchgröße Schritt für Schritt lädt.
 
-\pagebreak
-
 \begin{listing}[H]
 \begin{minted}{python}
 dataset = datasets.ImageFolder(
@@ -217,10 +200,12 @@ Der Dataloader lädt alle Bilder in allen Unterordnern innerhalbes des konfiguri
 \subsection{Netzwerkarchitektur}
 \label{sec:network_architecture}
 
-Die Architektur des Neuronalen Netzes spielt eine wichtige Rolle. Sie muss in der Lage die Eigenschaften eines Stils möglichst gut zu erlernen und dabei Performant bleiben. Dabei wurde die in Kapitel \ref{sec:fast_neural_style_transfer} vorgestellte Netzwerkarchitektur implementiert.
+Die Architektur des Neuronalen Netzes spielt eine wichtige Rolle. Sie muss in der Lage die Eigenschaften eines Stils möglichst gut zu erlernen und dabei Performant bleiben. Dabei wurde die in Kapitel \ref{sec:fast_neural_style_transfer_aufbau} vorgestellte Netzwerkarchitektur des \textit{Image Transformer Networks} implementiert.
 Dies geschieht in PyTorch in Form einer Klasse, welche von \mintinline{python}{Module} erbt.
 
-Um in Kapitel \ref{cha:tests} das Testen unterschiedlicher Netzwerkarchitekturen zu ermöglichen, wird die Klasse des Transformer Networks möglichst dynamisch implementiert. Einstellbar sind dabei folgende Werte, die im weiteren Verlauf erklärt werden:
+\pagebreak
+
+Um in Kapitel \ref{cha:tests} das Testen unterschiedlicher Netzwerkarchitekturen zu ermöglichen, wird die Klasse des Image Transformer Networks möglichst dynamisch implementiert. Einstellbar sind dabei folgende Werte, die im weiteren Verlauf erklärt werden:
 
 \begin{itemize}
     \item channel\_multiplier
@@ -258,11 +243,9 @@ def get_activation_fn(name):
 
 Desweiteren müssen die in Kapitel \ref{sec:aufbau} konzipierten Layer-Blöcke implementiert werden.
 Der \textit{ConvBlock} besteht aus den PyTorch-Layern \mintinline{python}{Conv2d}, \mintinline{python}{InstanceNorm2d} und der gewählten Aktivierungsfunktion.
-\mintinline{python}{nn.InstanceNorm2d} wurde auf Grund des Papers \cite{DBLP:journals/corr/UlyanovVL16} gewählt und dort näher in Bezug auf die Verwendung mit Style-Transfer-Methoden erläutert.
+\mintinline{python}{InstanceNorm2d} wurde auf Grund des Papers \cite{DBLP:journals/corr/UlyanovVL16} gewählt und dort näher in Bezug auf die Verwendung mit Style-Transfer-Methoden erläutert.
 
-\pagebreak
-
-Die Parameter \mintinline{python}{in_channels} und \mintinline{python}{out_channels} ergeben sich aus dem Parameter \mintinline{python}{channel_multiplier} multipliziert mit einem festen Wert, der je nach Layer $ 1 $, $ 2 $ oder $ 4 $ beträgt.
+Die Parameter \mintinline{python}{in_channels} und \mintinline{python}{out_channels} ergeben sich aus dem Parameter \mintinline{python}{channel_multiplier} ($ m $) multipliziert mit einem festen Wert, der je nach Layer $ 1 $, $ 2 $ oder $ 4 $ beträgt.
 
 \begin{listing}[H]
 \begin{minted}{python}
@@ -280,9 +263,11 @@ class ConvBlock(nn.Module):
 \captionof{lstlisting}{Aufbau des ConvBlock}
 \end{listing}
 
+\pagebreak
+
 \subsection{ResidualBlock}
 
-Der ResidualBlock, vgl. \ref{img:residual_block_img}, besteht aus zwei aufeinanderfolgenden \mintinline{python}{Conv2d}-Layern. Wie beim vorherigen ConvBlock werden die Daten über \mintinline{python}{InstanceNorm2d} normalisiert, anschließend wird die Aktivierungsfunktion angewendet. Die Besonderheit ist das die Eingangdaten kopiert werden und danach mit den berechneten Daten der Convolutional-Layer addiert werden. Durch \mintinline{python}{Conv2d} verkleinert sich die Dimension der Daten, vgl. \ref{sec:conv_networks}, welches durch die \mintinline{python}{ReflectionPad2d}-Layer wieder ausgeglichen wird. Eingangsdaten und berechnete Daten müssen die gleichen Dimensionen aufweisen um addiert werden zu können. Die Parameter \mintinline{python}{in_channels} und \mintinline{python}{out_channels} ergeben sich aus \mintinline{python}{channel_multiplier} multipliziert mit $ 4 $.
+Der ResidualBlock, vgl. \ref{img:residual_block_img}, besteht aus zwei aufeinanderfolgenden \mintinline{python}{Conv2d}-Layern. Wie beim vorherigen ConvBlock werden die Daten über \mintinline{python}{InstanceNorm2d} normalisiert, anschließend wird die Aktivierungsfunktion angewendet. Die Besonderheit ist das die Eingangdaten kopiert werden und danach mit den berechneten Daten der Convolutional-Layer addiert werden. Durch \mintinline{python}{Conv2d} verkleinert sich die Dimension der Daten, vgl. \ref{sec:conv_networks}, welches durch den \mintinline{python}{ReflectionPad2d}-Layer wieder ausgeglichen wird. Eingangsdaten und berechnete Daten müssen die gleichen Dimensionen aufweisen um addiert werden zu können. Die Parameter \mintinline{python}{in_channels} und \mintinline{python}{out_channels} ergeben sich aus \mintinline{python}{channel_multiplier} multipliziert mit $ 4 $.
 
 
 \begin{listing}[H]
@@ -310,11 +295,13 @@ class ResidualBlock(nn.Module):
 \captionof{lstlisting}{Aufbau des ResidualBlock}
 \end{listing}
 
+\pagebreak
+
 \subsection{UpSampleBlock}
 
 Der UpSampleBlock schaltet lediglich dem ConvBlock ein Upsampling-Verfahren vor, um das Bild um einen entsprechenden Faktor zu vergrößern.
 
-In dieser Arbeit wird Nearest Neighbor Interpolation (ggf Paper hier einfügen) verwendet.
+In dieser Arbeit wird Nearest Neighbor Interpolation  verwendet.
 
 
 \begin{listing}[H]
@@ -342,6 +329,8 @@ class UpSampleBlock(nn.Module):
 \end{minted}
 \captionof{lstlisting}{Aufbau des UpSampleBlock}
 \end{listing}
+
+\pagebreak
 
 \subsection{TransformerNet}
 

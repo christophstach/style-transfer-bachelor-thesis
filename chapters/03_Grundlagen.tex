@@ -170,7 +170,7 @@ Sie ist in der Lage die Ergebnisse auf einen festgelegten Bereich zu beschränke
 \label{sec:conv_networks}
 
 Ein Convolutional Neural Network, nachfolgen CNN genannt, besteht aus mehreren aufeinanderfolgenden Convolutional-Layern, sowie
-abschließend beliebig vielen Fully-Connected-Layern (siehe \ref{img:cnn_example_network}). Convolutional-Layer dienen der Feature-Extraktion. Die Fully-Connected-Layer sind für Klassifizierung zuständig. Nachfolgend wird das Prinzip einer Convolution (zu dt. Faltung) erleutert.
+abschließend beliebig vielen Fully-Connected-Layern (siehe \ref{img:cnn_example_network}). Convolutional-Layer dienen der Feature-Extraktion. Die Fully-Connected-Layer sind für die Klassifizierung zuständig. Nachfolgend wird das Prinzip einer Convolution (zu dt. Faltung) erleutert.
 
 \begin{figure}[H]
 	\centering
@@ -179,7 +179,7 @@ abschließend beliebig vielen Fully-Connected-Layern (siehe \ref{img:cnn_example
 	\label{img:cnn_example_network}
 \end{figure}
 
-Ein Convolutional-Layer akzeptiert Daten in Form eines Bildes $ I $ in den Dimensionen $ W_1 \times H_1 \times C_1 $. Optional wird das Bild mit $ P $ Nullen an den Rändern aufgefüllt. Über das Bild fahren $ N $ Filter der Größe $ F $ mit einer Schrittweite $ S $ und führen an jedere Stelle ein Skalarprodukt mit den Daten der Bildmatrix durch. Daraus ergibt sich eine neue Matrix mit den Dimensionen $ W_2 \times H_2 \times C_2 $: \\
+Ein Convolutional-Layer akzeptiert Daten in Form eines Bildes $ I $ in den Dimensionen $ W_1 \times H_1 \times C_1 $. Optional wird das Bild mit $ P $ Nullen an den Rändern aufgefüllt. Über das Bild fahren $ N $ Filter der Größe $ F $ mit einer Schrittweite $ S $ und führen an jeder Stelle ein Skalarprodukt mit den Daten der Bildmatrix durch. Daraus ergibt sich eine neue Matrix mit den Dimensionen $ W_2 \times H_2 \times C_2 $: \\
 
 \begin{itemize}
 	\item $ W_2 = (W_1 - F) / S + 1 $
@@ -201,7 +201,7 @@ Die Ergebnisse nach Durchlauf eines Convolutional-Layer werden Feature Maps oder
 \section{Backprogation}
 \label{sec:backpropagation}
 
-Um ein Neuronales Netzwerk zu trainieren muss das Loss, welches ein Neurales Netzwerk erzeugt, minimiert werden. Das Loss berechnet sich dabei aus der Differenz zwischen $ y $ und $ \hat{y} $. Wobei $ y $ die echten gelabelten Ergebnisse sind und $ \hat{y} $ die Vorhersage, die das Neuronale Netzwerk erzeugt, ist.
+Um ein Neuronales Netzwerk zu trainieren muss das Loss, welches ein Neurales Netzwerk erzeugt, minimiert werden. Das Loss berechnet sich dabei aus der Differenz zwischen $ y $ und $ \hat{y} $. Wobei $ y $ die echten gelabelten Ergebnisse sind und $ \hat{y} $ die Vorhersage, die das Neuronale Netzwerk erzeugt.
 Anhand dieser Daten kann ein Optimizer, wie beispielsweise \gls{adam} \cite{kingma2015adam}, die Gewichte des Netzwerks anpassen und das Loss minimieren.
 
 \begin{figure}[H]
@@ -263,12 +263,12 @@ Diese Arbeit basiert größtenteils auf den bereits bestehenden Lösungen von Jo
 \label{sec:neural_style_transfer}
 
 Hierbei handelt sich um eine Technik um den Stil von artistischen Bildern auf ein anderes willkürliches Bild zu übertragen.
-Das Verfahren nutzt dabei einen optimisierenden Ansatz. Dabei werden die Pixel des eines Eingangsbildes Schritt für Schritt den Pixeln 
+Das Verfahren nutzt dabei einen optimisierenden Ansatz. Dabei werden die Pixel eines Eingangsbildes Schritt für Schritt den Pixeln 
 des gewünschten Ausgangsbildes angepasst. 
 
-Der Neural Style Transfer Algorithmus, beschrieben im Paper \cite{DBLP:journals/corr/GatysEB15a}, optimiert direkt die Pixels eines Bildes anhand einem sogenannten Perceptual-Loss. Die entsprechende Loss-Funktion besteht aus mehreren Teilen. Einem Content-Loss und einem Style-Loss. Optional kann zusätztlich ein Total-Variation-Loss verwendet werden. Das gesammte Perceptual Loss wird über Hyperparameter konfiguriert, welche die Gewichtung der Unterfunktionen auf das Gesamt-Loss wiederspiegeln.
+Der Neural Style Transfer Algorithmus, beschrieben im Paper \cite{DBLP:journals/corr/GatysEB15a}, optimiert direkt die Pixel eines Bildes anhand einem sogenannten Perceptual-Loss. Die entsprechende Loss-Funktion besteht aus mehreren Teilen. Einem Content-Loss und einem Style-Loss. Optional kann zusätztlich ein Total-Variation-Loss verwendet werden. Das gesammte Perceptual-Loss wird über Hyperparameter konfiguriert, welche die Gewichtung der Unterfunktionen auf das Gesamt-Loss wiederspiegeln.
 
-Content-Loss und Style-Loss benutzen dabei ein bereits auf einem großen Datensatz vortrainiertes Model. In dieser Arbeit wird das VGG16 \cite{DBLP:journals/corr/SimonyanZ14a} Model verwendet.
+Content-Loss und Style-Loss benutzen dabei ein bereits auf einem großen Datensatz vortrainiertes Model. In dieser Arbeit wird das VGG16 \cite{DBLP:journals/corr/SimonyanZ14a} Model verwendet. Das Content-Loss vergleicht Features eines Inhaltsbildes mit den Features des Ausgangsbild. Das Style-Loss vergleicht Features eines Stilbildes mit den Features des Ausgangsbildes.
 
 \begin{figure}[H]
 	\centering
@@ -280,7 +280,7 @@ Content-Loss und Style-Loss benutzen dabei ein bereits auf einem großen Datensa
 \subsubsection{Content-Loss}
 \label{sec:content_loss}
 
-Um das Content-Loss zu berechnen wird nicht direkt das Contentbild mit dem Ausgangsbild verglichen, stattdessen werden die \gls{activation_map}s nach bestimmten Layern im VGG16-Netzwerk (weiterhin Loss-Netzwerk genannt) verwendet. Auch ist es möglich die \gls{activation_map}s mehrerer Layer zu benutzen, da unterschiedliche Layer ein anderes \gls{receptive_field} haben und somit unterscheidliche Informationen speichern.
+Um das Content-Loss zu berechnen wird nicht direkt das Contentbild mit dem Ausgangsbild verglichen, stattdessen werden die \gls{activation_map}s nach bestimmten Layern im VGG16-Netzwerk (auch Loss-Network gennant) verwendet. Auch ist es möglich die \gls{activation_map}s mehrerer Layer zu benutzen, da unterschiedliche Layer ein anderes \gls{receptive_field} haben und somit unterscheidliche Informationen speichern.
 
 \begin{figure}[H]
 	\centering
@@ -299,23 +299,23 @@ Zwischen den \gls{activation_map}s $ P $  des Contentbildes $ \vec{p} $ und den 
 \subsubsection{Style-Loss}
 \label{sec:style_loss}
 
-Das Style-Loss verwendet die \gls{activation_map}s nicht direkt sondern bildet vorher die Gram-Matrix dieser. Das hat zur Folge das räumliche Informationen verworfen werden, jedoch Farben und Formen erhalten bleiben, die beim Style die wichtigste Rolle einehmen.
+Das Style-Loss verwendet die \gls{activation_map}s nicht direkt sondern bildet vorher die Gram-Matrix dieser. Das hat zur Folge das räumliche Informationen verworfen werden, jedoch Farben und Formen erhalten bleiben, die beim Übertragen des Stils die wichtigste Rolle einehmen.
 
-Um die Gram-Matrix mehrerer \gls{activation_map}s zu berechnen, werden die Matrizen geflächt, Height- und Width-Dimension werden zu einer Dimension zusammengefügt. Daraus ergibt sich eine 2-Dimensionale Matrix der Form $ C \times HW $. Diese wird transponiert micht sich selbst multipliziert.
+Um die Gram-Matrix mehrerer \gls{activation_map}s zu berechnen, werden die Matrizen geflächt, Height- und Width-Dimension werden zu einer Dimension zusammengefügt. Daraus ergibt sich eine 2-dimensionale Matrix der Form $ C \times HW $. Diese wird transponiert micht sich selbst multipliziert.
 
 \begin{equation}
 	\label{eq:gram_matrix_1}
 	G_{ij}^{l} = \sum_{k} F_{ik}^{l} F_{jk}^{l}
 \end{equation}
 
-Es wird die Gram-Matrix $ G $ aus dem Style-Bild und $ A $ aus dem generierten Bild anhand der gebenen Layer $ l $ berechnet, anschließend normalisiert und das \gls{mse_loss} gebildet.
+Es wird die Gram-Matrix, $ G $ aus dem Stilbild und $ A $ aus dem generierten Bild, anhand der gebenen Layer $ l $ berechnet, anschließend normalisiert und das \gls{mse_loss} gebildet.
 
 \begin{equation}
 	\label{eq:gram_matrix_2}
 	E_{l} = \frac{1}{4N_{l}^{2} M_{l}^2} = \sum_{i, j} ( G_{ij}^{l} - A_{ij}^{l} )^2
 \end{equation}
 
-Das Style-Loss ergibt sich aus der gewichteten Summe der Fehler.
+Das Style-Loss ergibt sich aus der gewichteten Summe der Layer-Losses.
 
 \begin{equation}
 	\label{eq:style_loss}
@@ -349,7 +349,7 @@ Das Perceptual-Loss ist die Kombination aus Content-, Style- und Total-Variation
 \label{sec:fast_neural_style_transfer}
 
 Im Gegensatz zum im Kapitel \ref{sec:neural_style_transfer} vorgestellten Algorithmus, in dem die Pixel des Eingangsbildes direkt optimiert werden, wird ein
-Neuronales Netzwerk darauf trainiert, die Konzepte eines Styles zu erlernen. Dieses Verfahren wird im Paper \cite{DBLP:journals/corr/JohnsonAL16} genauer beschrieben. Pro Style wird dabei ein Model trainiert. Die verwendete Loss Funktion ist das bereits zuvor beschriebene Perceptual-Loss \ref{sec:perceptual_loss}.
+Neuronales Netzwerk darauf trainiert, die Konzepte eines Stils zu erlernen. Dieses Verfahren wird im Paper \cite{DBLP:journals/corr/JohnsonAL16} genauer beschrieben. Pro Style wird dabei ein Model trainiert. Die verwendete Loss-Funktion ist das bereits zuvor beschriebene Perceptual-Loss \ref{sec:perceptual_loss}.
 
 \begin{figure}[H]
 	\centering
@@ -358,4 +358,4 @@ Neuronales Netzwerk darauf trainiert, die Konzepte eines Styles zu erlernen. Die
 	\label{img:fast_neural_style_transfer}
 \end{figure}
 
-Durch die Verwendung eines \textit{Image Transformer Networks} kann die Berechnungszeit verbessert werden, da das neu gestylte Bild mit einem Forward-Pass durch das Netzwerk erstellt wird. Die rechenintensive Optimierung durch Backpropagation \ref{sec:backpropagation} entfällt. Das Training eines Image Transformer Netzworks nimmt jedoch viel Zeit in Anspruch.
+Durch die Verwendung eines \textit{Image Transformer Networks} kann die Berechnungszeit verbessert werden, da das neu gestylte Bild mit einem Forward-Pass durch das Netzwerk erstellt wird. Die rechenintensive Optimierung durch den Backpropagation-Algorithmus \ref{sec:backpropagation} entfällt. Das Training eines Image Transformer Netzworks nimmt jedoch viel Zeit in Anspruch.
