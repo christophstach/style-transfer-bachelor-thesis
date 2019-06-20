@@ -6,7 +6,7 @@ Netzwerk-Architekturen die Performanz auf Geräten mit leistungsarmer Hardware g
 
 \section{Auswirkungen der Hyperparameter}
 
-Im Folgenden werden unterschiedliche Kombinationen der Gewichtungsparameter Content-Weight $ \alpha $, Style-Weight $ \beta $ und Total-Variation-Weight $ \gamma $ getestet. Dabei wird als Inhaltsbild  eine eigene Abbildung der HTW-Berlin benutzt. Als Stilbild wird das Kunstwerk \textit{Starry Night} des Künstlers Vincent Van Gogh und The Scream von Edvard Munch verwendet. Die generierten Bilder entsprechen einer Größe von 768 * 768 Pixeln. Die restlichen Hyperparameter werden aus dem Kapitel Methodologie \ref{sec:method_neural_style_transfer} übernommen.
+Im Folgenden werden unterschiedliche Kombinationen der Gewichtungsparameter Content-Weight $ \alpha $, Style-Weight $ \beta $ und Total-Variation-Weight $ \gamma $ getestet. Dabei wird als Inhaltsbild  eine eigene Abbildung der HTW-Berlin benutzt. Als Stilbild wird das Kunstwerk \textit{Starry Night} des Künstlers Vincent Van Gogh und \textit{The Scream} von Edvard Munch verwendet. Die generierten Bilder entsprechen einer Größe von 768 * 768 Pixeln. Die restlichen Hyperparameter werden aus dem Kapitel Methodologie \ref{sec:method_neural_style_transfer} übernommen.
 
 \pagebreak
 
@@ -28,7 +28,7 @@ In diesem Experiment wird das Stilbild Starry Night von Vincent Van Gogh verwend
 \end{figure}
 
 In der ersten Abbildungen werden verschiedene die verschiedenen  \\
-Stil-Gewichtungen $ \beta = 10^{5} $, $ \beta = 10^{6} $, $ \beta = 10^{7} $, $ \beta = 10^{8} $ und $ \beta = 10^{9} $ für Starry Night getestet.
+Stilgewichtungen $ \beta = 10^{5} $, $ \beta = 10^{6} $, $ \beta = 10^{7} $, $ \beta = 10^{8} $ und $ \beta = 10^{9} $ für Starry Night getestet.
 
 \begin{figure}[H]
     \centering
@@ -101,7 +101,7 @@ In der zweiten Abbildungen werden verschiedene die verschiedenen Total-Variation
 
 
 In der ersten Abbildungen werden verschiedene die verschiedenen  \\
-Stil-Gewichtungen $ \beta = 10^{5} $, $ \beta = 10^{6} $, $ \beta = 10^{7} $, $ \beta = 10^{8} $ und $ \beta = 10^{9} $ für The Scream getestet.
+Stilgewichtungen $ \beta = 10^{5} $, $ \beta = 10^{6} $, $ \beta = 10^{7} $, $ \beta = 10^{8} $ und $ \beta = 10^{9} $ für The Scream getestet.
 
 \begin{figure}[H]
     \centering
@@ -159,10 +159,10 @@ In der zweiten Abbildungen werden verschiedene die verschiedenen Total-Variation
 
 \section{Auswirkungen der Netzwerkarchitekturen}
 
-Es werden im Folgenden Experimente mit drei unterschiedlichen Bildgrößen auf unterschiedlichen Geräten durchgeführt.
-Getest wird die Berechnungsgeschwindigkeit beim Forward-Pass durch das Netzwerk, sowie der benötigte Grafik- / Arbeitsspeicher. 
+Im nächsten Experiment werden drei unterschiedlichen Bildgrößen auf unterschiedlichen Geräten auf Durchführbarkeit getestet.
+Gemessen wird die Berechnungsgeschwindigkeit beim Forward-Pass durch das Netzwerk. 
 
-Ein bereits erster Indikator für die Performanz eines Neurolen Netzwerks ist die Anzahl der lernbaren Parameter, die bei der Trainingsphase optimiert werden.
+Ein bereits erster Indikator für die Performanz eines Neurolen Netzwerks ist die Anzahl der lernbaren Parameter, die bei der Trainingsphase optimiert werden. Trainiert wurden neun unterschiedliche Netzwerke auf dem Kunstwerk \textit{Starry Night} mit Unterschiedlichen Kombinationen für $ m $ und $ s $
 
 \begin{table}[H]
     \centering
@@ -185,33 +185,71 @@ Ein bereits erster Indikator für die Performanz eines Neurolen Netzwerks ist di
     \label{tab:networks}
 \end{table}
 
+Es macht dabei einen Unterschied ob die die Berechnung des Netzwerks auf dem CPU oder dem GPU eines Geräts durchgeführt wird. Neuronale Netzwerke können auf einer GPU besonders schneller als auf einem CPU berechnet werden. Das liegt daran eine GPU besonders auf die Berechnung von Matrix-Operationen (wie Sie auch bei Grafischen Anwendungen verwendet werden) spezialisiert ist.
 
+Die Daten die werden beim einsatzt des GPUs in den Grafikspeicher geladen. Bei der Berechnung über den CPU wird der Arbeitsspeicher (RAM) des Geräts verwendet. Der RAM kann über die Verwendung einer Auslagerungsdatei (SWAP-Datei) virtuell erweitert werden. Somit kann verhindert werden das es zu Fehlern wegen unzureichendem Arbeitsspeicher kommt.
 
-\begin{table}[h]
-
-    
+\begin{table}[H]
     \centering
-    \begin{tabular}{ |c|c|c| }
+    \begin{tabular}{ |c|c|c|c|c| }
         \hline
-        \textbf{Name} & \textbf{XPS 15} & \textbf{Auto}   \\ \hline
-        Netzwerk 1 & 1 sec & 1 sec \\ \hline
-        Netzwerk 2 & 1 sec & 1 sec \\ \hline
-        Netzwerk 3  & 1 sec & 1 sec \\ \hline
+        \textbf{Name} & \textbf{XPS 15 - CPU} & \textbf{XPS 15 - GPU} & \textbf{Auto - CPU} & \textbf{Auto - GPU}   \\ \hline
+        Netzwerk 1 & 1 sec & 1 sec & 1 sec & 1 sec \\ \hline
+        Netzwerk 2 & 1 sec & 1 sec & 1 sec & 1 sec \\ \hline
+        Netzwerk 3 & 1 sec & 1 sec & 1 sec & 1 sec \\ \hline
+	
+        Netzwerk 4 & 1 sec & 1 sec & 1 sec & 1 sec \\ \hline
+        Netzwerk 5 & 1 sec & 1 sec & 1 sec & 1 sec \\ \hline
+        Netzwerk 6 & 1 sec & 1 sec & 1 sec & 1 sec \\ \hline
 
-        Netzwerk 4 & 1 sec & 1 sec \\ \hline
-        Netzwerk 5 & 1 sec & 1 sec \\ \hline
-        Netzwerk 6  & 1 sec & 1 sec \\ \hline
-
-        Netzwerk 7 & 1 sec & 1 sec \\ \hline
-        Netzwerk 8 & 1 sec & 1 sec \\ \hline
-        Netzwerk 9 & 1 sec & 1 sec \\ \hline
+        Netzwerk 7 & 1 sec & 1 sec & 1 sec & 1 sec \\ \hline
+        Netzwerk 8 & 1 sec & 1 sec & 1 sec & 1 sec \\ \hline
+        Netzwerk 9 & 1 sec & 1 sec & 1 sec & 1 sec \\ \hline
     \end{tabular}
-    \caption{Berechnungsgeschwindigkeit und Arbeitsspeicherbedarf für Bilder der Größe 1024 * 768 Pixel}
+    \caption{Berechnungsgeschwindigkeit für Bilder der Größe 1024 * 768 Pixel}
     \label{tab:1024x768}
 \end{table}
 
-640 * 480
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ |c|c|c|c|c| }
+        \hline
+        \textbf{Name} & \textbf{XPS 15 - CPU} & \textbf{XPS 15 - GPU} & \textbf{Auto - CPU} & \textbf{Auto - GPU}   \\ \hline
+        Netzwerk 1 & 1 sec & 1 sec & 1 sec & 1 sec \\ \hline
+        Netzwerk 2 & 1 sec & 1 sec & 1 sec & 1 sec \\ \hline
+        Netzwerk 3 & 1 sec & 1 sec & 1 sec & 1 sec \\ \hline
+	
+        Netzwerk 4 & 1 sec & 1 sec & 1 sec & 1 sec \\ \hline
+        Netzwerk 5 & 1 sec & 1 sec & 1 sec & 1 sec \\ \hline
+        Netzwerk 6 & 1 sec & 1 sec & 1 sec & 1 sec \\ \hline
+
+        Netzwerk 7 & 1 sec & 1 sec & 1 sec & 1 sec \\ \hline
+        Netzwerk 8 & 1 sec & 1 sec & 1 sec & 1 sec \\ \hline
+        Netzwerk 9 & 1 sec & 1 sec & 1 sec & 1 sec \\ \hline
+    \end{tabular}
+    \caption{Berechnungsgeschwindigkeit für Bilder der Größe 640 * 480 Pixel}
+    \label{tab:640x480}
+\end{table}
 
 
-320 * 240
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ |c|c|c|c|c| }
+        \hline
+        \textbf{Name} & \textbf{XPS 15 - CPU} & \textbf{XPS 15 - GPU} & \textbf{Auto - CPU} & \textbf{Auto - GPU}   \\ \hline
+        Netzwerk 1 & 1 sec & 1 sec & 1 sec & 1 sec \\ \hline
+        Netzwerk 2 & 1 sec & 1 sec & 1 sec & 1 sec \\ \hline
+        Netzwerk 3 & 1 sec & 1 sec & 1 sec & 1 sec \\ \hline
+	
+        Netzwerk 4 & 1 sec & 1 sec & 1 sec & 1 sec \\ \hline
+        Netzwerk 5 & 1 sec & 1 sec & 1 sec & 1 sec \\ \hline
+        Netzwerk 6 & 1 sec & 1 sec & 1 sec & 1 sec \\ \hline
 
+        Netzwerk 7 & 1 sec & 1 sec & 1 sec & 1 sec \\ \hline
+        Netzwerk 8 & 1 sec & 1 sec & 1 sec & 1 sec \\ \hline
+        Netzwerk 9 & 1 sec & 1 sec & 1 sec & 1 sec \\ \hline
+    \end{tabular}
+    \caption{Berechnungsgeschwindigkeit für Bilder der Größe 320 * 240 Pixel}
+    \label{tab:320x240}
+\end{table}
