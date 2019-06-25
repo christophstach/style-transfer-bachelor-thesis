@@ -13,13 +13,18 @@
 
 \maketitle
 
-\pagenumbering{Roman}
-\input{chapters/01_Einleitung} \clearpage
+\pagenumbering{gobble}
+\input{chapters/01_Abstract} \clearpage
 
-\tableofcontents \newpage
+\pagenumbering{roman}
+\tableofcontents
+\listoffigures
+\listoftables
+\lstlistoflistings
 
+\newpage
 \pagenumbering{arabic}
-\input{chapters/02_Anforderungen} \clearpage
+\input{chapters/02_Einleitung} \clearpage
 \input{chapters/03_Grundlagen} \clearpage
 \input{chapters/04_Methodologie} \clearpage
 \input{chapters/05_Implementierung} \clearpage
@@ -27,12 +32,12 @@
 \input{chapters/07_Evaluation} \clearpage
 \input{chapters/08_Fazit} \clearpage
 
-\listoffigures
-\listoftables
-\lstlistoflistings
+
 \printnoidxglossary[title=Glossar]
 \printbibliography[title={Quellen- und Literaturverzeichnis}, heading=bibintoc]
 
+\newpage
+\pagenumbering{Roman}
 \input{chapters/09_Anhang}
 
 \end{document}
