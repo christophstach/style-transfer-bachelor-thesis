@@ -166,6 +166,25 @@ Sie ist in der Lage die Ergebnisse auf einen festgelegten Bereich zu beschränke
 	\label{img:hardtanh_activation_function}
 \end{figure}
 
+\subsection{Soidmoid}
+
+Die Sigmoid Funktion wird in dieser Arbeit als alternative abschliesende Aktiverungsfunktion genutzt \cite{DBLP:journals/corr/abs-1811-03378}.
+
+\begin{equation}
+	\sigma(x) = \frac{ 1 } { 
+		1 + e^{ -x }
+	}
+\end{equation}
+
+Die Ergebnisse liegen der Sigmoid-Funktion konvergieren zu 0 und 1 ereichen diese jedoch nie komplett.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.55\textwidth]{resources/content/Sigmoid.png}
+	\caption{Sigmoid-Aktivierungsfunktion \cite{sigmoid_activation_function_img}}
+	\label{img:sigmoid_activation_function}
+\end{figure}
+
 \section{Convolutional Neural Network}
 \label{sec:conv_networks}
 
