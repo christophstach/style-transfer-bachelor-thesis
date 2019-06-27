@@ -98,6 +98,10 @@ Das Total-Variation-Loss berechnet die Summe der Abweichungen eines Pixels zum n
 
 \begin{listing}[H]
 \begin{minted}{python}
+# Code von: 
+# https://towardsdatascience.com/pytorch-implementation-of-perceptual
+# -losses-for-real-time-style-transfer-8d608e2e9902
+
 def total_variation_loss(self, y):
     return torch.add(
         torch.sum(torch.abs(y[:, :, :, :-1] - y[:, :, :, 1:])),
