@@ -1,11 +1,26 @@
 \chapter{Evaluation}
 
-Im Kapitel Evaluation werden die restlichen Kapitel dieser Arbeit beleeuchtet und kritisch betrachtet. Dabei wird auf die Kapitel Grundlagen \ref{cha:fundamentals}, Methodologie \ref{cha:methodology}, Implementierung \ref{cha:implementation} und Tests und Experimente \ref{cha:tests} eingangen.
+Im Kapitel Evaluation werden die restlichen Kapitel dieser Arbeit beleuchtet und kritisch betrachtet. Dabei wird auf die Kapitel Grundlagen \ref{cha:fundamentals}, Methodologie \ref{cha:methodology}, Implementierung \ref{cha:implementation} und Tests und Experimente \ref{cha:tests} eingangen.
 
 \section{Grundlagen}
 
+Im Kapitel Grundlagen \ref{cha:fundamentals} wurden die Grundlagen zu Neuronalen Netzwerken erleutert. Besonders der Backprogation-Algorithmus \ref{sec:backpropagation} und die Beschreibung sowie tieferes Auseinandersetzen mit Convolutions \ref{sec:conv_networks} sind für das Verständniss der Problemstellung hilfreich.
+
+Anhand der Paper von Gatys \cite{DBLP:journals/corr/GatysEB15a} und Johnson \cite{DBLP:journals/corr/JohnsonAL16} kann die Problemstellung des Style Transfer gut nachvollzogen werden. Die in den Papern verwedendte Loss-Funktion ist bei beiden die gleiche. Jedoch werden unterschiedliche Notationen verwedent.
+Die Loss-Funktion kann für das trainieren eines Neuronalen Netzwerks wieder verwendet werden. Das Paper \cite{DBLP:journals/corr/JohnsonAL16} geht jedoch nicht auf die genaue Archtiktur des verwendenten Netzwerks ein. Hier zu ist es hilfreich die entsprechende offiziellen Implementierungen die Referenz-Implementierungen im PyTorch-Repository zu analysieren.
+
+Das Konzept wurde von Total-Variation-Denoising wurde in den Referenz-Implementierungen verwendet, ist dort jedoch unzureichend beschrieben. Eine detailierte Beschreibung ist im Paper \cite{Rudin1992NonlinearTV} vorhanden. TODO hier fehlt nocht irgendwie nen paper
+
 \section{Methodologie}
 
+Im Kapitel \ref{cha:methodology} wird die Vorgehensweise der geplanten Implementierung beschrieben. Das bereits in \cite{DBLP:journals/corr/JohnsonAL16} beschriebene Konzept des Transformer Networks wird im die Parameter der Bottleneck-Size $ s $ und Channnel-Multiplikator $ m $ erweitert. Dadurch können beliebig viele Netzwerk Architekturen dynamisch erstellt werden und es wurde somit die Grundlage für weitreichende Performanz-Tests geschaffen.
+
+Konzept des ResidualBlocks ist dahinhend intressant, da es auch für andere Problemstellung verwendet werden kann. Der Effekt des \gls{vanishing_gradient} kann mit ihnen bei jeglicher Art von Convolutional-Neural-Network verhindert werden und ein Training dieser erleichtern.
+
 \section{Implementierung}
+
+Bei der Implementierungen der Netzwerk-Archtiktur erwies es sich als vorteilhaft diese möglichst dynamisch aufzubauen. Die ursprünglich geplante, abschließende Aktivierungs-Funktion Hardtanh \ref{sec:hardtanh} konnte somit problemlos durch die Sigmoid-Aktivierungs-Funktion \ref{sec:sigmoid} ausgetauscht werden. Es wurde außerdem die Möglichkeit vorgeplant die im Bottleneck-Teil des Netzwerk verwendenten ResidualBlocks, durch andere Arten von Blöcken auszutauschen.
+
+Das in \ref{sec:method_neural_style_transfer} entworfene Skript zur Durchführung des Neural-Style-Algorithmus konnte zum Training der Netzwerke nicht wiederverwendet werden. Hierzu wurde eine Trainer-Klasse entworfen die weitreichende Konfigurationsmöglichkeiten bietet und das aufeianderfolgende Training mehrer Netzwerke erleichtert.
 
 \section{Tests und Experimente}
