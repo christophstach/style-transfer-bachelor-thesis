@@ -6,10 +6,10 @@ Im Kapitel Evaluation werden die restlichen Kapitel dieser Arbeit beleuchtet und
 
 Im Kapitel Grundlagen \ref{cha:fundamentals} wurden die Grundlagen zu Neuronalen Netzwerken erleutert. Besonders der Backprogation-Algorithmus \ref{sec:backpropagation} und die Beschreibung sowie tieferes Auseinandersetzen mit Convolutions \ref{sec:conv_networks} sind für das Verständniss der Problemstellung hilfreich.
 
-Anhand der Paper von Gatys \cite{DBLP:journals/corr/GatysEB15a} und Johnson \cite{DBLP:journals/corr/JohnsonAL16} kann die Problemstellung des Style Transfer gut nachvollzogen werden. Die in den Papern verwedendte Loss-Funktion ist bei beiden die gleiche. Jedoch werden unterschiedliche Notationen verwedent.
-Die Loss-Funktion kann für das trainieren eines Neuronalen Netzwerks wieder verwendet werden. Das Paper \cite{DBLP:journals/corr/JohnsonAL16} geht jedoch nicht auf die genaue Archtiktur des verwendenten Netzwerks ein. Hier zu ist es hilfreich die entsprechende offiziellen Implementierungen die Referenz-Implementierungen im PyTorch-Repository zu analysieren.
+Anhand der Paper von Gatys \cite{DBLP:journals/corr/GatysEB15a} und Johnson \cite{DBLP:journals/corr/JohnsonAL16} konnte die Problemstellung des Style Transfer gut nachvollzogen werden. Die in den Papern verwedendte Loss-Funktion ist bei beiden die gleiche. Jedoch werden unterschiedliche Notationen verwendet.
+Die Loss-Funktion kann für das Trainieren eines Neuronalen Netzwerks wieder verwendet werden. Das Paper \cite{DBLP:journals/corr/JohnsonAL16} geht jedoch nicht auf die genaue Archtiktur des verwendenten Netzwerks ein. Hier zu ist war hilfreich die entsprechende offiziellen Implementierungen die Referenz-Implementierungen im PyTorch-Repository zu analysieren.
 
-Das Konzept wurde von Total-Variation-Denoising wurde in den Referenz-Implementierungen verwendet, ist dort jedoch unzureichend beschrieben. Eine detailierte Beschreibung ist im Paper \cite{Rudin1992NonlinearTV} vorhanden. TODO hier fehlt nocht irgendwie nen paper
+Das Konzept wurde von Total-Variation-Denoising wurde in den Referenz-Implementierungen verwendet, ist dort jedoch unzureichend beschrieben. Eine detailierte Beschreibung ist im Paper \cite{Rudin1992NonlinearTV} vorhanden. TODO hier fehlt nocht irgendwie nen paper ne quelle für TV
 
 \section{Methodologie}
 
@@ -24,3 +24,10 @@ Bei der Implementierungen der Netzwerk-Archtiktur erwies es sich als vorteilhaft
 Das in \ref{sec:method_neural_style_transfer} entworfene Skript zur Durchführung des Neural-Style-Algorithmus konnte zum Training der Netzwerke nicht wiederverwendet werden. Hierzu wurde eine Trainer-Klasse entworfen die weitreichende Konfigurationsmöglichkeiten bietet und das aufeianderfolgende Training mehrer Netzwerke erleichtert.
 
 \section{Tests und Experimente}
+
+Im Kapitel Tests und Experimente \ref{cha:tests} wurde verschiedene Tests mit verschiedenen Hyperparametereingestellungen geführt.
+Es wurde demonstriert wie sich verschiedene Content-, Style- und Total-Variation-Loss-Gewichtungen zuander verhalten. Style-Transfer im allgemeinen hat weitere Hyperparameter, welche bei den gemachten Tests nicht berücktsichtigt wurden.
+
+Außerdem wurden verschiedene Tests hinsichtlich der Netzwerkarchitektur und Performanz durchgeführt. Es wurde gezeigt wie das auch Netzwerkarchitekturen mit weniger lernbaren Parameter in der Lage sein können Stile zu erlernen. Ein umfassender Test wurde jedoch nur mit The Starry Night \cite{the_starry_night_img} durchgeführt.
+
+Zudem wurde gezeigt, dass die gewählten Netzwerkarchitekturen größtenteils auf Geräten mit leistungsarmer Hardware zu berechnen sind.
