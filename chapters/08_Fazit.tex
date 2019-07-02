@@ -11,6 +11,16 @@ Anfangs wurde die Theorie zu Neuronalen Netzwerken und Style-Transfer analysiert
 
 \section{Kritischer Rückblick}
 
-TODO (Reflexion und Bewertung der Zielsetzung gegenüber erreichtem Ergebnis)
+Besonders das Training und das durchführen der Experimente muss kritisch betrachtet werden. Es wurden die entsprechende Hyperparametereinstellungen nur mit zwei Gemälden getestet. Fraglich ist ob diese den gleichen Effekt bei anderen Gemälden erziehlen. Hierfür wird davon ausgegangen das für jeden Stil die Hyperparametereinstellungen erneut getestet werden müsstn.
+
+Bei den gewählten Gemälden waren alle Netzwerkarchitekturen in der Lage den Stil zu extrahieren. Daraus kann schlussgefolgert werden das möglicherweise sogar Netzwerkarchitekturen mit weniger lernbaren Parametern, als die hier vorgeschlagenen, in der Lage sein könnte Stile aus Gemälden zu erlernen. Bei weiteren Expereminten wäre man unter Umständen in der Lage gewesen noch Performantere Netzwerkarchitekturen zu finden.
+
+Bei der Auswahl der verwendenten Gemälde musste beim Erstellen dieser Arbeit besonders vorsichtig vorgegangen werden. Die Bilder wurden nur aus Quellen genommen die die Verwendung für Bildungszwecke erlauben. Ein kommerzieller Einsatz wäre nicht möglich. Die Verwendung von Sttyle-Transfer-Methoden wirft besondere urheberrechtliche Bedenken auf. Urheberrechtlich geschützte Bilder können dazu verwendet werden Stile zu extrahieren und auf neue Bilder zu übertragen. Die in Bezug auf Urheberrecht aufkommenden Fragen müssen für den produktiven Einsatz eine Software-Systems geklärt werden.
 
 \section{Ausblick}
+
+Zukünftig könnte der Algorithmen um weitere Funktionen erweitert werden. Vorstellbar ist eine Vermischung von mehrern Stilen. Hierzu müsste die das Style-Loss aus die Gram-Matrizen merherer Gemälde kombieren.
+
+Außerdem kann eine ähnliche Methodig einen Super-Resulition-Algorithmus verwendet werden. Dieser wird ebenfalls im Paper von Johnson et al. \cite{DBLP:journals/corr/JohnsonAL16} beschrieben. Dabei muss eine Netzwerkarchitektur verwendet werden die in der Lage ist Bilder auf eine höhere Auflösung zu skalieren. Die verwendete Loss-Funktionen wäre das bereits vorgestellte Perceptual-Loss jedoch ohne den Style-Loss-Anteil.
+
+Performanztechnisch können weitere Experimente mit kleineren Netzwerkarchitekturen durchgeführt werden. Außerdem kann der ResidualBlock durch eine andere Art von Block ersetzt werden. Die Paper \cite{DBLP:journals/corr/HowardZCKWWAA17} und \cite{DBLP:journals/corr/abs-1801-04381} behandeln sogenannte MobileNets, welche besonders auf die Verwendung von Geräten mit leistungsarmer Hardware abziehlen. Vorstellbar wäre es die verwendenten Blöcke anstelle des ResidualBlock zu verwenden und Experimente durchzufüren.
