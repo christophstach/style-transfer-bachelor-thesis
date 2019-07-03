@@ -1,99 +1,59 @@
 \appendix
 \chapter{}
 \addcontentsline{toc}{chapter}{Anhang}
-\section{Script Neural Style Transfer}
-\label{sec:script_neural_style_transfer}
-Script zur Durchführung des Neural Style Transfer Algorithmus.
 
+\section{Notebook Neural Style Transfer}
+\label{sec:nootebook_neural_style_transfer}
 \begin{listing}[H]
 \begin{minted}{python}
-from tqdm import tqdm, tqdm_notebook
-import matplotlib.pyplot as plt
 import datetime
-
 import torch
 import torch.optim as optim
 import torch.nn as nn
-
 import torchvision.models as models
-
 from csfnst.utils import load_image, plot_image_tensor, save_image_tensor
-from csfnst.utils import rename_network_layers, replace_network_layers
+from csfnst.utils import rename_network_layers, replace_network_layers, get_criterion
 from csfnst.losses import PerceptualLoss
-\end{minted}
-\captionof{lstlisting}{Imports}
-\label{lst:neural_style_transfer_1}
-\end{listing}
-
-\begin{listing}[H]
-\begin{minted}{python}
-output_image_file = f'...'
-style_image_file = '...'
-content_image_file = '...'
-
-USE_LBFGS = False
-EPOCHS = 150
-
-force_cpu = True
-use_random_noise = True
-content_image_size = 200, style_image_size = 200
-\end{minted}
-\captionof{lstlisting}{Einstellungen}
-\label{lst:neural_style_transfer_2}
-\end{listing}
-
-\begin{listing}[H]
-\begin{minted}{python}
+output_image_file = '', style_image_file = '', content_image_file = ''
+USE_LBFGS = True
+force_cpu = False
+use_random_noise = False
+content_image_size = 768
+style_image_size = 768
 device = torch.device('cuda' if torch.cuda.is_available() and not force_cpu else 'cpu')
-
-style_image = load_image(style_image_file, size=style_image_size, normalize=False).to(device)
 content_image = load_image(content_image_file, size=content_image_size, normalize=False).to(device)
-
+style_image = load_image(f'../images/style/{style_image_file}', size=style_image_size, normalize=False).to(device)
 if use_random_noise:
     output_image = torch.rand(content_image.shape[0], content_image.shape[1], content_image.shape[2]).to(device)
 else:
     output_image = content_image.clone().to(device)
+config = {
+    'loss_network': 'vgg16',
+    'content_weight': 1,
+    'style_weight': 1e8,
+    'total_variation_weight': 1e-5,
+    'style_image': style_image_file,
+    'style_image_size': style_image_size,
+    'content_layers': ['relu3_3'],
+    'style_layers': ['relu1_2', 'relu2_2', 'relu3_3', 'relu4_3']
+}
 \end{minted}
-\captionof{lstlisting}{Bilder laden}
-\label{lst:neural_style_transfer_3}
+\captionof{lstlisting}{Notebook zur Durchführung des Neural Style Transfer Algorithmus 1}
+\label{lst:notebook_neural_style_transfer_1}
 \end{listing}
-
 
 \begin{listing}[H]
 \begin{minted}{python}
-loss_network = rename_network_layers(
-    replace_network_layers(
-        models.vgg16(pretrained=True).features.to(device).eval()[:23],
-        'MaxPool2d',
-        'AvgPool2d'
-    )
-).to(device).eval()
-
-criterion = PerceptualLoss(
-    model=loss_network,
-    content_layers=['relu3_3'],
-    style_layers=['relu1_2', 'relu2_2', 'relu3_3', 'relu4_3'],
-    style_image=style_image,    
-    content_weigth=10,
-    style_weigth=1e7,
-    total_variation_weigth=1e-5,
-)
-
+criterion = get_criterion(config, device='cpu' if force_cpu else 'cuda')
 optimizer = optim.LBFGS([output_image]) if USE_LBFGS else optim.Adam([output_image], lr=1e-1)
-\end{minted}
-\captionof{lstlisting}{Loss und Optimizer}
-\label{lst:neural_style_transfer_4}
-\end{listing}
-
-\pagebreak
-
-\begin{listing}[H]
-\begin{minted}{python}
+EPOCHS = 10
 content_image.unsqueeze_(0)
-
 output_image.unsqueeze_(0)
 output_image.requires_grad_()
-
+content_loss_history = []
+style_loss_history = []
+total_variation_loss_history = []
+loss_history = []
 progress_bar = tqdm_notebook(range(EPOCHS))
 
 if USE_LBFGS:
@@ -104,6 +64,11 @@ if USE_LBFGS:
 
             loss = criterion(output_image, content_image)
             loss.backward()
+            
+            content_loss_history.append(criterion.content_loss_val)
+            style_loss_history.append(criterion.style_loss_val)
+            total_variation_loss_history.append(criterion.total_variation_loss_val)
+            loss_history.append(criterion.loss_val)
 
             progress_bar.set_description(f'Loss: {loss.item():,.2f}')
 
@@ -117,26 +82,27 @@ else:
 
         loss = criterion(output_image, content_image)
         loss.backward()
+        
+        content_loss_history.append(criterion.content_loss_val)
+        style_loss_history.append(criterion.style_loss_val)
+        total_variation_loss_history.append(criterion.total_variation_loss_val)
+        loss_history.append(criterion.loss_val)
 
         progress_bar.set_description(f'Loss: {loss.item():,.2f}')
 
         optimizer.step()
-
-
-content_image.squeeze_()
-
-output_image.detach_()
-output_image.squeeze_()
-output_image.data.clamp_(0, 1)
 \end{minted}
-\captionof{lstlisting}{Durchführung des Neural Style Transfer}
-\label{lst:neural_style_transfer_5}
+\captionof{lstlisting}{Notebook zur Durchführung des Neural Style Transfer Algorithmus 2}
+\label{lst:notebook_neural_style_transfer_2}
 \end{listing}
-
-\pagebreak
 
 \begin{listing}[H]
 \begin{minted}{python}
+content_image.squeeze_()
+output_image.detach_()
+output_image.squeeze_()
+output_image.data.clamp_(0, 1)
+
 fig, axes = plt.subplots(1, 3)
 fig.set_size_inches(18, 20)
 
@@ -145,29 +111,134 @@ plot_image_tensor(style_image, ax=axes[1])
 plot_image_tensor(output_image, ax=axes[2])
 
 save_image_tensor(output_image, output_image_file)
+fig, axes = plt.subplots(1, 1, figsize=(18, 20))  
+axes.plot(content_loss_history, label='Content Loss')
+axes.plot(style_loss_history, label='Style Loss')
+axes.plot(total_variation_loss_history, label='Total Variation Loss')
+axes.plot(loss_history, label='Loss')
+plt.legend()
+plt.show()
 \end{minted}
-\captionof{lstlisting}{Ergebnisse visualisieren}
-\label{lst:neural_style_transfer_6}
+\captionof{lstlisting}{Notebook zur Durchführung des Neural Style Transfer Algorithmus 3}
+\label{lst:notebook_neural_style_transfer_3}
 \end{listing}
 
-\pagebreak
+\section{Script Activation-Functions}
+\label{sec:script_activation_functions}
+\begin{listing}[H]
+\begin{minted}{python}
+def get_activation_fn(name):
+    activation_fn_map = {
+        'ELU': lambda: nn.ELU(),
+        'ReLU': lambda: nn.ReLU(),
+        'RReLU': lambda: nn.RReLU(),
+        'PReLU': lambda: nn.PReLU(),
+        'SELU': lambda: nn.SELU(),
+        'CELU': lambda: nn.CELU(),
+        'ReLU6': lambda: nn.ReLU6(),
+        'Hardtanh': lambda: nn.Hardtanh(min_val=0.0, max_val=1.0),
+        'Sigmoid': lambda: nn.Sigmoid(),
+        'None': lambda: None
+    }
 
+    return activation_fn_map[name]()
+\end{minted}
+\captionof{lstlisting}{Activation-Functions}
+\label{lst:script_activation_functions}
+\end{listing}
 
-\section{Transformer Net}
-\label{sec:transformer_net_full}
+\section{Script ConvBlock}
+\label{sec:script_conv_block}
+\begin{listing}[H]
+\begin{minted}{python}
+class ConvBlock(nn.Module):
+    def __init__(self, in_channels, out_channels, kernel_size=3, stride=1, activation_fn='None'):
+        super(ConvBlock, self).__init__()
 
+        self.conv = nn.Conv2d(in_channels, out_channels, kernel_size, stride)
+        self.norm = nn.InstanceNorm2d(out_channels, affine=True)
+        self.activation_fn = get_activation_fn(activation_fn)
+
+    def forward(self, x):
+        x = self.norm(self.conv(x))
+        x = self.activation_fn(x) if self.activation_fn else x
+
+        return x
+\end{minted}
+\captionof{lstlisting}{ConvBlock}
+\label{lst:script_conv_block}
+\end{listing}
+
+\section{Script ResidualBlock}
+\label{sec:script_residual_block}
+\begin{listing}[H]
+\begin{minted}{python}
+class ResidualBlock(nn.Module):
+    def __init__(self, in_channels, out_channels, inner_channels=None, kernel_size=3, activation_fn='None'):
+        super(ResidualBlock, self).__init__()
+
+        inner_channels = inner_channels if inner_channels else in_channels
+
+        self.conv1 = nn.Conv2d(in_channels, inner_channels, kernel_size)
+        self.conv2 = nn.Conv2d(inner_channels, out_channels, kernel_size)
+
+        self.pad1 = nn.ReflectionPad2d(padding=kernel_size // 2)
+        self.pad2 = nn.ReflectionPad2d(padding=kernel_size // 2)
+
+        self.norm1 = nn.InstanceNorm2d(inner_channels, affine=True)
+        self.norm2 = nn.InstanceNorm2d(out_channels, affine=True)
+
+        self.activation_fn = get_activation_fn(activation_fn)
+
+    def forward(self, x):
+        identity = x
+
+        x = self.norm1(self.conv1(self.pad1(x)))
+        x = self.activation_fn(x) if self.activation_fn else x
+        x = self.norm2(self.conv2(self.pad2(x)))
+
+        return x + identity
+\end{minted}
+\captionof{lstlisting}{ResidualBlock}
+\label{lst:script_residual_block}
+\end{listing}
+
+\section{Script UpsampleBlock}
+\label{sec:script_upsample_block}
+\begin{listing}[H]
+\begin{minted}{python}
+class UpSampleBlock(nn.Module):
+    def __init__(self, in_channels, out_channels, kernel_size=3, stride=1, scale_factor=None,
+                 activation_fn='None'):
+        super(UpSampleBlock, self).__init__()
+
+        self.scale_factor = scale_factor
+
+        self.conv = ConvBlock(
+            in_channels=in_channels,
+            out_channels=out_channels,
+            kernel_size=kernel_size,
+            stride=stride,
+            activation_fn=activation_fn
+        )
+
+    def forward(self, x):
+        if self.scale_factor:
+            x = F.interpolate(x, mode='nearest', scale_factor=self.scale_factor)
+
+        return self.conv(x)
+\end{minted}
+\captionof{lstlisting}{UpsampleBlock}
+\label{lst:script_upsample_block}
+\end{listing}
+
+\section{Script TransformerNet}
+\label{sec:script_transformer_net}
 \begin{listing}[H]
 \begin{minted}{python}
 class TransformerNet(nn.Module):
-    def __init__(
-            self,
-            channel_multiplier=32,
-            bottleneck_size=5,
-            bottleneck_type=BottleneckType.RESIDUAL_BLOCK,
-            expansion_factor=6,
-            final_activation_fn='Hardtanh',
-            intermediate_activation_fn='PReLU'
-    ):
+    def __init__(self, channel_multiplier=32, bottleneck_size=5, bottleneck_type=BottleneckType.RESIDUAL_BLOCK,
+                 expansion_factor=6, final_activation_fn='None', intermediate_activation_fn='None'):
         super(TransformerNet, self).__init__()
 
         self.pad = nn.ReflectionPad2d(padding=20)
@@ -177,72 +248,105 @@ class TransformerNet(nn.Module):
                                activation_fn=intermediate_activation_fn)
         self.down3 = ConvBlock(channel_multiplier * 2, channel_multiplier * 4, kernel_size=5, stride=2,
                                activation_fn=intermediate_activation_fn)
-\end{minted}
-\captionof{lstlisting}{Down-Sampling}
-\label{lst:transformer_net_full_1}
-\end{listing}
 
-\pagebreak
+        if bottleneck_type == BottleneckType.RESIDUAL_BLOCK:
+            self.bottleneck = nn.Sequential(*[
+                ResidualBlock(channel_multiplier * 4, channel_multiplier * 4, activation_fn=intermediate_activation_fn)
+                for _ in range(bottleneck_size)
+            ])
+        else:
+            raise ValueError('Wrong value for bottleneck_type')
 
-\begin{listing}[H]
-\begin{minted}{python}
-if bottleneck_type == BottleneckType.RESIDUAL_BLOCK:
-    self.bottleneck = nn.Sequential(*[
-        ResidualBlock(channel_multiplier * 4, channel_multiplier * 4, activation_fn=intermediate_activation_fn)
-        for _ in range(bottleneck_size)
-    ])
-elif bottleneck_type == BottleneckType.MOBILE_VERSION_ONE_BLOCK:
-    self.bottleneck = nn.Sequential(*[
-        MobileVersionOneBlock(channel_multiplier * 4, channel_multiplier * 4,
-                              activation_fn1=intermediate_activation_fn,
-                              activation_fn2=intermediate_activation_fn)
-        for _ in range(bottleneck_size)
-    ])
-elif bottleneck_type == BottleneckType.MOBILE_VERSION_TWO_BLOCK:
-    self.bottleneck = nn.Sequential(*[
-        MobileVersionTwoBlock(channel_multiplier * 4, channel_multiplier * 4, expansion_factor=expansion_factor,
-                              activation_fn1=intermediate_activation_fn,
-                              activation_fn2=intermediate_activation_fn)
-        for _ in range(bottleneck_size)
-    ])
-else:
-    raise ValueError('Wrong value for bottleneck_type')
-\end{minted}
-\captionof{lstlisting}{Bottleneck}
-\label{lst:transformer_net_full_2}
-\end{listing}
-
-\begin{listing}[H]
-\begin{minted}{python}
-self.up1 = UpSampleBlock(channel_multiplier * 4, channel_multiplier * 2, kernel_size=5, scale_factor=2,
+        self.up1 = UpSampleBlock(channel_multiplier * 4, channel_multiplier * 2, kernel_size=5, scale_factor=2,
                                  activation_fn=intermediate_activation_fn)
-self.up2 = UpSampleBlock(channel_multiplier * 2, channel_multiplier, kernel_size=5, scale_factor=2,
-                         activation_fn=intermediate_activation_fn)
-self.up3 = ConvBlock(channel_multiplier, 3, kernel_size=9, activation_fn=final_activation_fn)
+        self.up2 = UpSampleBlock(channel_multiplier * 2, channel_multiplier, kernel_size=5, scale_factor=2,
+                                 activation_fn=intermediate_activation_fn)
+        self.up3 = ConvBlock(channel_multiplier, 3, kernel_size=9, activation_fn=final_activation_fn)
+
+    def forward(self, x):
+        x = self.pad(x)
+        x = self.down3(self.down2(self.down1(x)))
+        x = self.bottleneck(x)
+        return self.up3(self.up2(self.up1(x)))
 \end{minted}
-\captionof{lstlisting}{Up-Sampling}
-\label{lst:transformer_net_full_3}
+\captionof{lstlisting}{TransformerNet}
+\label{lst:script_transformer_net}
 \end{listing}
 
-\pagebreak
+\chapter{}
 
-\begin{listing}[H]
-\begin{minted}{python}
-def forward(self, x):
-    x = self.pad(x)
+\section{Performanz-Test mit 1024 * 1024 Pixel Bildern}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ |c|c|c|c|c| }
+        \hline
+        \textbf{Name} & \textbf{XPS 15 - CPU} & \textbf{XPS 15 - GPU} & \textbf{Auto - CPU} & \textbf{Auto - GPU}   \\ \hline
+        Netzwerk 1 & 2.72105 & \textcolor{danger}{nicht durchführbar} & & \\ \hline
+        Netzwerk 2 & 1.03105 & 0.23152                                & & \\ \hline
+        Netzwerk 3 & 0.48080 & 0.13070                                & & \\ \hline
+	
+        Netzwerk 4 & 2.51535 & \textcolor{danger}{nicht durchführbar} & & \\ \hline
+        Netzwerk 5 & 0.97727 & 0.21588                                & & \\ \hline
+        Netzwerk 6 & 0.44961 & 0.12341                                & & \\ \hline
 
-    x = self.down1(x)
-    x = self.down2(x)
-    x = self.down3(x)
+        Netzwerk 7 & 2.33272 & \textcolor{danger}{nicht durchführbar} & & \\ \hline
+        Netzwerk 8 & 0.89503 & 0.20119                                & & \\ \hline
+        Netzwerk 9 & 0.41804 & 0.11645                                & & \\ \hline
+    \end{tabular}
+    \caption{Berechnungsgeschwindigkeit für Bilder der Größe 1024 * 768 Pixel}
+    \label{tab:1024x768}
+\end{table}
 
-    x = self.bottleneck(x)
+\section{Performanz-Test mit 640 * 480 Pixel Bildern}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ |c|c|c|c|c| }
+        \hline
+        \textbf{Name} & \textbf{XPS 15 - CPU} & \textbf{XPS 15 - GPU} & \textbf{Auto - CPU} & \textbf{Auto - GPU}   \\ \hline
+        Netzwerk 1 & 1.04234 & 0.20962 & & \\ \hline
+        Netzwerk 2 & 0.41221 & 0.10425 & & \\ \hline
+        Netzwerk 3 & 0.19578 & 0.05207 & & \\ \hline
+	
+        Netzwerk 4 & 0.95978 & 0.19487 & & \\ \hline
+        Netzwerk 5 & 0.38498 & 0.09735 & & \\ \hline
+        Netzwerk 6 & 0.18290 & 0.04915 & & \\ \hline
 
-    x = self.up1(x)
-    x = self.up2(x)
-    x = self.up3(x)
+        Netzwerk 7 & 0.88858 & 0.18083 & & \\ \hline
+        Netzwerk 8 & 0.35051 & 0.09149 & & \\ \hline
+        Netzwerk 9 & 0.16939 & 0.04622 & & \\ \hline
+    \end{tabular}
+    \caption{Berechnungsgeschwindigkeit für Bilder der Größe 640 * 480 Pixel}
+    \label{tab:640x480}
+\end{table}
 
-    return x
-\end{minted}
-\captionof{lstlisting}{Forward-Pass}
-\label{lst:transformer_net_full_4}
-\end{listing}
+\section{Performanz-Test mit 320 * 240 Pixel Bildern}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ |c|c|c|c|c| }
+        \hline
+        \textbf{Name} & \textbf{XPS 15 - CPU} & \textbf{XPS 15 - GPU} & \textbf{Auto - CPU} & \textbf{Auto - GPU}   \\ \hline
+        Netzwerk 1 & 0.27885 & 0.07604 & & \\ \hline
+        Netzwerk 2 & 0.11639 & 0.02670 & & \\ \hline
+        Netzwerk 3 & 0.05898 & 0.01308 & & \\ \hline
+	
+        Netzwerk 4 & 0.25559 & 0.07088 & & \\ \hline
+        Netzwerk 5 & 0.10755 & 0.02511 & & \\ \hline
+        Netzwerk 6 & 0.05475 & 0.01238 & & \\ \hline
+
+        Netzwerk 7 & 0.23489 & 0.06698 & & \\ \hline
+        Netzwerk 8 & 0.09734 & 0.02369 & & \\ \hline
+        Netzwerk 9 & 0.05023 & 0.01172 & & \\ \hline
+    \end{tabular}
+    \caption{Berechnungsgeschwindigkeit für Bilder der Größe 320 * 240 Pixel}
+    \label{tab:320x240}
+\end{table}
+
+
+
+
+
+
+
+
+
+

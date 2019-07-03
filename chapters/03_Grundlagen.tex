@@ -170,7 +170,7 @@ Sie ist in der Lage die Ergebnisse auf einen festgelegten Bereich zu beschränke
 \subsection{Sigmoid}
 \label{sec:sigmoid}
 
-Die Sigmoid Funktion wird in dieser Arbeit als alternative abschliesende Aktiverungsfunktion genutzt \cite{DBLP:journals/corr/abs-1811-03378}.
+Die Sigmoid Funktion wird in dieser Arbeit als alternative, abschliesende Aktiverungsfunktion genutzt \cite{DBLP:journals/corr/abs-1811-03378}.
 
 \begin{equation}
 	\sigma(x) = \frac{ 1 } { 
@@ -178,7 +178,7 @@ Die Sigmoid Funktion wird in dieser Arbeit als alternative abschliesende Aktiver
 	}
 \end{equation}
 
-Die Ergebnisse liegen der Sigmoid-Funktion konvergieren zu 0 und 1 ereichen diese jedoch nie komplett.
+Die Ergebnisse der Sigmoid-Funktion konvergieren zu 0 und 1 ereichen diese jedoch nie komplett.
 
 \begin{figure}[H]
 	\centering
@@ -190,7 +190,7 @@ Die Ergebnisse liegen der Sigmoid-Funktion konvergieren zu 0 und 1 ereichen dies
 \section{Convolutional Neural Network}
 \label{sec:conv_networks}
 
-Ein Convolutional Neural Network, nachfolgen CNN genannt, besteht aus mehreren aufeinanderfolgenden Convolutional-Layern, sowie
+Ein Convolutional Neural Network, nachfolgend CNN genannt, besteht aus mehreren aufeinanderfolgenden Convolutional-Layern, sowie
 abschließend beliebig vielen Fully-Connected-Layern (siehe \ref{img:cnn_example_network}). Convolutional-Layer dienen der Feature-Extraktion. Die Fully-Connected-Layer sind für die Klassifizierung zuständig. Nachfolgend wird das Prinzip einer Convolution (zu dt. Faltung) erleutert.
 
 \begin{figure}[H]
@@ -200,7 +200,7 @@ abschließend beliebig vielen Fully-Connected-Layern (siehe \ref{img:cnn_example
 	\label{img:cnn_example_network}
 \end{figure}
 
-Ein Convolutional-Layer akzeptiert Daten in Form eines Bildes $ I $ in den Dimensionen $ W_1 \times H_1 \times C_1 $. Optional wird das Bild mit $ P $ Nullen an den Rändern aufgefüllt. Über das Bild fahren $ N $ Filter der Größe $ F $ mit einer Schrittweite $ S $ und führen an jeder Stelle ein Skalarprodukt mit den Daten der Bildmatrix durch. Daraus ergibt sich eine neue Matrix mit den Dimensionen $ W_2 \times H_2 \times C_2 $: \\
+Ein Convolutional-Layer akzeptiert Daten in Form eines Bildes $ I $ in den Dimensionen $ W_1 \times H_1 \times C_1 $. Optional wird das Bild mit $ P $ Nullen an den Rändern aufgefüllt. Über das Bild fahren $ N $ Filter der Größe $ F $ mit einer Schrittweite $ S $ und führen an jeder Stelle ein Skalarprodukt mit den Daten der Bildmatrix durch. Daraus ergibt sich eine neue Matrix mit den Dimensionen $ W_2 \times H_2 \times C_2 $:
 
 \begin{itemize}
 	\item $ W_2 = (W_1 - F) / S + 1 $
@@ -210,14 +210,12 @@ Ein Convolutional-Layer akzeptiert Daten in Form eines Bildes $ I $ in den Dimen
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.95\textwidth]{resources/content/cnn/convolution_croped.png}
+	\includegraphics[width=0.90\textwidth]{resources/content/cnn/convolution_croped.png}
 	\caption{Berechnungsschritt während einer Convolution \cite{convolution_img}}
 	\label{img:convolution_img}
 \end{figure}
 
 Die Ergebnisse nach Durchlauf eines Convolutional-Layer werden Feature Maps oder \gls{activation_map}s genannt. Im trainierten CNN erkennen frühe Convolutional-Layer Kanten, Kurven und feine Muster. Spätere Layer erkennen komplette geometrische Figuren bis hin zu komplexen Mustern sowie Schemen von reellen Objekten und Gegenständen.
-
-\pagebreak
 
 \section{Backprogation}
 \label{sec:backpropagation}
@@ -353,8 +351,6 @@ Bei dieser Loss-Funktion handelt es sich um einen Signal-Denoising-Algorithmus \
 	L_{tv} ( \vec{x} ) = \sum_{i,j} \sqrt{ |y_{i+1,j} - y_{i,j}|^{2}} + \sum_{i,j} \sqrt{ |y_{i,j+1} - y_{i,j}|^{2} } 
 	= \sum_{i,j} | y_{i + 1, j} - y_{i, j} | + | y_{i, j + 1} - y_{i,j} |
 \end{equation}
-
-\pagebreak
 
 \subsubsection{Perceptual-Loss}
 \label{sec:perceptual_loss}

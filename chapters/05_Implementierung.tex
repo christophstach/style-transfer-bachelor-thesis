@@ -92,6 +92,8 @@ def style_loss(self, y):
 \captionof{lstlisting}{Berechnung des Style-Loss, vgl. Gleichung \eqref{eq:style_loss}}
 \end{listing}
 
+\pagebreak
+
 \subsection{Total-Variation-Loss}
 
 Das Total-Variation-Loss berechnet die Summe der Abweichungen eines Pixels zum nächsten Pixel eines Bildes. Dies wird für Höhe und Breite des Bildes durchgeführt und addiert.
@@ -189,12 +191,7 @@ dataset = datasets.ImageFolder(
     ])
 )
 
-dataloader = data.DataLoader(
-    dataset, 
-    batch_size=config['batch_size'],
-    shuffle=True, 
-    num_workers=8
-)
+dataloader = data.DataLoader(dataset, batch_size=config['batch_size'], shuffle=True)
 \end{minted}
 \captionof{lstlisting}{Der PyTorch-Dataloader lädt Bilder in der gewünschten Batchgröße}
 \end{listing}
@@ -206,8 +203,6 @@ Der Dataloader lädt alle Bilder in allen Unterordnern innerhalbes des konfiguri
 
 Die Architektur des Neuronalen Netzes spielt eine wichtige Rolle. Sie muss in der Lage die Eigenschaften eines Stils möglichst gut zu erlernen und dabei Performant bleiben. Dabei wurde die in Kapitel \ref{sec:fast_neural_style_transfer} vorgestellte Netzwerkarchitektur des \textit{Image Transformer Networks} implementiert.
 Dies geschieht in PyTorch in Form einer Klasse, welche von \mintinline{python}{Module} erbt.
-
-\pagebreak
 
 Um in Kapitel \ref{cha:tests} das Testen unterschiedlicher Netzwerkarchitekturen zu ermöglichen, wird die Klasse des Image Transformer Networks möglichst dynamisch implementiert. Einstellbar sind dabei folgende Werte, die im weiteren Verlauf erklärt werden:
 
@@ -223,26 +218,6 @@ Um in Kapitel \ref{cha:tests} das Testen unterschiedlicher Netzwerkarchitekturen
 
 Benötigt wird eine Funktion, die entsprechende PyTorch-Aktivierungsfunktionen zurück gibt. Hardtanh und Sigmoid eigenen sich als finale Aktivierungsfunktionen des Netzwerks, da Sie Werte zwischen $ 0.0 $ und $ 1.0 $ zurückliefern. Das eignet sich für die Generierung von Bildern, welche in PyTorch ebenfals Pixelwerte zwischen $ 0.0 $ und 1.0 besitzen. Zu beachten ist das die Hardtanh-Funktion mit den Parametern \mintinline{python}{min_val=0.0} und \mintinline{python}{max_val=1.0} initialisiert wird, welche den Wertebereich verschieben. Mit den Standardeinstellungen liegt der Wertebereich der Hardtanh-Funktion zwischen $ -1.0 $ und $ 1.0 $. Die Parameter \mintinline{python}{final_activation_fn} und \mintinline{python}{intermediate_activation_fn} werden dabei auf die entsprechenden PyTorch-Aktivierungsfunktionen überführt.
 
-\begin{listing}[H]
-\begin{minted}{python}
-def get_activation_fn(name):
-    activation_fn_map = {
-        'ELU': lambda: nn.ELU(),
-        'ReLU': lambda: nn.ReLU(),
-        'RReLU': lambda: nn.RReLU(),
-        'PReLU': lambda: nn.PReLU(),
-        'SELU': lambda: nn.SELU(),
-        'CELU': lambda: nn.CELU(),
-        'ReLU6': lambda: nn.ReLU6(),
-        'Hardtanh': lambda: nn.Hardtanh(min_val=0.0, max_val=1.0),
-        'Sigmoid': lambda: nn.Sigmoid()
-    }
-
-    return activation_fn_map[name]()
-\end{minted}
-\captionof{lstlisting}{Map der Aktivierungsfunktionen}
-\end{listing}
-
 \subsection{ConvBlock}
 
 Desweiteren müssen die in Kapitel \ref{sec:aufbau} konzipierten Layer-Blöcke implementiert werden.
@@ -251,124 +226,17 @@ Der \textit{ConvBlock} besteht aus den PyTorch-Layern \mintinline{python}{Conv2d
 
 Die Parameter \mintinline{python}{in_channels} und \mintinline{python}{out_channels} ergeben sich aus dem Parameter \mintinline{python}{channel_multiplier} ($ m $) multipliziert mit einem festen Wert, der je nach Layer $ 1 $, $ 2 $ oder $ 4 $ beträgt.
 
-\begin{listing}[H]
-\begin{minted}{python}
-class ConvBlock(nn.Module):
-    def __init__(self, in_channels, out_channels, kernel_size=3, stride=1, activation_fn='PReLU'):
-        super(ConvBlock, self).__init__()
-
-        self.conv = nn.Conv2d(in_channels, out_channels, kernel_size, stride)
-        self.norm = nn.InstanceNorm2d(out_channels, affine=True)
-        self.activation_fn = get_activation_fn(activation_fn)
-
-    def forward(self, x):
-        returnself.activation_fn(self.norm(self.conv(x)))
-\end{minted}
-\captionof{lstlisting}{Aufbau des ConvBlock}
-\end{listing}
-
-\pagebreak
-
 \subsection{ResidualBlock}
 
 Der ResidualBlock, vgl. \ref{img:residual_block_img}, besteht aus zwei aufeinanderfolgenden \mintinline{python}{Conv2d}-Layern. Wie beim vorherigen ConvBlock werden die Daten über \mintinline{python}{InstanceNorm2d} normalisiert, anschließend wird die Aktivierungsfunktion angewendet. Die Besonderheit ist das die Eingangdaten kopiert werden und danach mit den berechneten Daten der Convolutional-Layer addiert werden. Durch \mintinline{python}{Conv2d} verkleinert sich die Dimension der Daten, vgl. \ref{sec:conv_networks}, welches durch den \mintinline{python}{ReflectionPad2d}-Layer wieder ausgeglichen wird. Eingangsdaten und berechnete Daten müssen die gleichen Dimensionen aufweisen um addiert werden zu können. Die Parameter \mintinline{python}{in_channels} und \mintinline{python}{out_channels} ergeben sich aus \mintinline{python}{channel_multiplier} multipliziert mit $ 4 $.
 
-
-\begin{listing}[H]
-\begin{minted}{python}
-class ResidualBlock(nn.Module):
-    def __init__(self, in_channels, out_channels, inner_channels=None, kernel_size=3, activation_fn='PReLU'):
-        super(ResidualBlock, self).__init__()
-        inner_channels = inner_channels if inner_channels else in_channels
-        self.conv1 = nn.Conv2d(in_channels, inner_channels, kernel_size)
-        self.conv2 = nn.Conv2d(inner_channels, out_channels, kernel_size)
-        self.pad1 = nn.ReflectionPad2d(padding=kernel_size // 2)
-        self.pad2 = nn.ReflectionPad2d(padding=kernel_size // 2)
-        self.norm1 = nn.InstanceNorm2d(inner_channels, affine=True)
-        self.norm2 = nn.InstanceNorm2d(out_channels, affine=True)
-        self.activation_fn = get_activation_fn(activation_fn)
-
-    def forward(self, x):
-        identity = x
-
-        x = self.activation_fn(self.norm1(self.conv1(self.pad1(x))))
-        x = self.norm2(self.conv2(self.pad2(x)))
-
-        return x + identity
-\end{minted}
-\captionof{lstlisting}{Aufbau des ResidualBlock}
-\end{listing}
-
-\pagebreak
-
 \subsection{UpSampleBlock}
 
-Der UpSampleBlock schaltet lediglich dem ConvBlock ein Upsampling-Verfahren vor, um das Bild um einen entsprechenden Faktor zu vergrößern.
-
-In dieser Arbeit wird Nearest Neighbor Interpolation  verwendet.
-
-
-\begin{listing}[H]
-\begin{minted}{python}
-class UpSampleBlock(nn.Module):
-    def __init__(self, in_channels, out_channels, kernel_size=3, stride=1, scale_factor=None,
-                 activation_fn='Hardtanh'):
-        super(UpSampleBlock, self).__init__()
-
-        self.scale_factor = scale_factor
-
-        self.conv = ConvBlock(
-            in_channels=in_channels,
-            out_channels=out_channels,
-            kernel_size=kernel_size,
-            stride=stride,
-            activation_fn=activation_fn
-        )
-
-    def forward(self, x):
-        if self.scale_factor:
-            x = F.interpolate(x, mode='nearest', scale_factor=self.scale_factor)
-
-        return self.conv(x)
-\end{minted}
-\captionof{lstlisting}{Aufbau des UpSampleBlock}
-\end{listing}
-
-\pagebreak
+Der UpSampleBlock schaltet lediglich dem ConvBlock ein Upsampling-Verfahren vor, um das Bild um einen entsprechenden Faktor zu vergrößern. In dieser Arbeit wird Nearest Neighbor Interpolation  verwendet.
 
 \subsection{TransformerNet}
 
 Neben den Layer-Blöcke wurde noch die eigentliche Netzwerk Architektur implementiert. Die Implementierung nimmt die in \ref{sec:network_architecture} beschriebenen Parameter im Konstruktor entgegen um eine entsprechende Netzwerk-Architektur zu generieren. Neben den bereits beschriebenen Einstellungen gibt \mintinline{python}{bottleneck_size} die Anzahl der hintereinander geschalteten ResidualBlocks an. Der \mintinline{python}{bottleneck_type} ist für zukünftige Erweiterungen vorgesehen, damit der ResidualBlock durch einen anders aufgebauten Block ersetzt werden kann. Außerdem wurde ein anfängliches Padding eingefügt um die ursprüngliche Bildgröße beizubehalten.
-
-\begin{listing}[H]
-\begin{minted}{python}
-class TransformerNet(nn.Module):
-    def __init__(
-            self,
-            channel_multiplier=32,
-            bottleneck_size=5,
-            bottleneck_type=BottleneckType.RESIDUAL_BLOCK,
-            final_activation_fn='Hardtanh',
-            intermediate_activation_fn='PReLU'
-    ):
-        super(TransformerNet, self).__init__()
-
-        self.pad = nn.ReflectionPad2d(padding=20)
-
-        # Geneierung der Architektur
-
-    def forward(self, x):
-        x = self.pad(x)
-        x = self.down3(self.down2(self.down1(x)))
-        x = self.bottleneck(x)
-        x = self.up3(self.up2(self.up1(x)))
-
-        return x
-\end{minted}
-\captionof{lstlisting}{Aufbau des TransformerNet, kompletter Code: \ref{sec:transformer_net_full}}
-\end{listing}
-
-\pagebreak
 
 \subsection{Weitere Implementierungen}
 
