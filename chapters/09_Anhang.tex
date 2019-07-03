@@ -27,16 +27,6 @@ if use_random_noise:
     output_image = torch.rand(content_image.shape[0], content_image.shape[1], content_image.shape[2]).to(device)
 else:
     output_image = content_image.clone().to(device)
-config = {
-    'loss_network': 'vgg16',
-    'content_weight': 1,
-    'style_weight': 1e8,
-    'total_variation_weight': 1e-5,
-    'style_image': style_image_file,
-    'style_image_size': style_image_size,
-    'content_layers': ['relu3_3'],
-    'style_layers': ['relu1_2', 'relu2_2', 'relu3_3', 'relu4_3']
-}
 \end{minted}
 \captionof{lstlisting}{Notebook zur Durchführung des Neural Style Transfer Algorithmus 1}
 \label{lst:notebook_neural_style_transfer_1}
@@ -44,6 +34,7 @@ config = {
 
 \begin{listing}[H]
 \begin{minted}{python}
+config = {'loss_network': 'vgg16', 'content_weight': 1, 'style_weight': 1e8, 'total_variation_weight': 1e-5, 'style_image': style_image_file, 'style_image_size': style_image_size, 'content_layers': ['relu3_3'], 'style_layers': ['relu1_2', 'relu2_2', 'relu3_3', 'relu4_3']}
 criterion = get_criterion(config, device='cpu' if force_cpu else 'cuda')
 optimizer = optim.LBFGS([output_image]) if USE_LBFGS else optim.Adam([output_image], lr=1e-1)
 EPOCHS = 10
@@ -61,35 +52,26 @@ if USE_LBFGS:
         def closure():
             output_image.data.clamp_(0, 1)
             optimizer.zero_grad()
-
             loss = criterion(output_image, content_image)
             loss.backward()
-            
             content_loss_history.append(criterion.content_loss_val)
             style_loss_history.append(criterion.style_loss_val)
             total_variation_loss_history.append(criterion.total_variation_loss_val)
             loss_history.append(criterion.loss_val)
-
             progress_bar.set_description(f'Loss: {loss.item():,.2f}')
-
             return loss
-
         optimizer.step(closure)
 else:
     for epoch in progress_bar:
         output_image.data.clamp_(0, 1)
         optimizer.zero_grad()
-
         loss = criterion(output_image, content_image)
         loss.backward()
-        
         content_loss_history.append(criterion.content_loss_val)
         style_loss_history.append(criterion.style_loss_val)
         total_variation_loss_history.append(criterion.total_variation_loss_val)
         loss_history.append(criterion.loss_val)
-
         progress_bar.set_description(f'Loss: {loss.item():,.2f}')
-
         optimizer.step()
 \end{minted}
 \captionof{lstlisting}{Notebook zur Durchführung des Neural Style Transfer Algorithmus 2}
