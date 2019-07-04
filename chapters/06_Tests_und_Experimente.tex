@@ -6,7 +6,7 @@ Netzwerk-Architekturen die Performanz auf Geräten mit leistungsarmer Hardware g
 
 \section{Auswirkungen der Hyperparameter}
 
-Im Folgenden werden unterschiedliche Kombinationen der Gewichtungsparameter Content-Weight $ \alpha $, Style-Weight $ \beta $ und Total-Variation-Weight $ \gamma $ getestet. Dabei wird als Inhaltsbild  eine eigene Abbildung der HTW-Berlin benutzt. Als Stilbild wird das Kunstwerk \textit{The Starry Night} des Künstlers Vincent Van Gogh und \textit{The Scream} von Edvard Munch verwendet. Die generierten Bilder entsprechen einer Größe von 768 * 768 Pixeln. Die restlichen Hyperparameter werden aus dem Kapitel Methodologie \ref{sec:method_neural_style_transfer} übernommen.
+Im Folgenden werden unterschiedliche Kombinationen der Gewichtungsparameter Content-Weight $ \alpha $, Style-Weight $ \beta $ und Total-Variation-Weight $ \gamma $ getestet. Dabei wird als Inhaltsbild  eine eigene Abbildung der HTW-Berlin benutzt. Als Stilbild wird das Kunstwerk The Starry Night des Künstlers Vincent Van Gogh und The Scream von Edvard Munch verwendet. Die generierten Bilder entsprechen einer Größe von 768 * 768 Pixeln. Die restlichen Hyperparameter werden aus dem Kapitel Methodologie \ref{sec:method_neural_style_transfer} übernommen.
 
 \pagebreak
 
@@ -161,7 +161,7 @@ In der zweiten Abbildungen werden verschiedene die verschiedenen Total-Variation
 
 Wie beiden Tests zu sehen ist, werden die Muster mit zunehmendem Style-Weight $ \beta $ auf dem Ausgangsbild immer stärker generierten. Mit $ b = 10^{5} $ sind bei beiden Stilen die Muster des Gemäldes kaum noch zu erkennen. Lediglich wird das Ausgangsbild den Farben des Stilbildes angepasst. Ein optisch ansprechender Effekt ergibt sich bei beiden Stilen ab $ \beta = 10^{7} $. 
 
-Mit zunehmendem Total-Variation-Weight $ \gamma $ fließen die Farben mehr ineinander und das Ausgangsbild wird verschommener. Das ist besodners gut zu sehen bei \textit{The Starry Night} mit $ \gamma = 10^{-3} $ und \text{The Scream} mit $ \gamma = 10^{-4} $. Für \textit{The Scream} ist eine Gewichtung von $ \gamma = 10^{-3} $ bereits zu hoch gewählt. Das Ausgangsbild entwickelt sich zu einem grauen Rauschen.
+Mit zunehmendem Total-Variation-Weight $ \gamma $ fließen die Farben mehr ineinander und das Ausgangsbild wird verschommener. Das ist besodners gut zu sehen bei The Starry Night mit $ \gamma = 10^{-3} $ und \text{The Scream} mit $ \gamma = 10^{-4} $. Für The Scream ist eine Gewichtung von $ \gamma = 10^{-3} $ bereits zu hoch gewählt. Das Ausgangsbild entwickelt sich zu einem grauen Rauschen.
 
 
 \section{Auswirkungen der Netzwerkarchitekturen}
@@ -169,8 +169,8 @@ Mit zunehmendem Total-Variation-Weight $ \gamma $ fließen die Farben mehr inein
 Im nächsten Experiment werden drei unterschiedlichen Bildgrößen auf unterschiedlichen Geräten auf Durchführbarkeit und Performanz getestet.
 Gemessen wird die Berechnungsgeschwindigkeit beim Forward-Pass durch das Netzwerk. 
 
-Ein bereits erster Indikator für die Performanz eines Neuronalen Netzwerks ist die Anzahl der lernbaren Parameter, die bei der Trainingsphase optimiert werden. Trainiert wurden neun unterschiedliche Netzwerke auf dem Kunstwerk \textit{The Starry Night} mit unterschiedlichen Kombinationen für $ m $ und $ s $
-Dabei wurde bei allen Netzwerken eine Batch-Size von $ 16 $ und eine Learning-Rate von $ 10^{-3} $ verwendet. Die Netzwerke wurden über drei Epochen des COCO-Datensatzes trainiert. Dabei wurden die Testdaten aus dem Jahr 2014 sowie die Test-, Validierungs- und Trainingsdaten aus dem Jahr 2017 verwendet. Insgesamt handelt es sich dabei um $ 170877 $ Bilder. Insgesamt wurden die Modelle mit $ 512631 $ Bildern trainiert. Dabei dauerte die Trainingszeit auf einem Server mit einem \textit{GeForce GTX 1080 Ti}-GPU pro Modell zwischen 8 und 10 Stunden.
+Ein bereits erster Indikator für die Performanz eines Neuronalen Netzwerks ist die Anzahl der lernbaren Parameter, die bei der Trainingsphase optimiert werden. Trainiert wurden neun unterschiedliche Netzwerke auf dem Kunstwerk The Starry Night mit unterschiedlichen Kombinationen für $ m $ und $ s $
+Dabei wurde bei allen Netzwerken eine Batch-Size von $ 16 $ und eine Learning-Rate von $ 10^{-3} $ verwendet. Die Netzwerke wurden über drei Epochen des COCO-Datensatzes trainiert. Dabei wurden die Testdaten aus dem Jahr 2014 sowie die Test-, Validierungs- und Trainingsdaten aus dem Jahr 2017 verwendet. Insgesamt handelt es sich dabei um $ 170877 $ Bilder. Insgesamt wurden die Modelle mit $ 512631 $ Bildern trainiert. Dabei dauerte die Trainingszeit auf einem Server mit einem GeForce GTX 1080 T GPU pro Modell zwischen 8 und 10 Stunden.
 
 \begin{table}[H]
     \centering

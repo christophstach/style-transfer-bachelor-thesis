@@ -7,7 +7,7 @@ Im Kapitel Grundlagen werden die erfordentlichen Grundlagen erleutert, die notwe
 
 Feedforward Neural Networks werden im Bereich des Deep Learning eingesetzt. Dabei werden unteschiedliche Arten von Layern zu einem Neuronalen Netzwerk zusammen gesetzt. Je nach Aufgabenstellung sind unteschiedliche Arten von Layer-Kombination sinnvoll.
 
-Ein Feedforward Neural Network definiert eine Abildung von $ y = f(x; \phi) $ wobei $ \phi $ (auch mit $ w $ notiert) Gewichtungsparameter des Netzwerk sind. Es wird Feedforward genannt, da die Informationen $ x $ von vorne nach hinten durch die einzelnen Layer des Networks fließen und am Ende $ y $ ausgeben. Die Layer des Netzwerk sind dabei wiederum Unterfunktionen die in einer Kettenstruktur ineinander übergehen. Bei einem Neuronalen Netzwerk mit den drei Layern $ f^{(1)} $, $ f^{(2)} $, $ f^{(2)} $ ergibt sich der Aufbau $ f(x) = f^{(3)}(f^{(2)}(f^{(1)}(x))) $. Der erste Layer eines nennt sich \textit{Input-Layer}, der letzte \textit{Output-Layer}. Alle zwischenliegenden Layer werden \textit{Hidden-Layer} genannt. Je mehr Layer ein Netzwerk besitzt, desto komplexere mathematische Funktionen kann es abbilden und desto tiefer ist es. Daher rührt auch Name \textit{Deep Neural Network} und \textit{Deep Learning} \cite[164-165]{Goodfellow-et-al-2016}.
+Ein Feedforward Neural Network definiert eine Abildung von $ y = f(x; \phi) $ wobei $ \phi $ (auch mit $ w $ notiert) Gewichtungsparameter des Netzwerk sind. Es wird Feedforward genannt, da die Informationen $ x $ von vorne nach hinten durch die einzelnen Layer des Networks fließen und am Ende $ y $ ausgeben. Die Layer des Netzwerk sind dabei wiederum Unterfunktionen die in einer Kettenstruktur ineinander übergehen. Bei einem Neuronalen Netzwerk mit den drei Layern $ f^{(1)} $, $ f^{(2)} $, $ f^{(2)} $ ergibt sich der Aufbau $ f(x) = f^{(3)}(f^{(2)}(f^{(1)}(x))) $. Der erste Layer eines nennt sich Input-Layer, der letzte Output-Layer. Alle zwischenliegenden Layer werden Hidden-Layer genannt. Je mehr Layer ein Netzwerk besitzt, desto komplexere mathematische Funktionen kann es abbilden und desto tiefer ist es. Daher rührt auch Name Deep Neural Network und Deep Learning \cite[164-165]{Goodfellow-et-al-2016}.
 
 \pagebreak
 
@@ -344,12 +344,11 @@ Das Style-Loss ergibt sich aus der gewichteten Summe der Layer-Losses.
 \subsubsection{Total-Variation-Loss}
 \label{sec:total_variation_Loss}
 
-Bei dieser Loss-Funktion handelt es sich um einen Signal-Denoising-Algorithmus \cite{Rudin1992NonlinearTV}. Sie sorgt dafür das die Pixel der generierten Bilder sanft in einander überlaufen. So können \textit{Verpixelungseffekte} vermieden werden. Sie kann optional eingesetzt werden um das Resultat der generierten Bilder zu verbessern.
+Bei dieser Loss-Funktion handelt es sich um einen Signal-Denoising-Algorithmus \cite{RUDIN1992259, DBLP:journals/corr/EstrelaMS16}. Sie sorgt dafür das die Pixel der generierten Bilder sanft in einander überlaufen. So können Verpixelungseffekte vermieden werden. Sie kann optional eingesetzt werden um das Resultat der generierten Bilder zu verbessern.
 
 \begin{equation}
 	\label{eq:total_variation_loss}
-	L_{tv} ( \vec{x} ) = \sum_{i,j} \sqrt{ |y_{i+1,j} - y_{i,j}|^{2}} + \sum_{i,j} \sqrt{ |y_{i,j+1} - y_{i,j}|^{2} } 
-	= \sum_{i,j} | y_{i + 1, j} - y_{i, j} | + | y_{i, j + 1} - y_{i,j} |
+	L_{tv} ( \vec{x} ) = \sum_{i,j} | y_{i + 1, j} - y_{i, j} | + | y_{i, j + 1} - y_{i,j} |
 \end{equation}
 
 \subsubsection{Perceptual-Loss}
@@ -375,4 +374,4 @@ Neuronales Netzwerk darauf trainiert, die Konzepte eines Stils zu erlernen. Dies
 	\label{img:fast_neural_style_transfer}
 \end{figure}
 
-Durch die Verwendung eines \textit{Image Transformer Networks} kann die Berechnungszeit verbessert werden, da das neu gestylte Bild mit einem Forward-Pass durch das Netzwerk erstellt wird. Die rechenintensive Optimierung durch den Backpropagation-Algorithmus \ref{sec:backpropagation} entfällt. Das Training eines Image Transformer Netzworks nimmt jedoch viel Zeit in Anspruch.
+Durch die Verwendung eines Image Transformer Networks kann die Berechnungszeit verbessert werden, da das neu gestylte Bild mit einem Forward-Pass durch das Netzwerk erstellt wird. Die rechenintensive Optimierung durch den Backpropagation-Algorithmus \ref{sec:backpropagation} entfällt. Das Training eines Image Transformer Netzworks nimmt jedoch viel Zeit in Anspruch.

@@ -16,7 +16,7 @@ Der Bereich \textit{classifier} beinhaltet die Fully-Connected-Layer des Models,
 
 \subsection{Zugriff auf Hidden-Layer-Ergebnisse}
 
-Um bei Pytorch auf Zwischenergebnisse der Hidden-Layer zuzugreifen, werden hinter diesen \textit{Hooks} implementiert. Das kann in eine Funktion ausgelagert werden, welche die \gls{activation_map}s während des Forwardpass durch das VVG16-Model extrahiert.
+Um bei Pytorch auf Zwischenergebnisse der Hidden-Layer zuzugreifen, werden hinter diesen Hooks implementiert. Das kann in eine Funktion ausgelagert werden, welche die \gls{activation_map}s während des Forwardpass durch das VVG16-Model extrahiert.
 
 \begin{listing}[H]
 \begin{minted}{python}
@@ -100,17 +100,13 @@ Das Total-Variation-Loss berechnet die Summe der Abweichungen eines Pixels zum n
 
 \begin{listing}[H]
 \begin{minted}{python}
-# Code von: 
-# https://towardsdatascience.com/pytorch-implementation-of-perceptual
-# -losses-for-real-time-style-transfer-8d608e2e9902
-
 def total_variation_loss(self, y):
     return torch.add(
         torch.sum(torch.abs(y[:, :, :, :-1] - y[:, :, :, 1:])),
         torch.sum(torch.abs(y[:, :, :-1, :] - y[:, :, 1:, :]))
     )
 \end{minted}
-\captionof{lstlisting}{Berechnung des Total-Variation-Loss, vgl. Gleichung \eqref{eq:total_variation_loss}}
+\captionof{lstlisting}{Berechnung des Total-Variation-Loss \cite{pytorch-implementation-of-perceptual-losses-for-real-time-style-transfer}, vgl. Gleichung \eqref{eq:total_variation_loss}}
 \end{listing}
 
 \subsection{Perceptual-Loss}
@@ -201,7 +197,7 @@ Der Dataloader lädt alle Bilder in allen Unterordnern innerhalbes des konfiguri
 \subsection{Netzwerkarchitektur}
 \label{sec:network_architecture}
 
-Die Architektur des Neuronalen Netzes spielt eine wichtige Rolle. Sie muss in der Lage die Eigenschaften eines Stils möglichst gut zu erlernen und dabei Performant bleiben. Dabei wurde die in Kapitel \ref{sec:fast_neural_style_transfer} vorgestellte Netzwerkarchitektur des \textit{Image Transformer Networks} implementiert.
+Die Architektur des Neuronalen Netzes spielt eine wichtige Rolle. Sie muss in der Lage die Eigenschaften eines Stils möglichst gut zu erlernen und dabei Performant bleiben. Dabei wurde die in Kapitel \ref{sec:fast_neural_style_transfer} vorgestellte Netzwerkarchitektur des Image Transformer Networks implementiert.
 Dies geschieht in PyTorch in Form einer Klasse, welche von \mintinline{python}{Module} erbt.
 
 Um in Kapitel \ref{cha:tests} das Testen unterschiedlicher Netzwerkarchitekturen zu ermöglichen, wird die Klasse des Image Transformer Networks möglichst dynamisch implementiert. Einstellbar sind dabei folgende Werte, die im weiteren Verlauf erklärt werden:
@@ -221,7 +217,7 @@ Benötigt wird eine Funktion, die entsprechende PyTorch-Aktivierungsfunktionen z
 \subsection{ConvBlock}
 
 Desweiteren müssen die in Kapitel \ref{sec:aufbau} konzipierten Layer-Blöcke implementiert werden.
-Der \textit{ConvBlock} besteht aus den PyTorch-Layern \mintinline{python}{Conv2d}, \mintinline{python}{InstanceNorm2d} und der gewählten Aktivierungsfunktion.
+Der ConvBlock besteht aus den PyTorch-Layern \mintinline{python}{Conv2d}, \mintinline{python}{InstanceNorm2d} und der gewählten Aktivierungsfunktion.
 \mintinline{python}{InstanceNorm2d} wurde auf Grund des Papers \cite{DBLP:journals/corr/UlyanovVL16} gewählt und dort näher in Bezug auf die Verwendung mit Style-Transfer-Methoden erläutert.
 
 Die Parameter \mintinline{python}{in_channels} und \mintinline{python}{out_channels} ergeben sich aus dem Parameter \mintinline{python}{channel_multiplier} ($ m $) multipliziert mit einem festen Wert, der je nach Layer $ 1 $, $ 2 $ oder $ 4 $ beträgt.

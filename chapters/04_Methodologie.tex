@@ -94,7 +94,7 @@ Mit einem Stride von zwei, wird das Bild ungefähr um die Hälfte der ursprüngl
 
 Der zweite Teil besteht aus Residual Blöcken, beschrieben in \cite{DBLP:journals/corr/HeZRS15}. Diese bestehen aus zwei aufeinanderfolgenden Convolutional Layern, die mit einer sogennanten Skip-Connection mit ihren Eingangsdaten verbunden sind. Das hat den Vorteil das die ursprünglichen Eingangsdaten nach jedem Layer noch vorhanden sind. Das beugt dem \gls{vanishing_gradient} Problem vor. In diesem Teil des Netzwerk entsteht die meiste Berechnung und die meisten Daten des Styles werden hier in den Gewichten der Kernels gespeichert.
 
-Im dritten Teil wird das Bild durch Upsampling wieder auf seine ursprüngliche Maße vergrößert. Außerdem werden die Channels auf drei reduziert um es als RGB-Bild anzeigen zu können. Die Vergrößerung und wird durch \textit{nearest interplolation} kombiniert mit einem Convolutional Layer realisiert.
+Im dritten Teil wird das Bild durch Upsampling wieder auf seine ursprüngliche Maße vergrößert. Außerdem werden die Channels auf drei reduziert um es als RGB-Bild anzeigen zu können. Die Vergrößerung und wird durch Nearest Neighbor Interplolation kombiniert mit einem Convolutional Layer realisiert.
 Es wird zusammen mit seinen Vorteilen in \cite{odena2016deconvolution} näher beschrieben.
 
 \pagebreak

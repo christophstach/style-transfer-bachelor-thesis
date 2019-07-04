@@ -4,83 +4,108 @@
 
 \section{Notebook Neural Style Transfer}
 \label{sec:nootebook_neural_style_transfer}
-\begin{listing}[H]
+\begin{longlisting}
 \begin{minted}{python}
+from tqdm import tqdm_notebook
+import matplotlib.pyplot as plt
 import datetime
+
 import torch
 import torch.optim as optim
 import torch.nn as nn
+
 import torchvision.models as models
+
 from csfnst.utils import load_image, plot_image_tensor, save_image_tensor
 from csfnst.utils import rename_network_layers, replace_network_layers, get_criterion
 from csfnst.losses import PerceptualLoss
-output_image_file = '', style_image_file = '', content_image_file = ''
-USE_LBFGS = True
-force_cpu = False
+
+
+output_image_file = '../images/output/htw-test.jpg'
+style_image_file = 'license-checked/the_scream.jpg'
+content_image_file = '../images/content/htw-768x768.jpg'
+
+use_lbfgs = True
+force_cpu = True
 use_random_noise = False
-content_image_size = 768
+content_image_size = 128
 style_image_size = 768
+epochs = 10
+
 device = torch.device('cuda' if torch.cuda.is_available() and not force_cpu else 'cpu')
 content_image = load_image(content_image_file, size=content_image_size, normalize=False).to(device)
 style_image = load_image(f'../images/style/{style_image_file}', size=style_image_size, normalize=False).to(device)
+
 if use_random_noise:
     output_image = torch.rand(content_image.shape[0], content_image.shape[1], content_image.shape[2]).to(device)
 else:
     output_image = content_image.clone().to(device)
-\end{minted}
-\captionof{lstlisting}{Notebook zur Durchführung des Neural Style Transfer Algorithmus 1}
-\label{lst:notebook_neural_style_transfer_1}
-\end{listing}
 
-\begin{listing}[H]
-\begin{minted}{python}
-config = {'loss_network': 'vgg16', 'content_weight': 1, 'style_weight': 1e8, 'total_variation_weight': 1e-5, 'style_image': style_image_file, 'style_image_size': style_image_size, 'content_layers': ['relu3_3'], 'style_layers': ['relu1_2', 'relu2_2', 'relu3_3', 'relu4_3']}
+config = {
+    'loss_network': 'vgg16',
+    'content_weight': 1,
+    'style_weight': 1e8,
+    'total_variation_weight': 1e-5,
+    'style_image': style_image_file,
+    'style_image_size': style_image_size,
+    'content_layers': ['relu3_3'],
+    'style_layers': ['relu1_2', 'relu2_2', 'relu3_3', 'relu4_3']
+}
+
 criterion = get_criterion(config, device='cpu' if force_cpu else 'cuda')
-optimizer = optim.LBFGS([output_image]) if USE_LBFGS else optim.Adam([output_image], lr=1e-1)
-EPOCHS = 10
+optimizer = optim.LBFGS([output_image]) if use_lbfgs else optim.Adam([output_image], lr=1e-1)
+
+
 content_image.unsqueeze_(0)
 output_image.unsqueeze_(0)
 output_image.requires_grad_()
+
 content_loss_history = []
 style_loss_history = []
 total_variation_loss_history = []
 loss_history = []
-progress_bar = tqdm_notebook(range(EPOCHS))
 
-if USE_LBFGS:
+progress_bar = tqdm_notebook(range(epochs))
+
+if use_lbfgs:
     for epoch in progress_bar:
         def closure():
             output_image.data.clamp_(0, 1)
             optimizer.zero_grad()
+
             loss = criterion(output_image, content_image)
             loss.backward()
+            
             content_loss_history.append(criterion.content_loss_val)
             style_loss_history.append(criterion.style_loss_val)
             total_variation_loss_history.append(criterion.total_variation_loss_val)
             loss_history.append(criterion.loss_val)
+
             progress_bar.set_description(f'Loss: {loss.item():,.2f}')
+
             return loss
+
         optimizer.step(closure)
 else:
     for epoch in progress_bar:
         output_image.data.clamp_(0, 1)
         optimizer.zero_grad()
+
         loss = criterion(output_image, content_image)
         loss.backward()
+        
         content_loss_history.append(criterion.content_loss_val)
         style_loss_history.append(criterion.style_loss_val)
         total_variation_loss_history.append(criterion.total_variation_loss_val)
         loss_history.append(criterion.loss_val)
-        progress_bar.set_description(f'Loss: {loss.item():,.2f}')
-        optimizer.step()
-\end{minted}
-\captionof{lstlisting}{Notebook zur Durchführung des Neural Style Transfer Algorithmus 2}
-\label{lst:notebook_neural_style_transfer_2}
-\end{listing}
 
-\begin{listing}[H]
-\begin{minted}{python}
+        progress_bar.set_description(f'Loss: {loss.item():,.2f}')
+
+        optimizer.step()
+
+
 content_image.squeeze_()
+
 output_image.detach_()
 output_image.squeeze_()
 output_image.data.clamp_(0, 1)
@@ -93,6 +118,8 @@ plot_image_tensor(style_image, ax=axes[1])
 plot_image_tensor(output_image, ax=axes[2])
 
 save_image_tensor(output_image, output_image_file)
+
+
 fig, axes = plt.subplots(1, 1, figsize=(18, 20))  
 axes.plot(content_loss_history, label='Content Loss')
 axes.plot(style_loss_history, label='Style Loss')
@@ -101,13 +128,14 @@ axes.plot(loss_history, label='Loss')
 plt.legend()
 plt.show()
 \end{minted}
-\captionof{lstlisting}{Notebook zur Durchführung des Neural Style Transfer Algorithmus 3}
-\label{lst:notebook_neural_style_transfer_3}
-\end{listing}
+\captionof{lstlisting}{Notebook zur Durchführung des Neural Style Transfer Algorithmus}
+\label{lst:notebook_neural_style_transfer}
+\end{longlisting}
+
 
 \section{Script Activation-Functions}
 \label{sec:script_activation_functions}
-\begin{listing}[H]
+\begin{longlisting}
 \begin{minted}{python}
 def get_activation_fn(name):
     activation_fn_map = {
@@ -127,11 +155,11 @@ def get_activation_fn(name):
 \end{minted}
 \captionof{lstlisting}{Activation-Functions}
 \label{lst:script_activation_functions}
-\end{listing}
+\end{longlisting}
 
 \section{Script ConvBlock}
 \label{sec:script_conv_block}
-\begin{listing}[H]
+\begin{longlisting}
 \begin{minted}{python}
 class ConvBlock(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size=3, stride=1, activation_fn='None'):
@@ -149,11 +177,11 @@ class ConvBlock(nn.Module):
 \end{minted}
 \captionof{lstlisting}{ConvBlock}
 \label{lst:script_conv_block}
-\end{listing}
+\end{longlisting}
 
 \section{Script ResidualBlock}
 \label{sec:script_residual_block}
-\begin{listing}[H]
+\begin{longlisting}
 \begin{minted}{python}
 class ResidualBlock(nn.Module):
     def __init__(self, in_channels, out_channels, inner_channels=None, kernel_size=3, activation_fn='None'):
@@ -183,11 +211,11 @@ class ResidualBlock(nn.Module):
 \end{minted}
 \captionof{lstlisting}{ResidualBlock}
 \label{lst:script_residual_block}
-\end{listing}
+\end{longlisting}
 
 \section{Script UpsampleBlock}
 \label{sec:script_upsample_block}
-\begin{listing}[H]
+\begin{longlisting}
 \begin{minted}{python}
 class UpSampleBlock(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size=3, stride=1, scale_factor=None,
@@ -212,11 +240,11 @@ class UpSampleBlock(nn.Module):
 \end{minted}
 \captionof{lstlisting}{UpsampleBlock}
 \label{lst:script_upsample_block}
-\end{listing}
+\end{longlisting}
 
 \section{Script TransformerNet}
 \label{sec:script_transformer_net}
-\begin{listing}[H]
+\begin{longlisting}
 \begin{minted}{python}
 class TransformerNet(nn.Module):
     def __init__(self, channel_multiplier=32, bottleneck_size=5, bottleneck_type=BottleneckType.RESIDUAL_BLOCK,
@@ -253,7 +281,7 @@ class TransformerNet(nn.Module):
 \end{minted}
 \captionof{lstlisting}{TransformerNet}
 \label{lst:script_transformer_net}
-\end{listing}
+\end{longlisting}
 
 \chapter{}
 
