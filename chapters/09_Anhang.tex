@@ -285,23 +285,41 @@ class TransformerNet(nn.Module):
 
 \chapter{}
 
-\section{Performanz-Test mit 1024 * 1024 Pixel Bildern}
+\section{Performanz-Test mit 1920 * 1080 (Full HD) Pixel Bildern}
 \begin{table}[H]
     \centering
     \begin{tabular}{ |c|c|c|c|c| }
         \hline
-        \textbf{Name} & \textbf{XPS 15 - CPU} & \textbf{XPS 15 - GPU} & \textbf{Auto - CPU} & \textbf{Auto - GPU}   \\ \hline
-        Netzwerk 1 & 2.72105 & \textcolor{danger}{nicht durchführbar} & & \\ \hline
-        Netzwerk 2 & 1.03105 & 0.23152                                & & \\ \hline
-        Netzwerk 3 & 0.48080 & 0.13070                                & & \\ \hline
-	
-        Netzwerk 4 & 2.51535 & \textcolor{danger}{nicht durchführbar} & & \\ \hline
-        Netzwerk 5 & 0.97727 & 0.21588                                & & \\ \hline
-        Netzwerk 6 & 0.44961 & 0.12341                                & & \\ \hline
+        \textbf{Name} & \textbf{XPS 15 - CPU} & \textbf{XPS 15 - GPU} & \textbf{Jetson TX1 - CPU} & \textbf{Jetson TX1 - GPU}   \\ \hline
+        Network 1 & 8.56369 sec & \textcolor{danger}{nicht durchführbar} & & \\ \hline
+        Network 2 & 3.43223 sec & \textcolor{danger}{nicht durchführbar} & & \\ \hline
+        Network 3 & 1.39450 sec & \textcolor{danger}{nicht durchführbar} & & \\ \hline
+        Network 4 & 7.55040 sec & \textcolor{danger}{nicht durchführbar} & & \\ \hline
+        Network 5 & 3.06514 sec & \textcolor{danger}{nicht durchführbar} & & \\ \hline
+        Network 6 & 1.30307 sec & \textcolor{danger}{nicht durchführbar} & & \\ \hline
+        Network 7 & 6.92937 sec & \textcolor{danger}{nicht durchführbar} & & \\ \hline
+        Network 8 & 2.84717 sec & \textcolor{danger}{nicht durchführbar} & & \\ \hline
+        Network 9 & 1.21508 sec & \textcolor{danger}{nicht durchführbar} & & \\ \hline
+    \end{tabular}
+    \caption{Berechnungsgeschwindigkeit für Bilder der Größe 1920 * 1080 Pixel}
+    \label{tab:1920x1080}
+\end{table}
 
-        Netzwerk 7 & 2.33272 & \textcolor{danger}{nicht durchführbar} & & \\ \hline
-        Netzwerk 8 & 0.89503 & 0.20119                                & & \\ \hline
-        Netzwerk 9 & 0.41804 & 0.11645                                & & \\ \hline
+\section{Performanz-Test mit 1024 * 768 Pixel Bildern}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ |c|c|c|c|c| }
+        \hline
+        \textbf{Name} & \textbf{XPS 15 - CPU} & \textbf{XPS 15 - GPU} & \textbf{Jetson TX1 - CPU} & \textbf{Jetson TX1 - GPU}   \\ \hline
+        Network 1 & 2.84025 sec & \textcolor{danger}{nicht durchführbar} & & \\ \hline
+        Network 2 & 1.04201 sec & 0.04790 sec                            & & \\ \hline
+        Network 3 & 0.48485 sec & 0.02463 sec                            & & \\ \hline
+        Network 4 & 2.58202 sec & \textcolor{danger}{nicht durchführbar} & & \\ \hline
+        Network 5 & 0.96789 sec & 0.01090 sec                            & & \\ \hline
+        Network 6 & 0.45279 sec & 0.00567 sec                            & & \\ \hline
+        Network 7 & 2.35020 sec & \textcolor{danger}{nicht durchführbar} & & \\ \hline
+        Network 8 & 0.89255 sec & 0.00414 sec                            & & \\ \hline
+        Network 9 & 0.42105 sec & 0.00414 sec                            & & \\ \hline
     \end{tabular}
     \caption{Berechnungsgeschwindigkeit für Bilder der Größe 1024 * 768 Pixel}
     \label{tab:1024x768}
@@ -312,43 +330,19 @@ class TransformerNet(nn.Module):
     \centering
     \begin{tabular}{ |c|c|c|c|c| }
         \hline
-        \textbf{Name} & \textbf{XPS 15 - CPU} & \textbf{XPS 15 - GPU} & \textbf{Auto - CPU} & \textbf{Auto - GPU}   \\ \hline
-        Netzwerk 1 & 1.04234 & 0.20962 & & \\ \hline
-        Netzwerk 2 & 0.41221 & 0.10425 & & \\ \hline
-        Netzwerk 3 & 0.19578 & 0.05207 & & \\ \hline
-	
-        Netzwerk 4 & 0.95978 & 0.19487 & & \\ \hline
-        Netzwerk 5 & 0.38498 & 0.09735 & & \\ \hline
-        Netzwerk 6 & 0.18290 & 0.04915 & & \\ \hline
-
-        Netzwerk 7 & 0.88858 & 0.18083 & & \\ \hline
-        Netzwerk 8 & 0.35051 & 0.09149 & & \\ \hline
-        Netzwerk 9 & 0.16939 & 0.04622 & & \\ \hline
+        \textbf{Name} & \textbf{XPS 15 - CPU} & \textbf{XPS 15 - GPU} & \textbf{Jetson TX1 - CPU} & \textbf{Jetson TX1 - GPU}   \\ \hline
+        Network 1 & 1.04294 sec & 0.04822 sec & & \\ \hline
+        Network 2 & 0.41771 sec & 0.02446 sec & & \\ \hline
+        Network 3 & 0.19684 sec & 0.00980 sec & & \\ \hline
+        Network 4 & 0.96311 sec & 0.00955 sec & & \\ \hline
+        Network 5 & 0.38778 sec & 0.00490 sec & & \\ \hline
+        Network 6 & 0.18396 sec & 0.00485 sec & & \\ \hline
+        Network 7 & 0.88547 sec & 0.00421 sec & & \\ \hline
+        Network 8 & 0.35785 sec & 0.00419 sec & & \\ \hline
+        Network 9 & 0.17067 sec & 0.00415 sec & & \\ \hline
     \end{tabular}
     \caption{Berechnungsgeschwindigkeit für Bilder der Größe 640 * 480 Pixel}
     \label{tab:640x480}
-\end{table}
-
-\section{Performanz-Test mit 320 * 240 Pixel Bildern}
-\begin{table}[H]
-    \centering
-    \begin{tabular}{ |c|c|c|c|c| }
-        \hline
-        \textbf{Name} & \textbf{XPS 15 - CPU} & \textbf{XPS 15 - GPU} & \textbf{Auto - CPU} & \textbf{Auto - GPU}   \\ \hline
-        Netzwerk 1 & 0.27885 & 0.07604 & & \\ \hline
-        Netzwerk 2 & 0.11639 & 0.02670 & & \\ \hline
-        Netzwerk 3 & 0.05898 & 0.01308 & & \\ \hline
-	
-        Netzwerk 4 & 0.25559 & 0.07088 & & \\ \hline
-        Netzwerk 5 & 0.10755 & 0.02511 & & \\ \hline
-        Netzwerk 6 & 0.05475 & 0.01238 & & \\ \hline
-
-        Netzwerk 7 & 0.23489 & 0.06698 & & \\ \hline
-        Netzwerk 8 & 0.09734 & 0.02369 & & \\ \hline
-        Netzwerk 9 & 0.05023 & 0.01172 & & \\ \hline
-    \end{tabular}
-    \caption{Berechnungsgeschwindigkeit für Bilder der Größe 320 * 240 Pixel}
-    \label{tab:320x240}
 \end{table}
 
 
