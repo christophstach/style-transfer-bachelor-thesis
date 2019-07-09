@@ -157,7 +157,7 @@ In der zweiten Abbildungen werden verschiedene die verschiedenen Total-Variation
 
 \pagebreak
 
-\subsection{Ergebnisse}
+\subsection{Interpretation der Ergebnisse}
 
 Wie beiden Tests zu sehen ist, werden die Muster mit zunehmendem Style-Weight $ \beta $ auf dem Ausgangsbild immer stärker generierten. Mit $ b = 10^{5} $ sind bei beiden Stilen die Muster des Gemäldes kaum noch zu erkennen. Lediglich wird das Ausgangsbild den Farben des Stilbildes angepasst. Ein optisch ansprechender Effekt ergibt sich bei beiden Stilen ab $ \beta = 10^{7} $. 
 
@@ -166,11 +166,11 @@ Mit zunehmendem Total-Variation-Weight $ \gamma $ fließen die Farben mehr inein
 
 \section{Auswirkungen der Netzwerkarchitekturen}
 
-Im nächsten Experiment werden drei unterschiedlichen Bildgrößen auf unterschiedlichen Geräten auf Durchführbarkeit und Performanz getestet.
+Im diesem Experiment wurden drei unterschiedlichen Bildgrößen auf unterschiedlichen Geräten auf Durchführbarkeit und Performanz getestet.
 Gemessen wird die Berechnungsgeschwindigkeit beim Forward-Pass durch das Netzwerk. 
 
 Ein bereits erster Indikator für die Performanz eines Neuronalen Netzwerks ist die Anzahl der lernbaren Parameter, die bei der Trainingsphase optimiert werden. Trainiert wurden neun unterschiedliche Netzwerke auf dem Kunstwerk The Starry Night mit unterschiedlichen Kombinationen für $ m $ und $ s $
-Dabei wurde bei allen Netzwerken eine Batch-Size von $ 16 $ und eine Learning-Rate von $ 10^{-3} $ verwendet. Die Netzwerke wurden über drei Epochen des COCO-Datensatzes trainiert. Dabei wurden die Testdaten aus dem Jahr 2014 sowie die Test-, Validierungs- und Trainingsdaten aus dem Jahr 2017 verwendet. Insgesamt handelt es sich dabei um $ 170877 $ Bilder. Insgesamt wurden die Modelle mit $ 512631 $ Bildern trainiert. Dabei dauerte die Trainingszeit auf einem Server mit einem GeForce GTX 1080 T GPU pro Modell zwischen 8 und 10 Stunden.
+Dabei wurde bei allen Netzwerken eine Batch-Size von $ 16 $ und eine Learning-Rate von $ 10^{-3} $ verwendet. Die Netzwerke wurden über drei Epochen des COCO-Datensatzes trainiert. Dabei wurden die Testdaten aus dem Jahr 2014 sowie die Test-, Validierungs- und Trainingsdaten aus dem Jahr 2017 verwendet. Insgesamt handelt es sich dabei um $ 170877 $ Bilder. Insgesamt wurden die Modelle mit $ 512631 $ Bildern trainiert. Dabei dauerte die Trainingszeit auf einem Server mit einem GeForce GTX 1080 T GPU pro Modell zwischen 6 und 10 Stunden.
 
 \begin{table}[H]
     \centering
@@ -223,7 +223,9 @@ Die Daten werden beim Einsatz des GPUs in den Grafikspeicher geladen. Bei der Be
     \label{tab:jetson_tx1}
 \end{table}
 
-% Hier die Spezifikationen der Verwendenten Geräte hin.
+\subsection{Interpretation der Ergebnisse}
 
-Im folgenden werden die unterschiedlichen Netzwerkearchitekturen auf ihre Performanz getestet. Tests die wegen unzureichendem Arbeitsspeicher oder Grafikspeicher fehlschlagen werden als \textcolor{danger}{nicht durchführbar} gekennzeichnet.
+Im folgenden wurden die unterschiedlichen Netzwerkearchitekturen auf ihre Performanz getestet. Tests die wegen unzureichendem Arbeitsspeicher oder Grafikspeicher fehlschlagen sind, wurden als \textcolor{danger}{nicht durchführbar} gekennzeichnet. Die Ergebnisse sind in den Anlagen \ref{tab:1920x1080}, \ref{tab:1024x768} und \ref{tab:640x480} angefügt.
+
+Man kann erkennen das die Netzwerke 3, 6, und 9 eine weitaus geringere Berechnungszeit aufweisen. Daraus lässt sich schließen das der Parameter $ m $, welcher die Anzahl der Channels beeinflust, den größten Einfluss auf die Berechnugnsgeschwindigkeit hat. Die Anzahl der ResidualBlocks hingegen, Parameter $ s $, trägt im weitaus geringerem Maße zur Berechnungsgeschwindigkeit bei.
 
