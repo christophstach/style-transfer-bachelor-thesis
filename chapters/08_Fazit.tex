@@ -1,26 +1,49 @@
 \chapter{Fazit}
 
-Das Kapitel Fazit beinhaltet eine kurze Zusammenfassung der Abschlussarbeit. Das Thema wird kritisch betrachtet und es wird auf mögliche Probleme eingangen.
-Letzlich wird ein Ausblick über zukünfige Entwicklungen und Möglichkeiten gewährt.
+Das Kapitel Fazit beinhaltet eine kurze Zusammenfassung der Abschlussarbeit. Das Thema wird kritisch betrachtet und es wird auf mögliche Probleme eingangen. Letzlich wird ein Ausblick über zukünfige Entwicklungen und Möglichkeiten gewährt.
 
 \section{Zusammenfassung}
 
-In der Abschlussarbeit wurde sich mit intensiv mit dem Style-Transfer-Algorithmen beschäftig und diese auf Geräten mit leistungsarmer Hardware getestet.
-Anfangs wurde die Theorie zu Neuronalen Netzwerken und Style-Transfer analysiert. Es wurde eine Implementierung geplant und danach mit dem Framework PyTorch umgesetzt. Unterschiedliche Netzwerke wurden erfolgreich trainiert und Stile extrahiert. Verschiedene Hyperparametereinstellungen wurden getestet und die Performanz der Netzwerke gemessen.
+In der Abschlussarbeit wurde sich mit intensiv mit dem Style-Transfer-Algorithmen beschäftig und diese auf Geräten mit leistungsarmer Hardware getestet. Anfangs wurde die Theorie zu Neuronalen Netzwerken und Style-Transfer analysiert. Es wurde eine Implementierung geplant und danach mit dem Framework PyTorch umgesetzt. Unterschiedliche Netzwerke wurden erfolgreich trainiert und Stile extrahiert. Verschiedene Hyperparametereinstellungen wurden getestet und die Performanz der Netzwerke gemessen.
 
 
 \section{Kritischer Rückblick}
 
-Besonders das Training und das durchführen der Experimente muss kritisch betrachtet werden. Es wurden die entsprechende Hyperparametereinstellungen nur mit zwei Gemälden getestet. Fraglich ist ob diese den gleichen Effekt bei anderen Gemälden erziehlen. Hierfür wird davon ausgegangen das für jeden Stil die Hyperparametereinstellungen erneut getestet werden müsstn.
+Besonders das Training und das Durchführen der Experimente muss kritisch betrachtet werden. Es wurden die entsprechende Hyperparametereinstellungen nur mit zwei Gemälden getestet. Fraglich ist ob diese den gleichen Effekt bei anderen Gemälden erziehlen. Deswegen wird davon ausgegangen, dass für jeden Stil die Hyperparametereinstellungen individuell getestet werden müssen.
 
-Bei den gewählten Gemälden waren alle Netzwerkarchitekturen in der Lage den Stil zu extrahieren. Daraus kann schlussgefolgert werden das möglicherweise sogar Netzwerkarchitekturen mit weniger lernbaren Parametern, als die hier vorgeschlagenen, in der Lage sein könnte Stile aus Gemälden zu erlernen. Bei weiteren Expereminten wäre man unter Umständen in der Lage gewesen noch Performantere Netzwerkarchitekturen zu finden.
+Bei den gewählten Gemälden waren alle Netzwerkarchitekturen in der Lage den Stil zu extrahieren. Daraus kann schlussgefolgert werden das möglicherweise sogar Netzwerkarchitekturen mit weniger lernbaren Parametern, als die hier vorgeschlagenen, in der Lage sein könnte Stile aus Gemälden zu erlernen. Bei weiteren Expereminten wäre man unter Umständen in der Lage gewesen noch performantere Netzwerkarchitekturen zu finden.
 
-Bei der Auswahl der verwendenten Gemälde musste beim Erstellen dieser Arbeit besonders vorsichtig vorgegangen werden. Die Bilder wurden nur aus Quellen genommen die die Verwendung für Bildungszwecke erlauben. Ein kommerzieller Einsatz wäre nicht möglich. Die Verwendung von Sttyle-Transfer-Methoden wirft besondere urheberrechtliche Bedenken auf. Urheberrechtlich geschützte Bilder können dazu verwendet werden Stile zu extrahieren und auf neue Bilder zu übertragen. Die in Bezug auf Urheberrecht aufkommenden Fragen müssen für den produktiven Einsatz eine Software-Systems geklärt werden.
+Bei der Auswahl der verwendenten Gemälde musste beim Erstellen dieser Arbeit besonders vorsichtig vorgegangen werden. Die Bilder wurden nur aus Quellen genommen die teilweise nur die Verwendung für Bildungszwecke erlauben. Ein kommerzieller Einsatz wäre nicht möglich. Die Verwendung von Style-Transfer-Methoden wirft besondere urheberrechtliche Bedenken auf. Urheberrechtlich geschützte Bilder können dazu verwendet werden Stile zu extrahieren und auf neue Bilder zu übertragen. Die in Bezug auf Urheberrecht aufkommenden Fragen müssen für den produktiven Einsatz eines Software-Systems evaluiert werden.
 
 \section{Ausblick}
 
-Zukünftig könnte der Algorithmen um weitere Funktionen erweitert werden. Vorstellbar ist eine Vermischung von mehrern Stilen. Hierzu müsste die das Style-Loss aus die Gram-Matrizen merherer Gemälde kombieren.
+Folgend wird ein Ausblick auf Erweiterungen des Algorithmus gewährt. Dabei wird auf vorstellbare Funktionen und Einstellugen eingangen.
 
-Außerdem kann eine ähnliche Methodig einen Super-Resulition-Algorithmus verwendet werden. Dieser wird ebenfalls im Paper von Johnson et al. \cite{DBLP:journals/corr/JohnsonAL16} beschrieben. Dabei muss eine Netzwerkarchitektur verwendet werden die in der Lage ist Bilder auf eine höhere Auflösung zu skalieren. Die verwendete Loss-Funktionen wäre das bereits vorgestellte Perceptual-Loss jedoch ohne den Style-Loss-Anteil.
+\subsection{Verwendung von anderer Layer-Kombination}
+
+In dieser Arbeit wurde für die Berechnung des Style-Loss die Layer $ \{ relu1\_2, relu2\_2, relu3\_3, relu4\_3 \} $ und für die Berechnung des Content-Loss der Layer  $ relu3\_3 $ des VGG 16-Models verwendet. Man kann ein anderes Loss-Network und andere Kombinationen von Layern für die Berechnung der Losses benutzen. Das hätte zur Folge die generierten Stile sich unterscheiden würden. Im GitHub-Repository von Logan Engstrom  \cite{engstrom2016faststyletransfer} wurde dies bereits implementiert.
+
+\subsection{Kombination aus mehreren Stilen}
+\label{sec:combination_many_styles}
+
+Vorstellbar ist eine Vermischung von mehrern Stilen. Hierzu müsste die das Style-Loss aus die Gram-Matrizen mehrerer Gemälde kombieren.
+http://cs231n.stanford.edu/reports/2017/pdfs/428.pdf
+
+\subsection{Superresolution}
+\label{sec:superresolution}
+
+Außerdem kann eine ähnliche Methodig einen Super-Resulition-Algorithmus verwendet werden. Dieser wird ebenfalls im Paper von Johnson et al. \cite{DBLP:journals/corr/JohnsonAL16} beschrieben. Dabei muss eine Netzwerkarchitektur verwendet werden, die in der Lage ist Bilder auf eine höhere Auflösung zu skalieren. Die verwendete Loss-Funktionen wäre das bereits vorgestellte Perceptual-Loss jedoch ohne den Style-Loss-Anteil.
+
+\subsection{Alternativen zum ResidualBlock}
+\label{sec:alternatives_to_residual_block}
 
 Performanztechnisch können weitere Experimente mit kleineren Netzwerkarchitekturen durchgeführt werden. Außerdem kann der ResidualBlock durch eine andere Art von Block ersetzt werden. Die Paper \cite{DBLP:journals/corr/HowardZCKWWAA17} und \cite{DBLP:journals/corr/abs-1801-04381} behandeln sogenannte MobileNets, welche besonders auf die Verwendung von Geräten mit leistungsarmer Hardware abziehlen. Vorstellbar wäre es die verwendenten Blöcke anstelle des ResidualBlock zu verwenden und Experimente durchzufüren.
+
+\subsection{Video Stylization}
+\label{sec:video_stylization}
+\cite{DBLP:journals/corr/abs-1807-01197}
+
+\subsection{Ausführung im Webbrowser}
+\label{sec:inference_in_browser}
+
+Onnx.js, Tensorflow.js
