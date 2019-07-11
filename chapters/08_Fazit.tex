@@ -21,29 +21,30 @@ Folgend wird ein Ausblick auf Erweiterungen des Algorithmus gewährt. Dabei wird
 
 \subsection{Verwendung von anderer Layer-Kombination}
 
-In dieser Arbeit wurde für die Berechnung des Style-Loss die Layer $ \{ relu1\_2, relu2\_2, relu3\_3, relu4\_3 \} $ und für die Berechnung des Content-Loss der Layer  $ relu3\_3 $ des VGG 16-Models verwendet. Man kann ein anderes Loss-Network und andere Kombinationen von Layern für die Berechnung der Losses benutzen. Das hätte zur Folge die generierten Stile sich unterscheiden würden. Im GitHub-Repository von Logan Engstrom  \cite{engstrom2016faststyletransfer} wurde dies bereits implementiert.
+In dieser Arbeit wurde für die Berechnung des Style-Loss die Layer relu1\_2, relu2\_2, relu3\_3, relu4\_3 und für die Berechnung des Content-Loss der Layer relu3\_3 des VGG16-Models verwendet. Man kann ein anderes Loss-Network und andere Kombinationen von Layern für die Berechnung der Losses benutzen. Das hätte zur Folge, dass die generierten Stile sich unterscheiden würden. Im GitHub-Repository von Logan Engstrom  \cite{engstrom2016faststyletransfer} wurde dies bereits implementiert.
 
 \subsection{Kombination aus mehreren Stilen}
 \label{sec:combination_many_styles}
 
-Vorstellbar ist eine Vermischung von mehrern Stilen. Hierzu müsste die das Style-Loss aus die Gram-Matrizen mehrerer Gemälde kombieren.
-http://cs231n.stanford.edu/reports/2017/pdfs/428.pdf
+Vorstellbar ist eine Vermischung von mehrern Stilen. Hierzu müsste man das Style-Loss aus die Gram-Matrizen mehrerer Gemälde kombieren. Im Paper \cite{stanfordStyleTransfer} wurde das anderen Erweiterungen beschrieben.
 
 \subsection{Superresolution}
 \label{sec:superresolution}
 
-Außerdem kann eine ähnliche Methodig einen Super-Resulition-Algorithmus verwendet werden. Dieser wird ebenfalls im Paper von Johnson et al. \cite{DBLP:journals/corr/JohnsonAL16} beschrieben. Dabei muss eine Netzwerkarchitektur verwendet werden, die in der Lage ist Bilder auf eine höhere Auflösung zu skalieren. Die verwendete Loss-Funktionen wäre das bereits vorgestellte Perceptual-Loss jedoch ohne den Style-Loss-Anteil.
+Neben Style-Transfer kann eine ähnliche Methodig für einen Super-Resulition-Algorithmus verwendet werden. Dieser wird ebenfalls im Paper von Johnson et al. \cite{DBLP:journals/corr/JohnsonAL16} beschrieben. Dabei muss eine Netzwerkarchitektur verwendet werden, die in der Lage ist Bilder auf eine höhere Auflösung zu skalieren. Die verwendete Loss-Funktionen wäre das bereits vorgestellte Perceptual-Loss jedoch ohne den Style-Loss-Anteil.
 
 \subsection{Alternativen zum ResidualBlock}
 \label{sec:alternatives_to_residual_block}
 
-Performanztechnisch können weitere Experimente mit kleineren Netzwerkarchitekturen durchgeführt werden. Außerdem kann der ResidualBlock durch eine andere Art von Block ersetzt werden. Die Paper \cite{DBLP:journals/corr/HowardZCKWWAA17} und \cite{DBLP:journals/corr/abs-1801-04381} behandeln sogenannte MobileNets, welche besonders auf die Verwendung von Geräten mit leistungsarmer Hardware abziehlen. Vorstellbar wäre es die verwendenten Blöcke anstelle des ResidualBlock zu verwenden und Experimente durchzufüren.
+Performanztechnisch können weitere Experimente mit kleineren Netzwerkarchitekturen durchgeführt werden. Außerdem kann der ResidualBlock durch eine andere Art von Block ersetzt werden. Die Paper \cite{DBLP:journals/corr/HowardZCKWWAA17} und \cite{DBLP:journals/corr/abs-1801-04381} behandeln sogenannte MobileNets, welche besonders auf die Verwendung von Geräten mit leistungsarmer Hardware abziehlen. Vorstellbar wäre es die verwendenten Blöcke anstelle des ResidualBlock zu verwenden und damit weitere Experimente durchzuführen.
 
 \subsection{Video Stylization}
 \label{sec:video_stylization}
-\cite{DBLP:journals/corr/abs-1807-01197}
+
+Im Paper \cite{DBLP:journals/corr/abs-1807-01197} wird beschrieben wie Style-Transfer für Videos realisiert werden kann. Dabei wird eine zusätzliche Loss-Funktion eingeführt, die ein Flickern zwischen den einzelnen Video-Frames verhindert.
 
 \subsection{Ausführung im Webbrowser}
 \label{sec:inference_in_browser}
 
-Onnx.js, Tensorflow.js
+
+Ein neu aufkommendes Feld ist die Realisierung von Deep-Learning im Webbrowser. Tensorflow.js\footnote{\url{https://www.tensorflow.org/js}} ist ein Framework welches Modelle direkt im Browser und somit auch direkt auf beispielsweise Mobiletelefonen oder anderen Geräten mit leistungsarmer Hard ausführen kann. Ein weiteres Werkzeug ist ONNX.js\footnote{\url{https://github.com/microsoft/onnxjs}}. In PyTorch trainierte Modelle können in das ONNX-Format exportiert werden und mit ONNX.js direkt im Webbrowser ausgeführt werden. Zum Zeitpunkt der Erstellung dieser Arbeit befindet sich ONNX.js noch in einem frühen Entwicklungsstadium. Später wäre ein exportieren der in dieser Arbeit erstellten Modelle vorstellbar.

@@ -167,9 +167,7 @@ Mit zunehmendem Total-Variation-Weight $ \gamma $ fließen die Farben mehr inein
 \section{Auswirkungen der Netzwerkarchitekturen}
 
 Im diesem Experiment wurden drei unterschiedlichen Bildgrößen auf unterschiedlichen Geräten auf Durchführbarkeit und Performanz getestet.
-Gemessen wird die Berechnungsgeschwindigkeit beim Forward-Pass durch das Netzwerk. 
-
-Ein bereits erster Indikator für die Performanz eines Neuronalen Netzwerks ist die Anzahl der lernbaren Parameter, die bei der Trainingsphase optimiert werden. Trainiert wurden neun unterschiedliche Netzwerke mit dem Kunstwerk The Starry Night mit unterschiedlichen Kombinationen für $ m $ und $ s $. Dabei wurde bei allen Netzwerken eine Batch-Size von $ 16 $ und eine Learning-Rate von $ 10^{-3} $ verwendet. Die Netzwerke wurden über drei Epochen des COCO-Datensatzes trainiert. Dabei wurden die Testdaten aus dem Jahr 2014 sowie die Test-, Validierungs- und Trainingsdaten aus dem Jahr 2017 verwendet. Insgesamt handelt es sich dabei um $ 170877 $ Bilder. Insgesamt wurden die Modelle mit $ 512631 $ Bildern trainiert. Dabei dauerte die Trainingszeit auf einem Server mit einem GeForce GTX 1080 T GPU pro Modell zwischen 6 und 10 Stunden.
+Gemessen wird die Berechnungsgeschwindigkeit beim Forward-Pass durch das Netzwerk. Ein bereits erster Indikator für die Performanz eines Neuronalen Netzwerks ist die Anzahl der lernbaren Parameter, die bei der Trainingsphase optimiert werden. Erstellt wurden neun unterschiedliche Netzwerke mit dem Kunstwerk The Starry Night mit unterschiedlichen Kombinationen für $ m $ und $ s $. 
 
 \begin{table}[H]
     \centering
@@ -227,11 +225,13 @@ Abschließend wurden die unterschiedlichen Netzwerkearchitekturen auf ihre Perfo
 
 \subsection{Interpretation der Ergebnisse}
 
-Auffällig bei den Messungen ist das der Parameter $ m $, welche die Anzahl der Channels im Netzwerk beeinflusst, bei Berechnungen auf dem CPU einen größere Performanzverbesserung bietet als der Parameter $ s $. Bei Berechnungen mit einem GPU ist der Parameter $ s $, Anzahl der ResidualBlocks weit aus relatanter für die Berechnugnsgeschwindigkeit des Netzwerks. Bei den Netzwerken 7, 8 und 9 spielt der Paramter $ m $ bei der Benutzung eines GPU fast garkeine Rolle mehr.
+Alle Netzwerke wurden mit einer Batch-Size von $ 24 $, Bildgrößen von 224 * 224 Pixel und einer Learning-Rate von $ 10^{-3} $ trainiert. Es wurden 4 Epochen der Trainingsdaten aus dem Jahr 2017 des COCO-Datensatzes verwendet, welche $ 118287 $ Bilder enthalten. Insgesamt wurden die Modelle mit $ 473148 $ Bildern trainiert. Dabei dauerte die Trainingszeit auf einem Server mit einem GeForce GTX 1080 Ti GPU pro Modell zwischen 3 und 6 Stunden.
 
-Die Berechnung der Netzwerke mit Full HD Bildern war jedoch mit keinem der Netzwerke auf dem GPU möglich.
+Beim Training fiel auf das die generierten Bilder großflächige, schwarze oder weiße Artefakte enthielten. Ein Austausch der finalen Aktivierungsfunktion HardTanH, vgl. \ref{sec:hardtanh}, mit der Sigmoid-Aktivierungsfunktion, vgl. \ref{sec:sigmoid}, konnte das Problem lösen.
 
-In der folgenden Abbildung ist zu sehen das alle Netzwerkarchitekturen gleichermaßen in der Lagen waren den Stil von The Starry Night zu extrahieren.
+Auffällig bei den Messungen ist das der Parameter $ m $, welche die Anzahl der Channels im Netzwerk beeinflusst, bei Berechnungen auf dem CPU einen größere Performanzverbesserung bietet als der Parameter $ s $. Bei Berechnungen mit einem GPU ist der Parameter $ s $, Anzahl der ResidualBlocks weit aus relatanter für die Berechnugnsgeschwindigkeit des Netzwerks. Bei den Netzwerken 7, 8 und 9 spielt der Paramter $ m $ bei der Benutzung eines GPU fast garkeine Rolle mehr. Die Berechnung der Netzwerke mit Full HD Bildern war jedoch mit keinem der Netzwerke auf dem GPU möglich.
+
+In der folgenden Abbildung ist zu sehen das alle Netzwerkarchitekturen, nach Austausch der finalen Aktivierungsfunktion, gleichermaßen in der Lagen waren den Stil von The Starry Night zu extrahieren.
 Alle gelernten Muster sind zwar geringfügig unterschiedlich, jedoch optisch gleichermaßen ansprechend und dem Stil des Bildes The Starry Night ähnlich.
 
 \begin{figure}[H]
