@@ -1,19 +1,19 @@
 \chapter{Implementierung}
 \label{cha:implementation}
 
-Im Bereich des Machine Learning und Deep Learning gibt es viele verschiedene Frameworks, die bei der Umsetzung und dem Training von Neuronalen Netzwerken behilflich sind. Beispiele hierfür sind Tensorflow\footnote{\url{https://www.tensorflow.org/}} von Google, PyTorch\footnote{\url{https://pytorch.org/}} von Facebook und Apache MXNet\footnote{\url{https://mxnet.apache.org/}}. Da ich bereits im Vorfeld, während meiner Universitätsveranstaltungen, Erfahrungen mit PyTorch sammeln konnten, habe ich mich für dieses Framework entscheiden.
+Im Bereich des Machine Learning und Deep Learning gibt es viele verschiedene Frameworks, die bei der Umsetzung und dem Training von Neuronalen Netzwerken behilflich sind. Beispiele hierfür sind Tensorflow\footnote{\url{https://www.tensorflow.org/}} von Google, PyTorch\footnote{\url{https://pytorch.org/}} von Facebook und Apache MXNet\footnote{\url{https://mxnet.apache.org/}}. Da ich bereits im Vorfeld, während meiner Universitätsveranstaltungen, Erfahrungen mit PyTorch sammeln konnten, habe ich mich für dieses Framework entschieden.
 
 \section{Loss-Funktion}
 
 Im ersten Schritt wird die Loss-Funktion implementiert, die das Kernstück des modelbasierten und des optimisierenden Ansatz ist.
-PyTorch behinhaltet bereits vortrainierte Versionen verschiedener Model Architekuren. Es wird das VGG16-Model benutzt, auf dieses
-wird mit \mintinline{python}{model = torchvision.models.vgg16(pretrained=True).features} zugegriffen. Das PyTorch-Model ist dabei in die Bereiche \textit{features} und \textit{classifier} aufgeteilt. Es wird lediglich der Bereich \textit{features} benötigt, welcher die bereits vortrainierten Convolutional-Layer beinhaltet. Der Bereich \textit{classifier} beinhaltet die Fully-Connected-Layer des Models, welche für die Aufgabenstellen ungenutzt bleiben.
+PyTorch behinhaltet bereits vortrainierte Versionen verschiedener Model Architekuren. In dieser Arbeit wird das \gls{vgg16}-Model benutzt, auf dieses
+wird mit \mintinline{python}{model = torchvision.models.vgg16(pretrained=True).features} zugegriffen. Das PyTorch-Model ist dabei in die Bereiche \textit{features} und \textit{classifier} aufgeteilt. Es wird lediglich der Bereich \textit{features} benötigt, welcher die bereits vortrainierten Convolutional-Layer enthält. Der Bereich \textit{classifier} enthält die Fully-Connected-Layer des Models, welche für die Aufgabenstellen ungenutzt bleiben.
 
 \pagebreak
 
 \subsection{Zugriff auf Hidden-Layer-Ergebnisse}
 
-Um bei PyTorch auf Zwischenergebnisse der Hidden-Layer zuzugreifen, werden hinter diesen Hooks implementiert. Das kann in eine Funktion ausgelagert werden, welche die \gls{activation_map}s während des Forwardpass durch das VVG16-Model extrahiert.
+Um bei PyTorch auf Zwischenergebnisse der Hidden-Layer zuzugreifen, werden hinter diesen Hooks implementiert. Das kann in eine Funktion ausgelagert werden, welche die \gls{activation_map}s während der Berechnung des Forward-Pass durch das \gls{vgg16}-Model extrahiert.
 
 \begin{listing}[H]
 \begin{minted}{python}
@@ -23,14 +23,18 @@ def extract_activation_maps(image_batch, model, layers, detach=False):
             self.activation = []
         def hook(self, model, inpt, outpt):
             self.activation.append(outpt.detach() if detach else outpt)
+
     sam = SaveActivationMap()
     handles = []
+
     for layer in layers:
         i = list(dict(model.named_children()).keys()).index(str(layer))
         handles.append(model[i].register_forward_hook(sam.hook))
     model(image_batch)
+
     for handle in handles:
         handle.remove()
+
     return sam.activation
 \end{minted}
 \captionof{lstlisting}{Extrahierung der Activation-Maps mit PyTorch}
@@ -39,7 +43,7 @@ def extract_activation_maps(image_batch, model, layers, detach=False):
 \subsection{Content-Loss}
 
 Um das Content-Loss zu bilden wird mit der zuvor definierten Funktion auf die Zwischenergebnisse der Hidden-Layer zugegriffen.
-Das Ergebnis ist das \gls{mse_loss} aller Zwischenergebnisse der Eingangsdaten (Inhaltsbild) vergliechen mit den Zwischenergebnisse der Ausgangsdaten (generierte Bilder), vgl. Kapitel \ref{sec:content_loss}.
+Das Ergebnis ist das \gls{mse_loss} aller Zwischenergebnisse der Eingangsdaten (Inhaltsbild) verglichen mit den Zwischenergebnisse der Ausgangsdaten (generierte Bilder), vgl. Kapitel \ref{sec:content_loss}.
 
 \begin{listing}[H]
 \begin{minted}{python}
@@ -56,7 +60,7 @@ def content_loss(self, y, x):
 
 \subsection{Style-Loss}
 
-Für das Style-Loss wird eine Funktion benötigt um die Gram-Matrix eines Tensors zu bilden. Die Anzahl der Dimensionen des Eingangstensors wird auf zwei Dimensionen geflächt. Diese Matrix wird einer von sich selbst transponierten Version multipliziert. Danach wird das Ergebnis über das Produkt der Anzahl der Channel, Höhe und Breite des Eingangstensors normalisiert.
+Für das Style-Loss wird eine Funktion benötigt um die Gram-Matrix eines \gls{tensor}s zu bilden. Die Anzahl der Dimensionen des Eingangstensors wird auf zwei Dimensionen geflächt. Diese Matrix wird einer von sich selbst transponierten Version multipliziert. Danach wird das Ergebnis über das Produkt der Anzahl der Channel, Höhe und Breite des Eingangstensors normalisiert.
 
 \begin{listing}[H]
 \begin{minted}{python}
@@ -129,7 +133,7 @@ def forward(self, y, x):
 Die Implementation des Neural Style Transfer Algorithmus wird in einem Jupyter Notebook\footnote{\url{https://jupyter.org/}} durchgeführt. 
 Dadurch können im späteren Verlauf unterschiedliche Tests durchgeführt werden, da die Hyperparameter schnell angepasst werden können.
 
-Das Notebook, vgl. \ref{sec:nootebook_neural_style_transfer}, orientiert sich am zuvor erstellten Programmablaufplan, vlg. Abbildung \ref{img:neural_style_pap_img}. Es bietet außerdem die Auswahl zwischen den PyTorch-Optimizern Adam und L-BFGS \cite{Liu1989}.
+Das Notebook, vgl. \ref{sec:nootebook_neural_style_transfer}, orientiert sich am zuvor erstellten Programmablaufplan, vlg. Abbildung \ref{img:neural_style_pap_img}. Es bietet außerdem die Auswahl zwischen den PyTorch-Optimizern \gls{adam} und L-BFGS \cite{Liu1989}. Folgender Code zeigt die  generele Optimierung von Parametern mit PyTorch.
 
 \begin{listing}[H]
 \begin{minted}{python}
@@ -149,10 +153,7 @@ for epoch in range(epochs):
 
 \section{Fast Neural Style Transfer}
 
-Das Verfahren des Fast Neural Style funtkioniert ähnlich wie beim normalen Neural Style Transfer.
-Anstatt der Pixel des Ausgangsbildes werden jedoch die Gewichte eine Neuronalen Netzwerks optimiert.
-Der bestehende Code kann aus  dem vorherigen Kapitel wiederverwendet werden. 
-Lediglich die Initialisierung des PyTorch Optimizers muss angepasst werden.
+Das Verfahren des Fast Neural Style funtkioniert ähnlich wie beim vorher vorgestellten Neural Style Transfer. Anstatt der Pixel des Ausgangsbildes werden jedoch die Gewichte eines Neuronalen Netzwerks optimiert. Der bestehende Code kann aus  dem vorherigen Kapitel wiederverwendet werden. Lediglich die Initialisierung des PyTorch Optimizers muss angepasst werden.
 
 \begin{listing}[H]
 \begin{minted}{python}
@@ -164,12 +165,11 @@ optimizer = optim.Adam(model.parameters())
 
 \subsection{COCO-Datensatz}
 
-Um das Neuronale Netzwerk zu trainieren, wird ein großer Bilddatensatz benötigt. In dieser Arbeit wird dafür der COCO-Datensatz der Firma Microsoft verwendet \cite{DBLP:journals/corr/LinMBHPRDZ14}. Es handelt sich dabei um einen öffentlichen, freiverfügbaren Datensatz vieler verschiedener Bilder, verschiedener Kategorien. Während des Trainingsverlauf werden zufällige Bilder aus dem COCO-Datensatz genutzt, 
-und das Loss  (Style-, Content- und Total-Variation-Loss) über die Ausgaben, die das Netzwerk generiert, berechnet.
+Um das Neuronale Netzwerk zu trainieren, wird ein großer Bilddatensatz benötigt. In dieser Arbeit wird dafür der \gls{coco}-Datensatz der Firma Microsoft verwendet \cite{DBLP:journals/corr/LinMBHPRDZ14}. Es handelt sich dabei um einen öffentlichen, freiverfügbaren Datensatz vieler verschiedener Bilder, verschiedener Kategorien. Während des Trainingsverlauf werden zufällige Bilder aus dem \gls{coco}-Datensatz genutzt, und das Loss  (Style-, Content- und Total-Variation-Loss) über die Ausgaben, die das Netzwerk generiert, berechnet.
 Mit dem berechnete Loss ist PyTorch in der Lage die Gradienten der Gewichte des Neuronalen Netzwerks zu berechnen und diese 
-Schrittweise zu opitmieren.
+Schrittweise zu optimieren.
 
-Der COCO-Datensatz liegt in Form vieler verschiedener JPEG-Bilder vor. 
+Der \gls{coco}-Datensatz liegt in Form vieler verschiedener \gls{jpeg}-Bilder vor. 
 Um nicht alle Bilder gleichzeitig laden zu müssen, bietet PyTorch die Möglichkeit einen Dataloader\footnote{Weitere Information zum PyTorch-Dataloader: \url{https://pytorch.org/tutorials/beginner/data_loading_tutorial.html}}
 zu nutzen, welcher die Bilder in der gewünschten Batchgröße Schritt für Schritt lädt.
 
@@ -194,10 +194,9 @@ Der Dataloader lädt alle Bilder in allen Unterordnern innerhalbes des konfiguri
 \subsection{Netzwerkarchitektur}
 \label{sec:network_architecture}
 
-Die Architektur des Neuronalen Netzes spielt eine wichtige Rolle. Sie muss in der Lage die Eigenschaften eines Stils möglichst gut zu erlernen und dabei Performant bleiben. Dabei wurde die in Kapitel \ref{sec:fast_neural_style_transfer} vorgestellte Netzwerkarchitektur des Image Transformer Networks implementiert.
-Dies geschieht in PyTorch in Form einer Klasse, welche von \mintinline{python}{Module} erbt.
+Die Architektur des Neuronalen Netzes spielt eine wichtige Rolle. Sie muss in der Lage sein, die Eigenschaften eines Stils möglichst gut zu erlernen und dabei performant bleiben. Dabei wurde die in Kapitel \ref{sec:fast_neural_style_transfer} vorgestellte Netzwerkarchitektur des Image Transformer Networks implementiert. Dies geschieht in PyTorch in Form einer Klasse, welche von \mintinline{python}{Module} erbt.
 
-Um in Kapitel \ref{cha:tests} das Testen unterschiedlicher Netzwerkarchitekturen zu ermöglichen, wird die Klasse des Image Transformer Networks möglichst dynamisch implementiert. Einstellbar sind dabei folgende Werte, die im weiteren Verlauf erklärt werden:
+Um in Kapitel \ref{cha:tests} das Testen unterschiedlicher Netzwerkarchitekturen zu ermöglichen, wird die Klasse des Image Transformer Networks möglichst dynamisch implementiert. Einstellbar sind dabei folgende Parameter, die im weiteren Verlauf erklärt werden:
 
 \begin{itemize}
     \item channel\_multiplier
@@ -209,13 +208,13 @@ Um in Kapitel \ref{cha:tests} das Testen unterschiedlicher Netzwerkarchitekturen
 
 \subsection{Aktivierungsfunktionen}
 
-Benötigt wird eine Funktion, die entsprechende PyTorch-Aktivierungsfunktionen zurück gibt. Hardtanh und Sigmoid eigenen sich als finale Aktivierungsfunktionen des Netzwerks, da Sie Werte zwischen $ 0.0 $ und $ 1.0 $ zurückliefern. Das eignet sich für die Generierung von Bildern, welche in PyTorch ebenfals Pixelwerte zwischen $ 0.0 $ und 1.0 besitzen. Zu beachten ist das die Hardtanh-Funktion mit den Parametern \mintinline{python}{min_val=0.0} und \mintinline{python}{max_val=1.0} initialisiert wird, welche den Wertebereich verschieben. Mit den Standardeinstellungen liegt der Wertebereich der Hardtanh-Funktion zwischen $ -1.0 $ und $ 1.0 $. Die Parameter \mintinline{python}{final_activation_fn} und \mintinline{python}{intermediate_activation_fn} werden dabei auf die entsprechenden PyTorch-Aktivierungsfunktionen überführt.
+Für den dynamischen Aufbau des Netzwerks wird eine Funktion benötigt, die entsprechende PyTorch-Aktivierungsfunktionen zurück gibt. Hardtanh und Sigmoid eigenen sich als finale Aktivierungsfunktionen des Netzwerks, da Sie Werte zwischen $ 0.0 $ und $ 1.0 $ zurückliefern. Das eignet sich für die Generierung von Bildern, welche in PyTorch ebenfals Pixelwerte zwischen $ 0.0 $ und $ 1.0 $ besitzen. Zu beachten ist das die Hardtanh-Funktion mit den Parametern \mintinline{python}{min_val=0.0} und \mintinline{python}{max_val=1.0} initialisiert wird, welche den Wertebereich verschieben. Mit den Standardeinstellungen liegt der Wertebereich der Hardtanh-Funktion zwischen $ -1.0 $ und $ 1.0 $. Die Parameter \mintinline{python}{final_activation_fn} und \mintinline{python}{intermediate_activation_fn} werden dabei auf die entsprechenden PyTorch-Aktivierungsfunktionen überführt.
 
 \subsection{ConvBlock}
 
 Desweiteren müssen die in Kapitel \ref{sec:aufbau} konzipierten Layer-Blöcke implementiert werden.
 Der ConvBlock besteht aus den PyTorch-Layern \mintinline{python}{Conv2d}, \mintinline{python}{InstanceNorm2d} und der gewählten Aktivierungsfunktion.
-\mintinline{python}{InstanceNorm2d} wurde auf Grund des Papers \cite{DBLP:journals/corr/UlyanovVL16} gewählt und dort näher in Bezug auf die Verwendung mit Style-Transfer-Methoden erläutert.
+\mintinline{python}{InstanceNorm2d} wurde auf Grund des Papers \cite{DBLP:journals/corr/UlyanovVL16} gewählt und dort näher in Bezug auf die Verwendung mit Style Transfer-Methoden erläutert.
 
 Die Parameter \mintinline{python}{in_channels} und \mintinline{python}{out_channels} ergeben sich aus dem Parameter \mintinline{python}{channel_multiplier} ($ m $) multipliziert mit einem festen Wert, der je nach Layer $ 1 $, $ 2 $ oder $ 4 $ beträgt.
 
@@ -225,11 +224,11 @@ Der ResidualBlock, vgl. \ref{img:residual_block_img}, besteht aus zwei aufeinand
 
 \subsection{UpSampleBlock}
 
-Der UpSampleBlock schaltet lediglich dem ConvBlock ein Upsampling-Verfahren vor, um das Bild um einen entsprechenden Faktor zu vergrößern. In dieser Arbeit wird Nearest Neighbor Interpolation  verwendet.
+Der UpSampleBlock schaltet lediglich dem ConvBlock ein Upsampling-Verfahren vor, um das Bild um einen entsprechenden Faktor zu vergrößern. In dieser Arbeit wird Nearest Neighbor Interpolation verwendet.
 
 \subsection{TransformerNet}
 
-Neben den Layer-Blöcke wurde noch die eigentliche Netzwerk Architektur implementiert. Die Implementierung nimmt die in \ref{sec:network_architecture} beschriebenen Parameter im Konstruktor entgegen um eine entsprechende Netzwerk-Architektur zu generieren. Neben den bereits beschriebenen Einstellungen gibt \mintinline{python}{bottleneck_size} die Anzahl der hintereinander geschalteten ResidualBlocks an. Der \mintinline{python}{bottleneck_type} ist für zukünftige Erweiterungen vorgesehen, damit der ResidualBlock durch einen anders aufgebauten Block ersetzt werden kann. Außerdem wurde ein anfängliches Padding eingefügt um die ursprüngliche Bildgröße beizubehalten.
+Neben den Layer-Blöcken wurde noch die eigentliche Netzwerkarchitektur implementiert. Die Implementierung nimmt die in \ref{sec:network_architecture} beschriebenen Parameter im Konstruktor entgegen um eine entsprechende Netzwerkarchitektur zu generieren. Neben den bereits beschriebenen Einstellungen gibt \mintinline{python}{bottleneck_size} die Anzahl der hintereinander geschalteten ResidualBlocks an. Der \mintinline{python}{bottleneck_type} ist für zukünftige Erweiterungen vorgesehen, damit der ResidualBlock durch einen anders aufgebauten Block ersetzt werden kann. Außerdem wurde ein anfängliches Padding eingefügt um die ursprüngliche Bildgröße beizubehalten.
 
 \subsection{Weitere Implementierungen}
 
@@ -237,8 +236,8 @@ Zusätzlich zu den bereits vorgestellten Implementierungen wurden Hilfsskripte u
 Außerdem wurde eine Trainer-Klasse entworfen die in der Lage ist Einstellungen für Trainingsläufe aus einer Konfiguration Datei zu lesen und somit 
 ein aufeinanderfolgendes Training mehrerer Modelle zu ermöglichen. Auf diese Arte ist es möglich viele unterschiedliche Parametereinstellungen zu testen.
 
-Zur Realisierung eines Prototypens wurde eine JSON-API mit dem Framework Flask\footnote{Flask: \url{http://flask.pocoo.org/}} erstellt. Die API stellt einen Endpunkt zur Verfügung, welche den Style Transfer mit einem gewünschten Modell durchführt. Sie wurde in einen Docker\footnote{Docker: \url{https://www.docker.com/}}-Container überführt um Hosting auf unterschiedlichen Geräten zu erleichtern.
+Zur Realisierung eines Prototypens wurde eine JSON-API mit dem Framework Flask\footnote{Flask: \url{http://flask.pocoo.org/}} erstellt. Die API stellt einen Endpunkt zur Verfügung, welche den Style Transfer mit einem gewünschten Model durchführt. Sie wurde in einen Docker\footnote{Docker: \url{https://www.docker.com/}}-Container überführt um das Hosting auf unterschiedlichen Geräten zu erleichtern.
 
-Um die Ergebnisse zu visualisieren wurde eine Frontend-Applikation mit dem Framework Angular\footnote{Angular: \url{https://angular.io/}} erstellt. Diese kann Bilder über die Webcam eines Handys oder eines Computers aufnehmen und Sie an die Flask-API senden, welche folgend das geschossene Bild in einen vorher ausgewählten Stil überführt.
+Um die Ergebnisse zu visualisieren wurde eine Frontend-Applikation mit dem Framework Angular\footnote{Angular: \url{https://angular.io/}} erstellt. Diese kann Bilder über die Webcam eines Handys oder eines Computers aufnehmen und sie an die Flask-API senden, welche folgend das geschossene Bild in einen vorher ausgewählten Stil überführt.
 
 Skripte, Frontend-Applikationen und JSON-API sind nicht Bestandteil dieser Arbeit und befinden sich in einem protypischen Zustand. Der komplette Code zu diesem Projekt ist unter \url{https://github.com/christophstach/style-transfer-project} öffentlich einsehbar. Der Code des Frontends unter \url{https://github.com/christophstach/style-transfer-frontend}. Ein gehosteter Prototyp zum Testen des Style Transfers ist unter \url{https://stylized.christophstach.me/} verfügbar.

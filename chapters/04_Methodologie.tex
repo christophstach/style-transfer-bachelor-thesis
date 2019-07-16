@@ -16,7 +16,7 @@ Neben den vorgestellten Implementierungen extistieren viele weitere Implementier
 \section{Neural Style Transfer}
 \label{sec:method_neural_style_transfer}
 
-Als ersten Schritt wird die Loss-Funktion entwickelt. Da das Loss aus drei Teilen besteht eignet es sich dieses als Klasse zu realisieren. Das Style-Loss, Content-Loss sowie Total-Variation-Loss können als einzelne Methoden dieser Klasse implementiert werden und als Gesamt-Loss mit Gewichtung zusammengefasst werden. Außerdem können die notwendingen Hyperparameter des Perceptual-Loss der Klasse bei Instanziierung übergeben werden. Desweiteren werden unterschiedliche Hilfsfunktionen benötigt um die Gram-Matrix zu berechnen, sowie das Laden und Speichern von Bilder und deren Umwandlung in und von Tensoren\footnote{Als \gls{tensor}en werden Matrizen/Vektoren jeglicher Dimensionen bezeichnet} zu ermöglichen.
+Als ersten Schritt wird die Loss-Funktion entwickelt. Da das Loss aus drei Teilen besteht eignet es sich dieses als Klasse zu realisieren. Das Style-Loss, Content-Loss sowie Total-Variation-Loss können als einzelne Methoden dieser Klasse implementiert werden und als Gesamt-Loss mit Gewichtung zusammengefasst werden. Außerdem können die notwendingen Hyperparameter des Perceptual-Loss der Klasse bei Instanziierung übergeben werden. Desweiteren werden unterschiedliche Hilfsfunktionen benötigt um die Gram-Matrix zu berechnen, sowie das Laden und Speichern von Bilder und deren Umwandlung in und von \gls{tensor}en\footnote{Als \gls{tensor}en werden Matrizen/Vektoren jeglicher Dimensionen bezeichnet} zu ermöglichen.
 
 Um mathematischen Operationen durchzuführen, die bei Berechung der Gram-Matrix oder des Loss verwendet werden, benötigt man außerdem unterschiedliche Funktionen, die das Rechnen mit Vektoren und Matrizen ermöglichen.
 
@@ -39,7 +39,7 @@ Der Algorithmus wird in einer interaktiven Umgebung erstellt, damit unterschiedl
 	\label{img:neural_style_pap_img}
 \end{figure}
 
-Bei Start des Programms werden das Content-Bild \lstinline{content_image} und das Style-Bild \lstinline{style_image} geladen. Danach wird eine Kopie von \lstinline{content_image} in \lstinline{output_image} erstellt. Die Bilder liegen dann als Tensoren der Form $ Channel \times Height \times Width $, wobei $ Channel = 3 $ beträgt, da Bilder im RGB-Farbraum drei Farbkanäle aufweisen.
+Bei Start des Programms werden das Content-Bild \lstinline{content_image} und das Style-Bild \lstinline{style_image} geladen. Danach wird eine Kopie von \lstinline{content_image} in \lstinline{output_image} erstellt. Die Bilder liegen dann als \gls{tensor}en der Form $ Channel \times Height \times Width $, wobei $ Channel = 3 $ beträgt, da Bilder im RGB-Farbraum drei Farbkanäle aufweisen.
 
 Es wird ein Objekt der Klasse \lstinline{PerceptualLoss} erstellt. Bei der Instanziierung werden die folgenden benötigten Hyperparamter als Argumente dem Konstruktor übergeben:
 
@@ -50,7 +50,7 @@ Es wird ein Objekt der Klasse \lstinline{PerceptualLoss} erstellt. Bei der Insta
 	\item \lstinline{content_weight}: Die Gewichtung des Content-Loss. $ 1 $ 
 	\item \lstinline{style_weight}: Die Gewichtung des Style-Loss. $ 1 \times 10^{7} $
 	\item \lstinline{total_variation_weight}: Die Gewichtung des Total-Variation-Denoising Faktors. $ 1 \times 10^{-5} $
-	\item \lstinline{style_image}: Der Tensor des gewünschten Style-Bildes.
+	\item \lstinline{style_image}: Der \gls{tensor} des gewünschten Style-Bildes.
 \end{itemize}
 
 Die Werte orientieren sich an den im Paper \cite{DBLP:journals/corr/JohnsonAL16} verwendenten Hyperparamtern. Je nach gewähltem Stil sind jedoch abweichenden Einstellung erforderlich um optisch ansprechende Ergebnisse zu erzeugen. Auf unterschiedliche Kombination der Hyperparamter wird im Kapitel \ref{cha:tests} eingangen.

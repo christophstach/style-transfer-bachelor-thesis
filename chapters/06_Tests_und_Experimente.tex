@@ -1,8 +1,7 @@
 \chapter{Tests und Experimente}
 \label{cha:tests}
 
-Im Kapitel Tests und Experimente werden unterschiedliche Hyperparameter-Konfigurationen auf ihre Auswirkungen getestet. Außerdem wird mit unterschiedlichen
-Netzwerk-Architekturen die Performanz auf Geräten mit leistungsarmer Hardware gemessen.
+Im Kapitel Tests und Experimente werden unterschiedliche Hyperparameter-Konfigurationen auf ihre Auswirkungen getestet. Außerdem wird mit unterschiedlichen Netzwerkarchitekturen die Performanz auf Geräten mit leistungsarmer Hardware gemessen.
 
 \section{Auswirkungen der Hyperparameter}
 
@@ -159,9 +158,9 @@ In der zweiten Abbildungen werden verschiedene die verschiedenen Total-Variation
 
 \subsection{Interpretation der Ergebnisse}
 
-Wie beiden Tests zu sehen ist, werden die Muster mit zunehmendem Style-Weight $ \beta $ auf dem Ausgangsbild immer stärker generierten. Mit $ b = 10^{5} $ sind bei beiden Stilen die Muster des Gemäldes kaum noch zu erkennen. Lediglich wird das Ausgangsbild den Farben des Stilbildes angepasst. Ein optisch ansprechender Effekt ergibt sich bei beiden Stilen ab $ \beta = 10^{7} $. 
+Wie beiden Tests zu sehen ist, werden die Muster mit zunehmendem Style-Weight $ \beta $ auf dem Ausgangsbild immer stärker generiert. Mit $ b = 10^{5} $ sind bei beiden Stilen die Muster des Gemäldes kaum noch zu erkennen. Lediglich wird das Ausgangsbild den Farben des Stilbildes angepasst. Ein optisch ansprechender Effekt ergibt sich bei beiden Stilen ab $ \beta = 10^{7} $. 
 
-Mit zunehmendem Total-Variation-Weight $ \gamma $ fließen die Farben mehr ineinander und das Ausgangsbild wird verschommener. Das ist besodners gut zu sehen bei The Starry Night mit $ \gamma = 10^{-3} $ und \text{The Scream} mit $ \gamma = 10^{-4} $. Für The Scream ist eine Gewichtung von $ \gamma = 10^{-3} $ bereits zu hoch gewählt. Das Ausgangsbild entwickelt sich zu einem grauen Rauschen.
+Mit zunehmendem Total-Variation-Weight $ \gamma $ fließen die Farben mehr ineinander und das Ausgangsbild wird verschommener. Das ist besonders gut zu sehen bei The Starry Night mit $ \gamma = 10^{-3} $ und \text{The Scream} mit $ \gamma = 10^{-4} $. Für The Scream ist eine Gewichtung von $ \gamma = 10^{-3} $ bereits zu hoch gewählt. Das Ausgangsbild entwickelt sich zu einem grauen Rauschen.
 
 
 \section{Auswirkungen der Netzwerkarchitekturen}
@@ -190,9 +189,15 @@ Gemessen wird die Berechnungsgeschwindigkeit beim Forward-Pass durch das Netzwer
     \label{tab:networks}
 \end{table}
 
-Bei der Berechnung des Forward-Pass macht es einen Unterschied ob sie  auf dem CPU oder dem GPU eines Geräts durchgeführt wird. Neuronale Netzwerke können auf einer GPU schneller als auf einem CPU berechnet werden. Das liegt daran, dass eine GPU besonders auf die Berechnung von Matrix-Operationen (wie Sie auch bei grafischen Anwendungen verwendet werden) spezialisiert ist.
+\subsection{Verwendete Geräte}
+
+Bei der Berechnung des Forward-Pass macht es einen Unterschied ob sie auf dem CPU oder dem GPU eines Geräts durchgeführt wird. Neuronale Netzwerke können auf einer GPU schneller als auf einem CPU berechnet werden. Das liegt daran, dass eine GPU besonders auf die Berechnung von Matrix-Operationen (wie Sie auch bei grafischen Anwendungen verwendet werden) spezialisiert ist.
 
 Die Daten werden beim Einsatz des GPUs in den Grafikspeicher geladen. Bei der Berechnung über den CPU wird der Arbeitsspeicher (RAM) des Geräts verwendet. Der RAM kann über die Verwendung einer Auslagerungsdatei (SWAP-Datei) virtuell erweitert werden. Somit kann verhindert werden das es zu Fehlern wegen unzureichendem Arbeitsspeicher kommt.
+
+\subsubsection{Gerät 1: Dell XPS 15 9550}
+
+Beim Dell XPS 15 9550 handelt es sich um einen handelsüblichen Laptop aus dem Jahr 2016.
 
 \begin{table}[H]
     \centering
@@ -207,32 +212,36 @@ Die Daten werden beim Einsatz des GPUs in den Grafikspeicher geladen. Bei der Be
     \label{tab:xps15}
 \end{table}
 
+\subsubsection{Gerät 2: Jetson TX2}
+
+Beim Jetson TX2 handelt es sich um ein leistungsarmes Gerät für die Realiserung von Algorithmen der künstlichen Intelligenz auf eingebetteten  Systemen.
+
 \begin{table}[H]
     \centering
     \begin{tabular}{ |c|c| }
         \hline
-        Prozessor       & Quad-Core ARM®Cortex®-A57 MPCore \\ \hline
+        Prozessor       & Dual-Core NVIDIA Denver 2 64-Bit CPU, Quad-Core ARM®Cortex®-A57 MPCore \\ \hline
         Grafikkarte     & 256-core NVIDIA Maxwell™ GPU \\ \hline
-        Arbeitsspeicher & 4GB 64-bit LPDDR4  \\ \hline
-        Festplatte      & 16GB eMMC 5.1 \\ \hline
+        Arbeitsspeicher & 8GB 128-bit LPDDR4 Memory  \\ \hline
+        Festplatte      & 32GB eMMC 5.1 \\ \hline
     \end{tabular}
-    \caption{Spezifikation: Jetson TX1}
+    \caption{Spezifikation: Jetson TX2}
     \label{tab:jetson_tx1}
 \end{table}
 
-
-Abschließend wurden die unterschiedlichen Netzwerkearchitekturen auf ihre Performanz getestet. Tests die wegen unzureichendem Arbeitsspeicher oder Grafikspeicher fehlschlagen sind, wurden als \textcolor{danger}{nicht durchführbar} gekennzeichnet. Um die Tests durchzuführen wurden Bilder der Größen 1920 * 1080 Pixel, 1024 * 786 Pixel und 640 * 480 Pixel jeweils 10 mal mit jedem Netzwerk berechnet, die Berechnugnsgeschwindigkeit gemessen, und das arithmische Mittel der 10 Durchläufe gebildet. Die Ergebnisse sind in den Anlagen \ref{tab:1920x1080}, \ref{tab:1024x768} und \ref{tab:640x480} angefügt.
-
-\subsection{Interpretation der Ergebnisse}
+\subsection{Durchführung der Experimente}
 
 Alle Netzwerke wurden mit einer Batch-Size von $ 24 $, Bildgrößen von 224 * 224 Pixel und einer Learning-Rate von $ 10^{-3} $ trainiert. Es wurden 4 Epochen der Trainingsdaten aus dem Jahr 2017 des COCO-Datensatzes verwendet, welche $ 118287 $ Bilder enthalten. Insgesamt wurden die Modelle mit $ 473148 $ Bildern trainiert. Dabei dauerte die Trainingszeit auf einem Server mit einem GeForce GTX 1080 Ti GPU pro Model zwischen 3 und 5 Stunden.
 
 Beim Training fiel auf das die generierten Bilder großflächige, schwarze oder weiße Artefakte enthielten. Ein Austausch der finalen Aktivierungsfunktion HardTanH, vgl. \ref{sec:hardtanh}, mit der Sigmoid-Aktivierungsfunktion, vgl. \ref{sec:sigmoid}, konnte das Problem lösen.
 
-Auffällig bei den Messungen ist das der Parameter $ m $, welche die Anzahl der Channels im Netzwerk beeinflusst, bei Berechnungen auf dem CPU einen größere Performanzverbesserung bietet als der Parameter $ s $. Bei Berechnungen mit einem GPU ist der Parameter $ s $, Anzahl der ResidualBlocks weit aus relatanter für die Berechnugnsgeschwindigkeit des Netzwerks. Bei den Netzwerken 7, 8 und 9 spielt der Paramter $ m $ bei der Benutzung eines GPU fast garkeine Rolle mehr. Die Berechnung der Netzwerke mit Full HD Bildern war jedoch mit keinem der Netzwerke auf dem GPU möglich.
+Abschließend wurden die unterschiedlichen Netzwerkearchitekturen auf ihre Performanz getestet. Tests die wegen unzureichendem Arbeitsspeicher oder Grafikspeicher fehlschlugen, wurden als \textcolor{danger}{nicht durchführbar} gekennzeichnet. Um die Tests durchzuführen wurden Bilder der Größen 1920 * 1080 Pixel, 1024 * 786 Pixel und 640 * 480 Pixel jeweils 10 mal mit jedem Netzwerk berechnet, die Berechnugnsgeschwindigkeit gemessen, und das arithmische Mittel der 10 Durchläufe gebildet. Die Ergebnisse sind in den Anlagen \ref{tab:1920x1080}, \ref{tab:1024x768} und \ref{tab:640x480} angefügt.
 
-In der folgenden Abbildung ist zu sehen das alle Netzwerkarchitekturen, nach Austausch der finalen Aktivierungsfunktion, gleichermaßen in der Lagen waren den Stil von The Starry Night zu extrahieren.
-Alle gelernten Muster sind zwar geringfügig unterschiedlich, jedoch optisch gleichermaßen ansprechend und dem Stil des Bildes The Starry Night ähnlich.
+\subsection{Interpretation der Ergebnisse}
+
+Auffällig bei den Performanzmessungen ist das der Parameter $ m $, welche die Anzahl der Channels im Netzwerk beeinflusst, bei Berechnungen auf dem CPU einen größere Performanzverbesserung bietet als der Parameter $ s $. Bei Berechnungen mit einem GPU ist der Parameter $ s $, Anzahl der ResidualBlocks, weit aus relevanter für die Berechnugnsgeschwindigkeit des Netzwerks. Bei den Netzwerken 7, 8 und 9 spielt der Parameter $ m $ bei der Benutzung eines GPU fast garkeine Rolle mehr. Die Berechnung der Netzwerke mit Full HD Bildern war jedoch mit keinem der Netzwerke auf dem GPU möglich.
+
+In der folgenden Abbildung ist zu sehen das alle Netzwerkarchitekturen, nach Austausch der finalen Aktivierungsfunktion, gleichermaßen in der Lagen waren den Stil von The Starry Night zu extrahieren. Alle gelernten Muster sind zwar geringfügig unterschiedlich, jedoch optisch gleichermaßen ansprechend und dem Stil des Bildes The Starry Night ähnlich.
 
 \begin{figure}[H]
     \centering
