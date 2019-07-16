@@ -225,7 +225,7 @@ Abschließend wurden die unterschiedlichen Netzwerkearchitekturen auf ihre Perfo
 
 \subsection{Interpretation der Ergebnisse}
 
-Alle Netzwerke wurden mit einer Batch-Size von $ 24 $, Bildgrößen von 224 * 224 Pixel und einer Learning-Rate von $ 10^{-3} $ trainiert. Es wurden 4 Epochen der Trainingsdaten aus dem Jahr 2017 des COCO-Datensatzes verwendet, welche $ 118287 $ Bilder enthalten. Insgesamt wurden die Modelle mit $ 473148 $ Bildern trainiert. Dabei dauerte die Trainingszeit auf einem Server mit einem GeForce GTX 1080 Ti GPU pro Modell zwischen 3 und 6 Stunden.
+Alle Netzwerke wurden mit einer Batch-Size von $ 24 $, Bildgrößen von 224 * 224 Pixel und einer Learning-Rate von $ 10^{-3} $ trainiert. Es wurden 4 Epochen der Trainingsdaten aus dem Jahr 2017 des COCO-Datensatzes verwendet, welche $ 118287 $ Bilder enthalten. Insgesamt wurden die Modelle mit $ 473148 $ Bildern trainiert. Dabei dauerte die Trainingszeit auf einem Server mit einem GeForce GTX 1080 Ti GPU pro Model zwischen 3 und 5 Stunden.
 
 Beim Training fiel auf das die generierten Bilder großflächige, schwarze oder weiße Artefakte enthielten. Ein Austausch der finalen Aktivierungsfunktion HardTanH, vgl. \ref{sec:hardtanh}, mit der Sigmoid-Aktivierungsfunktion, vgl. \ref{sec:sigmoid}, konnte das Problem lösen.
 
