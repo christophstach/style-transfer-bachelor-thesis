@@ -18,7 +18,7 @@ Neben den vorgestellten Implementierungen extistieren viele weitere Implementier
 
 Als ersten Schritt wird die Loss-Funktion entwickelt. Da das Loss aus drei Teilen besteht eignet es sich dieses als Klasse zu realisieren. Das Style-Loss, Content-Loss sowie Total-Variation-Loss können als einzelne Methoden dieser Klasse implementiert werden und als Gesamt-Loss mit Gewichtung zusammengefasst werden. Außerdem können die notwendingen Hyperparameter des Perceptual-Loss der Klasse bei Instanziierung übergeben werden. Desweiteren werden unterschiedliche Hilfsfunktionen benötigt um die Gram-Matrix zu berechnen, sowie das Laden und Speichern von Bilder und deren Umwandlung in und von Tensoren\footnote{Als \gls{tensor}en werden Matrizen/Vektoren jeglicher Dimensionen bezeichnet} zu ermöglichen.
 
-Um mathematischen Operationen durchzuführen, die bei Berechung der Gram-Matrix oder des Loss verwendet werden, benötigt man außerdem unterschiedliche Funktionen die das Rechnen mit Vektoren und Matrizen ermöglichen.
+Um mathematischen Operationen durchzuführen, die bei Berechung der Gram-Matrix oder des Loss verwendet werden, benötigt man außerdem unterschiedliche Funktionen, die das Rechnen mit Vektoren und Matrizen ermöglichen.
 
 
 % https://drive.google.com/file/d/1gn8Q9fPT6ZOsA8DkEg-lpwexMV28C-Px/view?usp=sharing
@@ -53,19 +53,19 @@ Es wird ein Objekt der Klasse \lstinline{PerceptualLoss} erstellt. Bei der Insta
 	\item \lstinline{style_image}: Der Tensor des gewünschten Style-Bildes.
 \end{itemize}
 
-Die Werte orientieren sich an den im Paper \cite{DBLP:journals/corr/JohnsonAL16} verwendenten Hyperparamtern. Je nach gewähltem Style sind jedoch abweichenden Einstellung erforderlich um optisch ansprechende Ergebnisse zu erzeugen. Auf unterschiedliche Kombination Hyperparamter der wird im Kapitel \ref{cha:tests} eingangen.
+Die Werte orientieren sich an den im Paper \cite{DBLP:journals/corr/JohnsonAL16} verwendenten Hyperparamtern. Je nach gewähltem Stil sind jedoch abweichenden Einstellung erforderlich um optisch ansprechende Ergebnisse zu erzeugen. Auf unterschiedliche Kombination der Hyperparamter wird im Kapitel \ref{cha:tests} eingangen.
 
 \section{Fast Neural Style Transfer}
 
-Die zuvor konzipierte Loss-Funktion kann bei beim Fast Neural Style Transfer wieder verwendet werden. 
-Im Gegensatz zum vorherigen Verahren werden nicht die Pixel als Parameter anhand der Loss-Funktion optimiert, sondern die Gewichtungsparameter eines Neuronalen Netzwerks. Das wird auch Training genannt. Nach beendeter Trainingsphase ist das Netzwerk in der Lage willkürliche Bilder in Bilder mit dem mit \lstinline{style_image} ausgewählten Style umzuwandeln.
+Die zuvor konzipierte Loss-Funktion kann beim Fast Neural Style Transfer wieder verwendet werden. 
+Im Gegensatz zum vorherigen Verahren werden nicht die Pixel als Parameter anhand der Loss-Funktion optimiert, sondern die Gewichtungsparameter eines Neuronalen Netzwerks. Dieses Verfahren wird auch Training genannt. Nach beendeter Trainingsphase ist das Netzwerk in der Lage willkürliche Bilder in Bilder mit dem mit \lstinline{style_image} ausgewählten Stil umzuwandeln.
 
 Im Zuge dieser Arbeit soll eine Netzwerkarchitektur gefunden werden, die in der Lage ist diese Aufgabe zu bewältigen. Außerdem wird die Netzwerkarchitektur im Kapitel \ref{cha:tests} auf ihre Performanz auf Geräten mit leistungsarmer Hardware getestet.
 
 \subsection{Aufbau}
 \label{sec:aufbau}
 
-Diese Netzwerkarchitektur, welche beim Fast Neural Style Transfer verwedndet wird, nachfolgend Transformer Net genannt, orientiert sich an der des Github-Repository \cite{PyTorchFastNeuralStyle}, welches den Fast Neural Style Transfer implementiert.
+Die Netzwerkarchitektur, welche beim Fast Neural Style Transfer verwedndet wird, nachfolgend Transformer Net genannt, orientiert sich an der des Github-Repository \cite{PyTorchFastNeuralStyle}, welches den Fast Neural Style Transfer implementiert.
 Es basiert dabei aus drei Teilen. Einem Down-Sampling-Teil, einem Computational-Teil (auch Bottleneck genannt) und einem Up-Sampling-Teil.
 
 \begin{figure}[H]
@@ -94,9 +94,9 @@ Mit einem Stride von zwei, wird das Bild ungefähr um die Hälfte der ursprüngl
 	\label{img:residual_block_img}
 \end{figure}
 
-Der zweite Teil besteht aus Residual Blöcken, beschrieben in \cite{DBLP:journals/corr/HeZRS15}. Diese bestehen aus zwei aufeinanderfolgenden Convolutional Layern, die mit einer sogennanten Skip-Connection mit ihren Eingangsdaten verbunden sind. Das hat den Vorteil das die ursprünglichen Eingangsdaten nach jedem Layer noch vorhanden sind. Das beugt dem \gls{vanishing_gradient} Problem vor. In diesem Teil des Netzwerk entsteht die meiste Berechnung und die meisten Daten des Styles werden hier in den Gewichten der Kernels gespeichert.
+Der zweite Teil besteht aus Residual Blöcken, beschrieben in \cite{DBLP:journals/corr/HeZRS15}. Diese bestehen aus zwei aufeinanderfolgenden Convolutional Layern, die mit einer sogennanten Skip-Connection mit ihren Eingangsdaten verbunden sind. Das hat den Vorteil, dass die ursprünglichen Eingangsdaten nach jedem Layer noch vorhanden sind. Das beugt dem \gls{vanishing_gradient} Problem vor. In diesem Teil des Netzwerk entsteht die meiste Berechnung und die meisten Daten des Stils werden hier in den Gewichten der Kernels gespeichert.
 
-Im dritten Teil wird das Bild durch Upsampling wieder auf seine ursprüngliche Maße vergrößert. Außerdem werden die Channels auf drei reduziert um es als RGB-Bild anzeigen zu können. Die Vergrößerung und wird durch Nearest Neighbor Interplolation kombiniert mit einem Convolutional Layer realisiert.
+Im dritten Teil wird das Bild durch Upsampling wieder auf seine ursprüngliche Maße vergrößert. Außerdem werden die Channels auf drei reduziert um es als RGB-Bild anzeigen zu können. Die Vergrößerung wird durch Nearest Neighbor Interplolation kombiniert mit einem Convolutional Layer realisiert.
 Es wird zusammen mit seinen Vorteilen in \cite{odena2016deconvolution} näher beschrieben.
 
 \pagebreak

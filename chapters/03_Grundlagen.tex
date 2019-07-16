@@ -23,7 +23,7 @@ Fully-Connected Neural Networks bestehen aus mehreren hintereinander geschaltete
 \end{figure}
 
 Die Kreise stellen die Neuronen dar und die Kanten sind die Gewichtungsfaktoren.
-Eine solche Struktur kann mit einer mit einer einziger Matrix-Multiplation berechnet werden.
+Eine solche Struktur kann mit einer einzigen Matrix-Multiplation berechnet werden.
 
 \begin{align}
 	f(x) = \sigma(x * w + b)
@@ -120,7 +120,7 @@ Im Folgende werden die in dieser Arbeit verwendeten Aktivierungsfunktionen besch
 
 \subsection{LeakyReLU, PReLU}
 
-Die Aktiverungsfunktionen LeakyReLU und PReLU sind Abwandulung von ReLU und werden um den Parameter $ \alpha $ ergänzt. Bei LeakyReLU handelt es sich bei $ \alpha $ um einen fixen, einstellbaren Wert und bei PReLU wird dieser im Laufe der Trainingsphase gelernt \cite{DBLP:journals/corr/XuWCL15}.
+Die Aktiverungsfunktionen LeakyReLU und PReLU sind Abwandulung von ReLU und werden um den Parameter $ \alpha $ ergänzt. Bei LeakyReLU handelt es sich bei $ \alpha $ um einen fixen, einstellbaren Wert und bei PReLU wird dieser im Laufe der Trainingsphase gelernt \cite{DBLP:journals/corr/XuWCL15}. ReLU hat gegen über PReLU und LeakyReLU den Nachteil, dass Neuronen deaktiviert werden können, da die linke Seite der Aktiverungsfunktion 0 beträgt. Somit ergeben sich auch bei der Berechnung der Gradienten keine Veränderungen.
 
 \begin{equation}
 	\sigma(\alpha ,x) = {
@@ -177,7 +177,7 @@ Die Sigmoid-Funktion wird in dieser Arbeit als alternative, abschliesende Aktive
 	}
 \end{equation}
 
-Die Ergebnisse der Sigmoid-Funktion konvergieren zu 0 und 1 ereichen diese jedoch nie komplett.
+Die Ergebnisse der Sigmoid-Funktion konvergieren zu 0 und 1, ereichen diese jedoch nie komplett.
 
 \begin{figure}[H]
 	\centering
@@ -219,7 +219,7 @@ Die Ergebnisse nach Durchlauf eines Convolutional-Layer werden Feature Maps oder
 \section{Backprogation}
 \label{sec:backpropagation}
 
-Um ein Neuronales Netzwerk zu trainieren muss das Loss, welches ein Neurales Netzwerk erzeugt, minimiert werden. Das Loss berechnet sich aus der Differenz zwischen $ y $ und $ \hat{y} $. Wobei $ y $ die echten gelabelten Ergebnisse sind und $ \hat{y} $ die Vorhersage, die das Neuronale Netzwerk erzeugt.
+Um ein Neuronales Netzwerk zu trainieren muss das Loss, welches ein Neurales Netzwerk erzeugt, minimiert werden. Dabei berechnet eine Funktionen den das Loss des Netzwerks. Beispielsweise berechnet sich das \gls{mse_loss} aus der Differenz zwischen $ y $ und $ \hat{y} $. Wobei $ y $ die echten gelabelten Ergebnisse sind und $ \hat{y} $ die Vorhersage, die das Neuronale Netzwerk erzeugt.
 Anhand dieser Daten kann ein Optimizer, wie beispielsweise \gls{adam} \cite{kingma2015adam}, die Gewichte des Netzwerks anpassen um das Loss zu minimieren.
 
 \begin{figure}[H]
@@ -250,7 +250,7 @@ Folgender Graph veranschaulicht die Berechnung der Gradienten der Funktion.
 Die Funktion wird in beliebig viele Unterfunktionen zerteilt und in Form eines gerichteten Graphen aufgeschrieben.
 In einem Forward-Pass werden die Zwischenergebnisse (hier in Grün dargestellt) oberhalb der Kanten festgehalten.
 
-Im Backward-Pass (Zwischenergebnisse in Rot dargestellt) wird von jedem Knoten die erste Ableitung gebildet. Die Zwischenergebnisse des Forward-Pass werden in die Ableitung eingesetzt und danach mit dem Backward-Passergebnis des Vorschritts multipliziert.
+Im Backward-Pass (Zwischenergebnisse in Rot dargestellt) wird von jedem Knoten die erste Ableitung gebildet. Die Zwischenergebnisse des Forward-Pass werden in die Ableitung eingesetzt und danach mit dem Backward-Passergebnis des Folgeschritts multipliziert.
 
 Beispielrechnungen des Backward-Pass der letzten drei Knoten: 
 
@@ -275,7 +275,7 @@ Durch die Berechnung der Gradienten der Gewichtsvariable $ w $ ist der Optimizer
 
 \section{Verwandte Arbeiten}
 
-Diese Arbeit basiert größtenteils auf den bereits bestehenden Lösungen von Johnson et. al. und Gatys et al., welche in den folgenden Abschnitten erklärt werden.
+Diese Arbeit basiert auf den bereits bestehenden Lösungen von Johnson et. al. und Gatys et al., welche in den folgenden Abschnitten erklärt werden.
 
 \subsection{Neural Style Transfer}
 \label{sec:neural_style_transfer}
@@ -317,7 +317,7 @@ Zwischen den \gls{activation_map}s $ P $  des Contentbildes $ \vec{p} $ und den 
 \subsubsection{Style-Loss}
 \label{sec:style_loss}
 
-Das Style-Loss verwendet die \gls{activation_map}s nicht direkt sondern bildet vorher die Gram-Matrix dieser. Das hat zur Folge das räumliche Informationen verworfen werden, jedoch Farben und Muster erhalten bleiben, die beim Übertragen des Stils die wichtigste Rolle einehmen.
+Das Style-Loss verwendet die \gls{activation_map}s nicht direkt, sondern bildet vorher die Gram-Matrix dieser. Das hat zur Folge das räumliche Informationen verworfen werden, jedoch Farben und Muster erhalten bleiben, die beim Übertragen des Stils die wichtigste Rolle einehmen.
 
 Um die Gram-Matrix mehrerer \gls{activation_map}s zu berechnen, werden die Matrizen geflächt, Height- und Width-Dimension werden zu einer Dimension zusammengefügt. Daraus ergibt sich eine 2-dimensionale Matrix der Form $ C \times HW $. Diese wird transponiert mit sich selbst multipliziert.
 
@@ -363,8 +363,7 @@ Das Perceptual-Loss ist die Kombination aus Content-, Style- und Total-Variation
 \subsection{Fast Neural Style Transfer}
 \label{sec:fast_neural_style_transfer}
 
-Im Gegensatz zum im Kapitel \ref{sec:neural_style_transfer} vorgestellten Algorithmus, in dem die Pixel des Eingangsbildes direkt optimiert werden, wird ein
-Neuronales Netzwerk darauf trainiert, die Konzepte eines Stils zu erlernen. Dieses Verfahren wird im Paper \cite{DBLP:journals/corr/JohnsonAL16} genauer beschrieben. Pro Style wird dabei ein Model trainiert. Die verwendete Loss-Funktion ist das bereits zuvor beschriebene Perceptual-Loss \ref{sec:perceptual_loss}.
+Im Gegensatz zum im Kapitel \ref{sec:neural_style_transfer} vorgestellten Algorithmus, in dem die Pixel des Eingangsbildes direkt optimiert werden, wird ein Neuronales Netzwerk darauf trainiert, die Konzepte eines Stils zu erlernen. Dieses Verfahren wird im Paper \cite{DBLP:journals/corr/JohnsonAL16} genauer beschrieben. Pro Stil wird dabei ein Model trainiert. Die verwendete Loss-Funktion ist das bereits zuvor beschriebene Perceptual-Loss \ref{sec:perceptual_loss}.
 
 \begin{figure}[H]
 	\centering
@@ -373,4 +372,4 @@ Neuronales Netzwerk darauf trainiert, die Konzepte eines Stils zu erlernen. Dies
 	\label{img:fast_neural_style_transfer}
 \end{figure}
 
-Durch die Verwendung eines Image Transformer Networks kann die Berechnungszeit verbessert werden, da das neu gestylte Bild mit einem Forward-Pass durch das Netzwerk erstellt wird. Die rechenintensive Optimierung durch den Backpropagation-Algorithmus \ref{sec:backpropagation} entfällt. Das Training eines Image Transformer Netzworks nimmt jedoch viel Zeit in Anspruch.
+Durch die Verwendung eines Image Transformer Networks kann die Berechnungszeit verbessert werden, da das neu gestylte Bild mit einem Forward-Pass durch das Netzwerk erstellt wird. Die rechenintensive Optimierung und Berechnung der Pixel-Gradienten durch den Backpropagation-Algorithmus \ref{sec:backpropagation} entfällt. Das Training eines Image Transformer Netzworks nimmt jedoch viel Zeit in Anspruch.
