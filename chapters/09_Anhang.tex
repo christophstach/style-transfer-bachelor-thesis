@@ -285,6 +285,36 @@ class TransformerNet(nn.Module):
 
 \chapter{}
 
+\section{Netzwerkarchitekturen}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ |c|c|c|c| }
+        \hline
+        \textbf{Name} & \textbf{Bottleneck Size $ s $} & \textbf{Multiplkator $ m $} & \textbf{Anzahl lernbarer Parameter} \\ \hline
+        Netzwerk 1 & 5 & 32 &  \\ \hline
+        Netzwerk 2 & 5 & 16 &  \\ \hline
+        Netzwerk 3 & 5 & 8  &  \\ \hline
+        Netzwerk 4 & 5 & 4  &  \\ \hline
+
+        Netzwerk 5 & 4 & 32 &  \\ \hline
+        Netzwerk 6 & 4 & 16 &  \\ \hline
+        Netzwerk 7 & 4 & 8  &  \\ \hline
+        Netzwerk 8 & 4 & 4  &  \\ \hline
+
+        Netzwerk 9  & 3 & 32 &  \\ \hline
+        Netzwerk 10 & 3 & 16 &  \\ \hline
+        Netzwerk 11 & 3 & 8  &  \\ \hline
+        Netzwerk 12 & 3 & 4  &  \\ \hline
+
+        Netzwerk 13 & 2 & 32 &  \\ \hline
+        Netzwerk 14 & 2 & 16 &  \\ \hline
+        Netzwerk 15 & 2 & 8  &  \\ \hline
+        Netzwerk 16 & 2 & 4  &  \\ \hline
+    \end{tabular}
+    \caption{Unterschiedliche Netzwerkgrößen und ihre Parameter}
+    \label{tab:networks}
+\end{table}
+
 \section{Performanz-Test mit 1920 * 1080 (Full HD) Pixel Bildern}
 \begin{table}[H]
     \centering
