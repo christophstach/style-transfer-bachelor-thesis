@@ -166,7 +166,7 @@ Mit zunehmendem Total-Variation-Weight $ \gamma $ fließen die Farben mehr inein
 \section{Auswirkungen der Netzwerkarchitekturen}
 
 Im diesem Experiment wurden drei unterschiedlichen Bildgrößen auf unterschiedlichen Geräten auf Durchführbarkeit und Performanz getestet.
-Gemessen wird die Berechnungsgeschwindigkeit beim Forward-Pass durch das Netzwerk. Ein bereits erster Indikator für die Performanz eines Neuronalen Netzwerks ist die Anzahl der lernbaren Parameter, die bei der Trainingsphase optimiert werden. Erstellt wurden neun unterschiedliche Netzwerke mit dem Kunstwerk The Starry Night mit unterschiedlichen Kombinationen für $ m $ und $ s $. 
+Gemessen wird die Berechnungsgeschwindigkeit beim Forward-Pass durch das Netzwerk. Ein bereits erster Indikator für die Performanz eines Neuronalen Netzwerks ist die Anzahl der lernbaren Parameter, die bei der Trainingsphase optimiert werden. Erstellt wurden 16 unterschiedliche Netzwerke mit unterschiedlichen Kombinationen für $ m $ und $ s $. 
 
 \ref{tab:networks}
 
@@ -174,7 +174,7 @@ Gemessen wird die Berechnungsgeschwindigkeit beim Forward-Pass durch das Netzwer
 
 Bei der Berechnung des Forward-Pass macht es einen Unterschied ob sie auf dem CPU oder dem GPU eines Geräts durchgeführt wird. Neuronale Netzwerke können auf einer GPU schneller als auf einem CPU berechnet werden. Das liegt daran, dass eine GPU besonders auf die Berechnung von Matrix-Operationen (wie Sie auch bei grafischen Anwendungen verwendet werden) spezialisiert ist.
 
-Die Daten werden beim Einsatz des GPUs in den Grafikspeicher geladen. Bei der Berechnung über den CPU wird der Arbeitsspeicher (RAM) des Geräts verwendet. Der RAM kann über die Verwendung einer Auslagerungsdatei (SWAP-Datei) virtuell erweitert werden. Somit kann verhindert werden das es zu Fehlern wegen unzureichendem Arbeitsspeicher kommt.
+Die Daten werden beim Einsatz des GPUs in den Grafikspeicher geladen. Bei der Berechnung über den CPU wird der Arbeitsspeicher (RAM) des Geräts verwendet.
 
 \subsubsection{Gerät 1: Dell XPS 15 9550}
 
@@ -195,7 +195,7 @@ Beim Dell XPS 15 9550 handelt es sich um einen handelsüblichen Laptop aus dem J
 
 \subsubsection{Gerät 2: Jetson TX2}
 
-Beim Jetson TX2 handelt es sich um ein leistungsarmes Gerät für die Realiserung von Algorithmen der künstlichen Intelligenz auf eingebetteten  Systemen.
+Beim Jetson TX2 handelt es sich um ein leistungsarmes Gerät für die Realiserung von Algorithmen der künstlichen Intelligenz auf eingebetteten Systemen.
 
 \begin{table}[H]
     \centering
@@ -212,7 +212,7 @@ Beim Jetson TX2 handelt es sich um ein leistungsarmes Gerät für die Realiserun
 
 \subsection{Durchführung der Experimente}
 
-Alle Netzwerke wurden mit einer Batch-Size von $ 24 $, Bildgrößen von 224 * 224 Pixel und einer Learning-Rate von $ 10^{-3} $ trainiert. Es wurden 4 Epochen der Trainingsdaten aus dem Jahr 2017 des COCO-Datensatzes verwendet, welche $ 118287 $ Bilder enthalten. Insgesamt wurden die Modelle mit $ 473148 $ Bildern trainiert. Dabei dauerte die Trainingszeit auf einem Server mit einem GeForce GTX 1080 Ti GPU pro Model zwischen 3 und 5 Stunden.
+Alle Netzwerke wurden mit einer Batch-Size von $ 24 $, Bildgrößen von 224 * 224 Pixel und einer Learning-Rate von $ 10^{-3} $ trainiert. Es wurden 6 Epochen der Trainingsdaten aus dem Jahr 2017 des COCO-Datensatzes verwendet, welche $ 118287 $ Bilder enthalten. Insgesamt wurden die Modelle mit $ 709722 $ Bildern trainiert. Dabei lag die Trainingszeit auf einem Server mit einem GeForce GTX 1080 Ti GPU pro Model zwischen 5 und 10 Stunden.
 
 Beim Training fiel auf das die generierten Bilder großflächige, schwarze oder weiße Artefakte enthielten. Ein Austausch der finalen Aktivierungsfunktion HardTanH, vgl. \ref{sec:hardtanh}, mit der Sigmoid-Aktivierungsfunktion, vgl. \ref{sec:sigmoid}, konnte das Problem lösen.
 
@@ -220,52 +220,12 @@ Abschließend wurden die unterschiedlichen Netzwerkearchitekturen auf ihre Perfo
 
 \subsection{Interpretation der Ergebnisse}
 
-Auffällig bei den Performanzmessungen ist das der Parameter $ m $, welche die Anzahl der Channels im Netzwerk beeinflusst, bei Berechnungen auf dem CPU einen größere Performanzverbesserung bietet als der Parameter $ s $. Bei Berechnungen mit einem GPU ist der Parameter $ s $, Anzahl der ResidualBlocks, weit aus relevanter für die Berechnugnsgeschwindigkeit des Netzwerks. Bei den Netzwerken 7, 8 und 9 spielt der Parameter $ m $ bei der Benutzung eines GPU fast garkeine Rolle mehr. Die Berechnung der Netzwerke mit Full HD Bildern war jedoch mit keinem der Netzwerke auf dem GPU möglich.
+Die Performanz-Tests haben ergeben, dass der Jetson TX2 mit fast allen Netzwerkarchitekturen in der Lage war den Style-Transfer durchzuführen. Für Bilder der Größe 1920 * 768  war es jedoch nicht möglich Netzwerk 1 und Netzwerk 5 zu verwenden, vlg. \ref{tab:1920x1080}. Alle anderen Netzwerkarchitekturen konnten für Full HD Bilder in weniger als einer Sekunde berechnet werden.
 
-In der folgenden Abbildung ist zu sehen das alle Netzwerkarchitekturen, nach Austausch der finalen Aktivierungsfunktion, gleichermaßen in der Lagen waren den Stil von The Starry Night zu extrahieren. Alle gelernten Muster sind zwar geringfügig unterschiedlich, jedoch optisch gleichermaßen ansprechend und dem Stil des Bildes The Starry Night ähnlich.
+Die Abbildungen \ref{img:loss_the_starry_night} und \ref{img:loss_the_scream} stellen die Loss-Kurven beim Trainingsverlauf aller Netzwerke dar. Die Loss-Kurven wurden dabei mit einem laufenden arithmischen Mittel über 100 Iterationen geflächt, um die Ergebnisse besser darstellen zu können. Für beide Stilbilder ergibt sich ein ähnlicher Trainingsverlauf. Die Netzwerkarchitekturen mit mehr lernbaren Parametern erreichen ein niedrigeres Endloss. Eine Ausnahme sind dabei die Netzwerke mit dem Parameter $ m = 16 $. Sie erreichen in allen Fällen das niedrigste Endloss. In den Abbildungen sind die Loss-Kurven dieser Netzwerke mit einer stärkeren Linie gekennzeichnet.
 
-\begin{figure}[H]
-    \centering
-    \begin{subfigure}[h]{0.15\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/experiments/net1.jpg}
-    \end{subfigure}
-    \begin{subfigure}[h]{0.15\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/experiments/net2.jpg}
-    \end{subfigure}
-    \begin{subfigure}[h]{0.15\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/experiments/net3.jpg}
-    \end{subfigure} \\
+Desweiteren wurden die optischen Ergebnisse aller Netzwerkarchitekturen getestet. Die Ergebnisse sind in \ref{img:results_the_starry_night} und \ref{img:results_the_scream} dargestellt. Wieder zeigt sich, dass Netzwerke mit dem Parameter $ m = 16 $ optisch vielfältigere Bilder generieren als die anderen Netzwerke. Daraus wird geschlussfolgert, dass die optische Vielfalt der generierten Bilder mit dem Loss zusammenhängt.
 
-    \begin{subfigure}[h]{0.15\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/experiments/net4.jpg}
-    \end{subfigure}
-    \begin{subfigure}[h]{0.15\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/experiments/net5.jpg}
-    \end{subfigure}
-    \begin{subfigure}[h]{0.15\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/experiments/net6.jpg}
-    \end{subfigure} \\
-    
-    \begin{subfigure}[h]{0.15\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/experiments/net7.jpg}
-    \end{subfigure}
-    \begin{subfigure}[h]{0.15\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/experiments/net8.jpg}
-    \end{subfigure}
-    \begin{subfigure}[h]{0.15\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/experiments/net9.jpg}
-    \end{subfigure}
-    \caption{Vergleich der Netzwerke 1 bis 9}
-\end{figure}
+\subsection{Weitere Ergebnisse}
 
-Daraus kann geschlussfolgert werden, dass sogar das Netzwerk mit den wenigstens lernbaren Parametern, Netzwerk 9, in der Lage ist Stile zu erlernen.
-Der arithmische Mittelwert bei der Berechnung von Bildern der Größe 1024 * 768 Pixel mit Netzwerk 9 betrug 0.00414 Sekunden, vgl. \ref{tab:1024x768}. Damit können mehr als 240 Bilder pro Sekunde zu berechnen werden. Somit würde sich die Möglichkeit ergeben komplette Videos in Echtzeit zu berechnen, worauf im Ausblick \ref{sec:video_stylization} eingegangen wird.
+Auf Basis der zuvor gewonnen Erkenntniss über die unterschiedliche Netzwerkarchitekturen, wurden weitere Modelle mit unterschiedlichen Stilbildern trainiert. Für das Training wurde jeweils die Netzwerkarchitektur 2, $ m = 16 $ und $ s = 5 $, verwendet, welche in den durchführten Tests am besten abschnitt.

@@ -338,7 +338,7 @@ class TransformerNet(nn.Module):
         Network 15 & 1,46334                                & \textcolor{danger}{nicht durchführbar} & \textcolor{danger}{nicht durchführbar} & 0,21752                                \\ \hline
         Network 16 & 0,75117                                & 0,00454                                & \textcolor{danger}{nicht durchführbar} & 0,19545                                \\ \hline
     \end{tabular}
-    \caption{Berechnungsgeschwindigkeit für Bilder der Größe 1920 * 1080 Pixel}
+    \caption{Berechnungsgeschwindigkeit in Sekunden für Bilder der Größe 1920 * 1080 Pixel}
     \label{tab:1920x1080}
 \end{table}
 
@@ -365,7 +365,7 @@ class TransformerNet(nn.Module):
         Network 15 & 0,51133                                & 0,00468                                & 22,53269                               & 0,17650                                \\ \hline
         Network 16 & 0,27009                                & 0,00436                                & 7,84484                                & 0,17443                                \\ \hline
     \end{tabular}
-    \caption{Berechnungsgeschwindigkeit für Bilder der Größe 1024 * 768 Pixel}
+    \caption{Berechnungsgeschwindigkeit in Sekunden für Bilder der Größe 1024 * 768 Pixel}
     \label{tab:1024x768}
 \end{table}
 
@@ -392,14 +392,42 @@ class TransformerNet(nn.Module):
         Network 15 & 0,20557                                & 0,00414                                & 8,90912                                & 0,16807                                \\ \hline
         Network 16 & 0,11306                                & 0,00395                                & 3,14229                                & 0,17277                                \\ \hline
     \end{tabular}
-    \caption{Berechnungsgeschwindigkeit für Bilder der Größe 640 * 480 Pixel}
+    \caption{Berechnungsgeschwindigkeit in Sekunden für Bilder der Größe 640 * 480 Pixel}
     \label{tab:640x480}
 \end{table}
 
 
+\section{Loss: The Starry Night}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.00\textwidth]{resources/content/experiments/fast_image_grid_experiment1.jpg}
+	\caption{Loss: The Starry Night}
+	\label{img:loss_the_starry_night}
+\end{figure}
 
+\section{Loss: The Scream}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.00\textwidth]{resources/content/experiments/fast_image_grid_experiment2.jpg}
+	\caption{Loss: The Scream}
+	\label{img:loss_the_scream}
+\end{figure}
 
+\section{Ergebnisse: The Starry Night}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.00\textwidth]{resources/content/experiments/fast_loss_plot_experiment1.jpg}
+	\caption{Ergebnisse: The Starry Night}
+	\label{img:results_the_starry_night}
+\end{figure}
 
+\section{Ergebnisse: The Scream}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.00\textwidth]{resources/content/experiments/fast_loss_plot_experiment2.jpg}
+	\caption{Ergebnisse: The Scream}
+	\label{img:results_the_scream}
+\end{figure}
 
 
 
