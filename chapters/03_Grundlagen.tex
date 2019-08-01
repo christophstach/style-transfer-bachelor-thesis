@@ -1,19 +1,19 @@
 \chapter{Grundlagen}
 \label{cha:fundamentals}
 
-Im Kapitel Grundlagen werden die erfordentlichen Grundlagen erleutert, die notwendig sind um die Funktionsweise von Style Transfer zu verstehen. Außerdem wird auf bestehende Arbeiten in diesem Bereich eingegangen.
+Im Kapitel Grundlagen werden die erfordentlichen Grundlagen erläutert, die notwendig sind, um die Funktionsweise von Style Transfer zu verstehen. Außerdem wird auf bestehende Arbeiten in diesem Bereich eingegangen.
 
 \section{Feedforward Neural Network}
 
-Feedforward Neural Networks werden im Bereich des Deep Learning eingesetzt. Dabei werden unteschiedliche Arten von Layern zu einem Neuronalen Netzwerk zusammen gesetzt. Je nach Aufgabenstellung sind unteschiedliche Arten von Layer-Kombination sinnvoll.
+Feedforward Neural Networks werden im Bereich des Deep Learning eingesetzt. Dabei werden unterschiedliche Arten von Layern zu einem Neuronalen Netzwerk zusammen gesetzt. Je nach Aufgabenstellung sind verschiedene Arten von Layer-Kombinationen sinnvoll.
 
-Ein Feedforward Neural Network definiert eine Abildung von $ y = f(x; \phi) $ wobei $ \phi $ (auch mit $ w $ notiert) Gewichtungsparameter des Netzwerk sind. Es wird Feedforward genannt, da die Informationen $ x $ von vorne nach hinten durch die einzelnen Layer des Networks fließen und am Ende $ y $ ausgeben. Die Layer des Netzwerk sind dabei wiederum Unterfunktionen die in einer Kettenstruktur ineinander übergehen. Bei einem Neuronalen Netzwerk mit den drei Layern $ f^{(1)} $, $ f^{(2)} $, $ f^{(2)} $ ergibt sich der Aufbau $ f(x) = f^{(3)}(f^{(2)}(f^{(1)}(x))) $. Der erste Layer eines Netzwerks nennt sich Input-Layer, der letzte Output-Layer. Alle zwischenliegenden Layer werden Hidden-Layer genannt. Je mehr Layer ein Netzwerk besitzt, desto komplexere mathematische Funktionen kann es abbilden und desto tiefer ist es. Daher rührt auch Name Deep Neural Network und Deep Learning \cite[164-165]{Goodfellow-et-al-2016}.
+Ein Feedforward Neural Network definiert eine Abildung von $ y = f(x; \phi) $, wobei $ \phi $ (auch mit $ w $ notiert) Gewichtungsparameter des Netzwerks sind. Es wird Feedforward genannt, da die Informationen $ x $ von vorne nach hinten durch die einzelnen Layer des Netwerks fließen und am Ende $ y $ ausgeben. Die Layer des Netzwerks sind dabei wiederum Unterfunktionen die in einer Kettenstruktur ineinander übergehen. Bei einem Neuronalen Netzwerk mit den drei Layern $ f^{(1)} $, $ f^{(2)} $, $ f^{(2)} $ ergibt sich der Aufbau $ f(x) = f^{(3)}(f^{(2)}(f^{(1)}(x))) $. Der erste Layer eines Netzwerks nennt sich Input-Layer, der letzte Output-Layer. Alle zwischenliegenden Layer werden Hidden-Layer genannt. Je mehr Layer ein Netzwerk besitzt, desto komplexere mathematische Funktionen kann es abbilden und desto tiefer ist es. Daher rührt auch der Name Deep Neural Network und Deep Learning \cite[164-165]{Goodfellow-et-al-2016}.
 
 \pagebreak
 
 \section{Fully-Connected Neural Network}
 
-Fully-Connected Neural Networks bestehen aus mehreren hintereinander geschalteten Fully-Connected-Layern. Der Name rührt daraus, dass zwischen zwei aufeinanderfolgenden Layern alle Neuronen miteinander verbunden sind.
+Fully-Connected Neural Networks bestehen aus mehreren hintereinander geschalteten Fully-Connected-Layern. Der Name rührt daher, dass zwischen zwei aufeinanderfolgenden Layern alle Neuronen miteinander verbunden sind.
 
 \begin{figure}[H]
 	\centering
@@ -23,7 +23,7 @@ Fully-Connected Neural Networks bestehen aus mehreren hintereinander geschaltete
 \end{figure}
 
 Die Kreise stellen die Neuronen dar und die Kanten sind die Gewichtungsfaktoren.
-Eine solche Struktur kann mit einer einzigen Matrix-Multiplation berechnet werden.
+Eine solche Struktur kann mit einer einzigen Matrix-Multiplikation berechnet werden.
 
 \begin{align}
 	f(x) = \sigma(x * w + b)
@@ -116,11 +116,11 @@ Die im voherigen Beispiel verwendete Aktivierungsfunktion nennt sich ReLU \cite{
 
 
 Neben der ReLU-Aktivierungsfunktion existieren weitere Aktiverungsfunktionen, die im Zusammenhang mit Neuronalen Netzwerken verwendet werden.
-Im Folgende werden die in dieser Arbeit verwendeten Aktivierungsfunktionen beschrieben.
+Im Folgenden werden die in dieser Arbeit verwendeten Aktivierungsfunktionen beschrieben.
 
 \subsection{LeakyReLU, PReLU}
 
-Die Aktiverungsfunktionen LeakyReLU und PReLU sind Abwandulung von ReLU und werden um den Parameter $ \alpha $ ergänzt. Bei LeakyReLU handelt es sich bei $ \alpha $ um einen fixen, einstellbaren Wert und bei PReLU wird dieser im Laufe der Trainingsphase gelernt \cite{DBLP:journals/corr/XuWCL15}. ReLU hat gegen über PReLU und LeakyReLU den Nachteil, dass Neuronen deaktiviert werden können, da die linke Seite der Aktiverungsfunktion 0 beträgt. Somit ergeben sich auch bei der Berechnung der Gradienten keine Veränderungen.
+Die Aktiverungsfunktionen LeakyReLU und PReLU sind Abwandlungen von ReLU und werden um den Parameter $ \alpha $ ergänzt. Bei LeakyReLU handelt es sich bei $ \alpha $ um einen fixen, einstellbaren Wert und bei PReLU wird dieser im Laufe der Trainingsphase gelernt \cite{DBLP:journals/corr/XuWCL15}. ReLU hat gegenüber PReLU und LeakyReLU den Nachteil, dass Neuronen deaktiviert werden können, da die linke Seite der Aktiverungsfunktion 0 beträgt. Somit ergeben sich auch bei der Berechnung der Gradienten keine Veränderungen.
 
 \begin{equation}
 	\sigma(\alpha ,x) = {
@@ -143,7 +143,7 @@ Visualisiert besitzen beide Aktiverungsfunktionen folgende Form:
 \subsection{Hardtanh}
 \label{sec:hardtanh}
 
-Die Hardtanh Funktion wird in dieser Arbeit als abschliesende Aktiverungsfunktion genutzt \cite{DBLP:journals/corr/abs-1811-03378, Collobert:2011:NLP:1953048.2078186}.
+Die Hardtanh Funktion wird in dieser Arbeit als abschließende Aktiverungsfunktion genutzt \cite{DBLP:journals/corr/abs-1811-03378, Collobert:2011:NLP:1953048.2078186}.
 
 \begin{equation}
 	\sigma(x) = {
@@ -169,7 +169,7 @@ Sie ist in der Lage die Ergebnisse auf einen festgelegten Bereich zu beschränke
 \subsection{Sigmoid}
 \label{sec:sigmoid}
 
-Die Sigmoid-Funktion wird in dieser Arbeit als alternative, abschliesende Aktiverungsfunktion genutzt \cite{DBLP:journals/corr/abs-1811-03378}.
+Die Sigmoid-Funktion wird in dieser Arbeit als alternative, abschließende Aktivierungsfunktion genutzt \cite{DBLP:journals/corr/abs-1811-03378}.
 
 \begin{equation}
 	\sigma(x) = \frac{ 1 } { 
@@ -189,8 +189,8 @@ Die Ergebnisse der Sigmoid-Funktion konvergieren zu 0 und 1, ereichen diese jedo
 \section{Convolutional Neural Network}
 \label{sec:conv_networks}
 
-Ein Convolutional Neural Network, auch CNN genannt, besteht aus mehreren aufeinanderfolgenden Convolutional-Layern, sowie
-abschließend beliebig vielen Fully-Connected-Layern (siehe \ref{img:cnn_example_network}). Convolutional-Layer dienen der Featureextraktion. Die Fully-Connected-Layer sind für die Klassifizierung zuständig. Nachfolgend wird das Prinzip einer Convolution (zu dt. Faltung) erleutert.
+Ein Convolutional Neural Network, auch CNN genannt, besteht aus mehreren aufeinanderfolgenden Convolutional-Layern sowie
+abschließend beliebig vielen Fully-Connected-Layern (siehe \ref{img:cnn_example_network}). Convolutional-Layer dienen der Featureextraktion. Die Fully-Connected-Layer sind für die Klassifizierung zuständig. Nachfolgend wird das Prinzip einer Convolution (zu dt. Faltung) erläutert.
 
 \begin{figure}[H]
 	\centering
@@ -214,13 +214,13 @@ Ein Convolutional-Layer akzeptiert Daten in Form eines Bildes $ I $ in den Dimen
 	\label{img:convolution_img}
 \end{figure}
 
-Die Ergebnisse nach Durchlauf eines Convolutional-Layer werden Feature Maps oder \gls{activation_map}s genannt. Im trainierten CNN erkennen frühe Convolutional-Layer Kanten, Kurven und feine Muster. Spätere Layer erkennen komplette geometrische Figuren bis hin zu komplexen Mustern sowie Schemen von reellen Objekten und Gegenständen.
+Die Ergebnisse nach Durchlauf eines Convolutional-Layer werden Feature Maps oder \gls{activation_map}s genannt. Im trainierten CNN erkennen frühe Convolutional-Layer Kanten, Kurven und feine Muster. Spätere Layer erkennen komplette geometrische Figuren bis hin zu komplexen Mustern sowie Schemen von realen Objekten und Gegenständen.
 
 \section{Backprogation}
 \label{sec:backpropagation}
 
-Um ein Neuronales Netzwerk zu trainieren muss das Loss, welches ein Neurales Netzwerk erzeugt, minimiert werden. Dabei berechnet eine Funktionen den das Loss des Netzwerks. Beispielsweise berechnet sich das \gls{mse_loss} aus der Differenz zwischen $ y $ und $ \hat{y} $. Wobei $ y $ die echten gelabelten Ergebnisse sind und $ \hat{y} $ die Vorhersage, die das Neuronale Netzwerk erzeugt.
-Anhand dieser Daten kann ein Optimizer, wie beispielsweise \gls{adam} \cite{kingma2015adam}, die Gewichte des Netzwerks anpassen um das Loss zu minimieren.
+Um ein Neuronales Netzwerk zu trainieren, muss das Loss, welches durch das Neuronales Netzwerk erzeugt wird, minimiert werden. Dabei berechnet eine Funktion das Loss des Netzwerks. Beispielsweise berechnet sich das \gls{mse_loss} aus der Differenz zwischen $ y $ und $ \hat{y} $, wobei $ y $ die echten gelabelten Ergebnisse sind und $ \hat{y} $ die Vorhersage, die das Neuronale Netzwerk erzeugt.
+Anhand dieser Daten kann ein Optimizer, wie beispielsweise \gls{adam} \cite{kingma2015adam}, die Gewichte des Netzwerks anpassen, um das Loss zu minimieren.
 
 \begin{figure}[H]
 	\centering
@@ -229,7 +229,7 @@ Anhand dieser Daten kann ein Optimizer, wie beispielsweise \gls{adam} \cite{king
 	\label{img:perceptron_img}
 \end{figure}
 
-Als Beispiel diehnt die mathematische Funktion eines 2-dimensionalen Neurons mit angehängter Sigmoid-Aktivierungsfunktion. Dabei werden die Eingabewerte durch die Variable $ x $ und die Gewichte des Neurons durch die Variable $ w $ beschrieben.
+Als Beispiel dient die mathematische Funktion eines 2-dimensionalen Neurons mit angehängter Sigmoid-Aktivierungsfunktion. Dabei werden die Eingabewerte durch die Variable $ x $ und die Gewichte des Neurons durch die Variable $ w $ beschrieben.
 
 \begin{align}
 	f(w, x) = \frac{1}{ 1 + e^{ - (w_{0}x_{0} + w_{1}x_{1} + w_{2}) } }
@@ -269,7 +269,7 @@ Beispielrechnungen des Backward-Pass der letzten drei Knoten:
 	& -0,1 \approx -0,77 * e^{-2}
 \end{align}
 
-Durch die Berechnung der Gradienten der Gewichtsvariable $ w $ ist der Optimizer in der Lage $ w $ Schritt für Schritt anzupassen und somit das Loss verringern.
+Durch die Berechnung der Gradienten der Gewichtsvariable $ w $ ist der Optimizer in der Lage, $ w $ Schritt für Schritt anzupassen und somit das Loss zu verringern.
 
 \pagebreak
 
@@ -280,13 +280,13 @@ Diese Arbeit basiert auf den bereits bestehenden Lösungen von Johnson et. al. u
 \subsection{Neural Style Transfer}
 \label{sec:neural_style_transfer}
 
-Hierbei handelt sich um eine Technik um den Stil von artistischen Bildern auf ein anderes willkürliches Bild zu übertragen.
-Das Verfahren nutzt dabei einen optimisierenden Ansatz. Dabei werden die Pixel eines Eingangsbildes Schritt für Schritt den Pixeln 
+Hierbei handelt es sich um eine Technik um den Stil von artistischen Bildern auf ein anderes willkürliches Bild zu übertragen.
+Das Verfahren nutzt dabei einen optimierenden Ansatz. Dabei werden die Pixel eines Eingangsbildes Schritt für Schritt den Pixeln 
 des gewünschten Ausgangsbildes angepasst. 
 
-Der Neural Style Transfer Algorithmus, beschrieben im Paper \cite{DBLP:journals/corr/GatysEB15a}, optimiert direkt die Pixel eines Bildes anhand einem sogenannten Perceptual-Loss. Die entsprechende Loss-Funktion besteht aus mehreren Teilen. Einem Content-Loss und einem Style-Loss. Optional kann zusätztlich ein Total-Variation-Loss verwendet werden. Das gesammte Perceptual-Loss wird über Hyperparameter konfiguriert, welche die Gewichtung der Unterfunktionen auf das Gesamt-Loss wiederspiegeln.
+Der Neural Style Transfer Algorithmus, beschrieben im Paper \cite{DBLP:journals/corr/GatysEB15a}, optimiert direkt die Pixel eines Bildes anhand eines sogenannten Perceptual-Loss. Die entsprechende Loss-Funktion besteht aus mehreren Teilen, einem Content-Loss und einem Style-Loss. Optional kann zusätztlich ein Total-Variation-Loss verwendet werden. Das gesamte Perceptual-Loss wird über Hyperparameter konfiguriert, welche die Gewichtung der Unterfunktionen auf das Gesamt-Loss wiederspiegeln.
 
-Content-Loss und Style-Loss benutzen dabei ein bereits auf einem großen Datensatz vortrainiertes Model. In dieser Arbeit wird das VGG16-Model \cite{DBLP:journals/corr/SimonyanZ14a} verwendet. Das Content-Loss vergleicht Features eines Inhaltsbildes mit den Features des Ausgangsbild. Das Style-Loss vergleicht Features eines Stilbildes mit den Features des Ausgangsbildes.
+Content-Loss und Style-Loss benutzen dabei ein bereits auf einem großen Datensatz vortrainiertes Modell. In dieser Arbeit wird das VGG16-Modell \cite{DBLP:journals/corr/SimonyanZ14a} verwendet. Das Content-Loss vergleicht Features eines Inhaltsbildes mit den Features des Ausgangsbild. Das Style-Loss vergleicht Features eines Stilbildes mit den Features des Ausgangsbildes.
 
 \begin{figure}[H]
 	\centering
@@ -298,7 +298,7 @@ Content-Loss und Style-Loss benutzen dabei ein bereits auf einem großen Datensa
 \subsubsection{Content-Loss}
 \label{sec:content_loss}
 
-Um das Content-Loss zu berechnen wird nicht direkt das Contentbild mit dem Ausgangsbild verglichen, stattdessen werden die \gls{activation_map}s nach bestimmten Layern im VGG16-Netzwerk (auch Loss-Network genannt) verwendet. Auch ist es möglich die \gls{activation_map}s mehrerer Layer zu benutzen, da unterschiedliche Layer ein anderes \gls{receptive_field} haben und somit unterscheidliche Informationen speichern.
+Um das Content-Loss zu berechnen, wird nicht direkt das Contentbild mit dem Ausgangsbild verglichen, stattdessen werden die \gls{activation_map}s nach bestimmten Layern im VGG16-Netzwerk (auch Loss-Network genannt) verwendet. Es ist auch möglich die \gls{activation_map}s mehrerer Layer zu benutzen, da unterschiedliche Layer ein anderes \gls{receptive_field} haben und somit unterschiedliche Informationen speichern.
 
 \begin{figure}[H]
 	\centering
@@ -317,9 +317,9 @@ Zwischen den \gls{activation_map}s $ P $  des Contentbildes $ \vec{p} $ und den 
 \subsubsection{Style-Loss}
 \label{sec:style_loss}
 
-Das Style-Loss verwendet die \gls{activation_map}s nicht direkt, sondern bildet vorher die Gram-Matrix dieser. Das hat zur Folge das räumliche Informationen verworfen werden, jedoch Farben und Muster erhalten bleiben, die beim Übertragen des Stils die wichtigste Rolle einehmen.
+Das Style-Loss verwendet die \gls{activation_map}s nicht direkt, sondern bildet vorher deren Gram-Matrix. Das hat zur Folge, dass räumliche Informationen verworfen werden, jedoch Farben und Muster erhalten bleiben, die beim Übertragen des Stils die wichtigste Rolle spielen.
 
-Um die Gram-Matrix mehrerer \gls{activation_map}s zu berechnen, werden die Matrizen geflächt, Height- und Width-Dimension werden zu einer Dimension zusammengefügt. Daraus ergibt sich eine 2-dimensionale Matrix der Form $ C \times HW $. Diese wird transponiert mit sich selbst multipliziert.
+Um die Gram-Matrix mehrerer \gls{activation_map}s zu berechnen, werden die Matrizen geflächt und Height- und Width-Dimension werden zu einer Dimension zusammengefügt. Daraus ergibt sich eine 2-dimensionale Matrix der Form $ C \times HW $. Diese wird transponiert mit sich selbst multipliziert.
 
 \begin{equation}
 	\label{eq:gram_matrix_1}
@@ -363,7 +363,7 @@ Das Perceptual-Loss ist die Kombination aus Content-, Style- und Total-Variation
 \subsection{Fast Neural Style Transfer}
 \label{sec:fast_neural_style_transfer}
 
-Im Gegensatz zum im Kapitel \ref{sec:neural_style_transfer} vorgestellten Algorithmus, in dem die Pixel des Eingangsbildes direkt optimiert werden, wird ein Neuronales Netzwerk darauf trainiert, die Konzepte eines Stils zu erlernen. Dieses Verfahren wird im Paper \cite{DBLP:journals/corr/JohnsonAL16} genauer beschrieben. Pro Stil wird dabei ein Model trainiert. Die verwendete Loss-Funktion ist das bereits zuvor beschriebene Perceptual-Loss \ref{sec:perceptual_loss}.
+Im Gegensatz zum im Kapitel \ref{sec:neural_style_transfer} vorgestellten Algorithmus, in dem die Pixel des Eingangsbildes direkt optimiert werden, wird ein Neuronales Netzwerk darauf trainiert, die Konzepte eines Stils zu erlernen. Dieses Verfahren wird im Paper \cite{DBLP:journals/corr/JohnsonAL16} genauer beschrieben. Pro Stil wird dabei ein Modell trainiert. Die verwendete Loss-Funktion ist das bereits zuvor beschriebene Perceptual-Loss \ref{sec:perceptual_loss}.
 
 \begin{figure}[H]
 	\centering

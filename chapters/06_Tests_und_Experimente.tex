@@ -212,7 +212,7 @@ Beim Jetson TX2 handelt es sich um ein leistungsarmes Gerät für die Realiserun
 
 \subsection{Durchführung der Experimente}
 
-Alle Netzwerke wurden mit einer Batch-Size von $ 24 $, Bildgrößen von 224 * 224 Pixel und einer Learning-Rate von $ 10^{-3} $ trainiert. Es wurden 6 Epochen der Trainingsdaten aus dem Jahr 2017 des COCO-Datensatzes verwendet, welche $ 118287 $ Bilder enthalten. Insgesamt wurden die Modelle mit $ 709722 $ Bildern trainiert. Dabei lag die Trainingszeit auf einem Server mit einem GeForce GTX 1080 Ti GPU pro Model zwischen 5 und 10 Stunden.
+Alle Netzwerke wurden mit einer Batch-Size von $ 24 $, Bildgrößen von 224 * 224 Pixel und einer Learning-Rate von $ 10^{-3} $ trainiert. Es wurden 6 Epochen der Trainingsdaten aus dem Jahr 2017 des COCO-Datensatzes verwendet, welche $ 118287 $ Bilder enthalten. Insgesamt wurden die Modelle mit $ 709722 $ Bildern trainiert. Dabei lag die Trainingszeit auf einem Server mit einem GeForce GTX 1080 Ti GPU pro Modell zwischen 5 und 10 Stunden.
 
 Beim Training fiel auf das die generierten Bilder großflächige, schwarze oder weiße Artefakte enthielten. Ein Austausch der finalen Aktivierungsfunktion HardTanH, vgl. \ref{sec:hardtanh}, mit der Sigmoid-Aktivierungsfunktion, vgl. \ref{sec:sigmoid}, konnte das Problem lösen.
 
