@@ -1,24 +1,24 @@
 \chapter{Methodologie}
 \label{cha:methodology}
 
-Im Kapitel Methodologie wird das allgemeine Vorgehen beschrieben, welches notwendig ist um die in \ref{cha:fundamentals} vorgestellten Algorithmen zu implementieren.
+Im Kapitel Methodologie wird das allgemeine Vorgehen beschrieben, dass notwendig ist, um die in Kapitel \ref{cha:fundamentals} vorgestellten Algorithmen zu implementieren.
 
 \section{Vorherige Arbeiten}
 
-Bereits vor Erstellung dieser Arbeit gab es Ansätze den Neural Style Transfer zu realisieren. Diese Arbeit orientiert sich dabei an den bereits bestehenden Entwicklungen und versucht diese zu verbessern, sowie auf Geräten mit leistungsarmer Hardware zu testen. Im GIT-Repository von Justin Johnson \cite{Johnson2015} ist der Neural Style Transfer \ref{sec:neural_style_transfer} auf Basis des Papers \cite{DBLP:journals/corr/GatysEB15a} mit dem Framework Torch \cite{torch} implementiert. Außerdem existiert ein Online Toturial des Frameworks PyTorch \cite{OnlineToturialNeuralStylePyTorch}.
+Bereits vor Erstellung dieser Arbeit gab es Ansätze, den Neural Style Transfer zu realisieren. Diese Arbeit orientiert sich dabei an den bereits bestehenden Entwicklungen und versucht diese zu verbessern sowie auf Geräten mit leistungsarmer Hardware zu testen. Im GIT-Repository von Justin Johnson \cite{Johnson2015} ist der Neural Style Transfer \ref{sec:neural_style_transfer} auf Basis des Papers \cite{DBLP:journals/corr/GatysEB15a} mit dem Framework Torch \cite{torch} implementiert. Außerdem existiert ein online Toturial des Frameworks PyTorch \cite{OnlineToturialNeuralStylePyTorch}.
 
-Der Fast Neural Style Transfer \ref{sec:fast_neural_style_transfer} orientiert sich ebenfalls an einem GIT-Repository von Justin Johnson \cite{Johnson2016}, welches den Algorithmus im Framework Torch implementiert. Desweiteren ist er als Beispielalgorithmus im PyTorch GIT-Repository \cite{PyTorchFastNeuralStyle} vorhanden.
+Der Fast Neural Style Transfer \ref{sec:fast_neural_style_transfer} orientiert sich ebenfalls an einem GIT-Repository von Justin Johnson \cite{Johnson2016}, dass den Algorithmus im Framework Torch implementiert. Desweiteren ist er als Beispielalgorithmus im PyTorch GIT-Repository \cite{PyTorchFastNeuralStyle} vorhanden.
 
-Neben den vorgestellten Implementierungen extistieren viele weitere Implementierungen in unterschiedlichen Frameworks verschiedener Authoren sowie entsprechende Blogeinträge auf beispielslweise \url{https://towardsdatascience.com/}.
+Neben den vorgestellten Implementierungen existieren viele weitere Implementierungen in unterschiedlichen Frameworks verschiedener Authoren sowie entsprechende Blogeinträge auf beispielslweise \url{https://towardsdatascience.com/}.
 
 \pagebreak
 
 \section{Neural Style Transfer}
 \label{sec:method_neural_style_transfer}
 
-Als ersten Schritt wird die Loss-Funktion entwickelt. Da das Loss aus drei Teilen besteht eignet es sich dieses als Klasse zu realisieren. Das Style-Loss, Content-Loss sowie Total-Variation-Loss können als einzelne Methoden dieser Klasse implementiert werden und als Gesamt-Loss mit Gewichtung zusammengefasst werden. Außerdem können die notwendingen Hyperparameter des Perceptual-Loss der Klasse bei Instanziierung übergeben werden. Desweiteren werden unterschiedliche Hilfsfunktionen benötigt um die Gram-Matrix zu berechnen, sowie das Laden und Speichern von Bilder und deren Umwandlung in und von \gls{tensor}en\footnote{Als \gls{tensor}en werden Matrizen/Vektoren jeglicher Dimensionen bezeichnet} zu ermöglichen.
+Als erster Schritt wird die Loss-Funktion entwickelt. Da das Loss aus drei Teilen besteht, eignet es sich, dieses als Klasse zu realisieren. Style-Loss, Content-Loss sowie Total-Variation-Loss können als einzelne Methoden dieser Klasse implementiert werden und als Gesamt-Loss mit Gewichtung zusammengefasst werden. Außerdem können die notwendigen Hyperparameter des Perceptual-Loss der Klasse bei Instanziierung übergeben werden. Desweiteren werden unterschiedliche Hilfsfunktionen benötigt, um die Gram-Matrix zu berechnen sowie das Laden und Speichern von Bildern und deren Umwandlung in und von \gls{tensor}en\footnote{Als \gls{tensor}en werden Matrizen/Vektoren jeglicher Dimensionen bezeichnet} zu ermöglichen.
 
-Um mathematischen Operationen durchzuführen, die bei Berechung der Gram-Matrix oder des Loss verwendet werden, benötigt man außerdem unterschiedliche Funktionen, die das Rechnen mit Vektoren und Matrizen ermöglichen.
+Um mathematische Operationen durchzuführen, die bei Berechung der Gram-Matrix oder des Loss verwendet werden, benötigt man außerdem unterschiedliche Funktionen, die das Rechnen mit Vektoren und Matrizen ermöglichen.
 
 
 % https://drive.google.com/file/d/1gn8Q9fPT6ZOsA8DkEg-lpwexMV28C-Px/view?usp=sharing
@@ -39,34 +39,34 @@ Der Algorithmus wird in einer interaktiven Umgebung erstellt, damit unterschiedl
 	\label{img:neural_style_pap_img}
 \end{figure}
 
-Bei Start des Programms werden das Content-Bild \lstinline{content_image} und das Style-Bild \lstinline{style_image} geladen. Danach wird eine Kopie von \lstinline{content_image} in \lstinline{output_image} erstellt. Die Bilder liegen dann als \gls{tensor}en der Form $ Channel \times Height \times Width $, wobei $ Channel = 3 $ beträgt, da Bilder im RGB-Farbraum drei Farbkanäle aufweisen.
+Bei Start des Programms werden das Content-Bild \mintinline{python}{content_image} und das Style-Bild \mintinline{python}{style_image} geladen. Danach wird eine Kopie von \mintinline{python}{content_image} in \mintinline{python}{output_image} erstellt. Die Bilder liegen dann als \gls{tensor}en der Form $ Channel \times Height \times Width $, wobei $ Channel = 3 $ beträgt, da Bilder im RGB-Farbraum drei Farbkanäle aufweisen.
 
-Es wird ein Objekt der Klasse \lstinline{PerceptualLoss} erstellt. Bei der Instanziierung werden die folgenden benötigten Hyperparamter als Argumente dem Konstruktor übergeben:
+Es wird ein Objekt der Klasse \mintinline{python}{PerceptualLoss} erstellt. Bei der Instanziierung werden die folgenden benötigten Hyperparameter als Argumente dem Konstruktor übergeben:
 
 \begin{itemize}
-	\item \lstinline{model}: Das Netzwerk, hier VVG16, dessen \gls{activation_map}s genutzt werden.
-	\item \lstinline{content_layers}: Eine Liste von Layern für die Berechnung des Content-Loss.\\ $ \{ relu3\_3 \} $
-	\item \lstinline{style_layers}: Eine Liste von Layern für die Berechnung des Style-Loss.\\ $ \{ relu1\_2, relu2\_2, relu3\_3, relu4\_3 \} $
-	\item \lstinline{content_weight}: Die Gewichtung des Content-Loss. $ 1 $ 
-	\item \lstinline{style_weight}: Die Gewichtung des Style-Loss. $ 1 \times 10^{7} $
-	\item \lstinline{total_variation_weight}: Die Gewichtung des Total-Variation-Denoising Faktors. $ 1 \times 10^{-5} $
-	\item \lstinline{style_image}: Der \gls{tensor} des gewünschten Style-Bildes.
+	\item \mintinline{python}{model}: Das Netzwerk, hier VVG16, dessen \gls{activation_map}s genutzt werden.
+	\item \mintinline{python}{content_layers}: Eine Liste von Layern für die Berechnung des Content-Loss.\\ $ \{ relu3\_3 \} $
+	\item \mintinline{python}{style_layers}: Eine Liste von Layern für die Berechnung des Style-Loss.\\ $ \{ relu1\_2, relu2\_2, relu3\_3, relu4\_3 \} $
+	\item \mintinline{python}{content_weight}: Die Gewichtung des Content-Loss. $ 1 $ 
+	\item \mintinline{python}{style_weight}: Die Gewichtung des Style-Loss. $ 1 \times 10^{7} $
+	\item \mintinline{python}{total_variation_weight}: Die Gewichtung des Total-Variation-Denoising Faktors. $ 1 \times 10^{-5} $
+	\item \mintinline{python}{style_image}: Der \gls{tensor} des gewünschten Style-Bildes.
 \end{itemize}
 
-Die Werte orientieren sich an den im Paper \cite{DBLP:journals/corr/JohnsonAL16} verwendenten Hyperparamtern. Je nach gewähltem Stil sind jedoch abweichenden Einstellung erforderlich um optisch ansprechende Ergebnisse zu erzeugen. Auf unterschiedliche Kombination der Hyperparamter wird im Kapitel \ref{cha:tests} eingangen.
+Die Werte orientieren sich an den im Paper \cite{DBLP:journals/corr/JohnsonAL16} verwendeten Hyperparametern. Je nach gewähltem Stil sind jedoch abweichenden Einstellungen erforderlich, um optisch ansprechende Ergebnisse zu erzielen. Auf unterschiedliche Kombinationen der Hyperparameter wird im Kapitel \ref{cha:tests} eingegangen.
 
 \section{Fast Neural Style Transfer}
 
 Die zuvor konzipierte Loss-Funktion kann beim Fast Neural Style Transfer wieder verwendet werden. 
-Im Gegensatz zum vorherigen Verahren werden nicht die Pixel als Parameter anhand der Loss-Funktion optimiert, sondern die Gewichtungsparameter eines Neuronalen Netzwerks. Dieses Verfahren wird auch Training genannt. Nach beendeter Trainingsphase ist das Netzwerk in der Lage willkürliche Bilder in Bilder mit dem mit \lstinline{style_image} ausgewählten Stil umzuwandeln.
+Im Gegensatz zum vorherigen Verfahren werden nicht die Pixel als Parameter anhand der Loss-Funktion optimiert sondern die Gewichtungsparameter eines Neuronalen Netzwerks. Dieses Verfahren wird auch Training genannt. Nach beendeter Trainingsphase ist das Netzwerk in der Lage, willkürliche Bilder in Bilder mit dem mit \mintinline{python}{style_image} ausgewählten Stil umzuwandeln.
 
-Im Zuge dieser Arbeit soll eine Netzwerkarchitektur gefunden werden, die in der Lage ist diese Aufgabe zu bewältigen. Außerdem wird die Netzwerkarchitektur im Kapitel \ref{cha:tests} auf ihre Performanz auf Geräten mit leistungsarmer Hardware getestet.
+Im Zuge dieser Arbeit soll eine Netzwerkarchitektur gefunden werden, die in der Lage ist, diese Aufgabe zu bewältigen. Außerdem wird die Netzwerkarchitektur im Kapitel \ref{cha:tests} auf ihre Performanz auf Geräten mit leistungsarmer Hardware getestet.
 
 \subsection{Aufbau}
 \label{sec:aufbau}
 
-Die Netzwerkarchitektur, welche beim Fast Neural Style Transfer verwedndet wird, nachfolgend Transformer Net genannt, orientiert sich an der des Github-Repository \cite{PyTorchFastNeuralStyle}, welches den Fast Neural Style Transfer implementiert.
-Es basiert dabei aus drei Teilen. Einem Down-Sampling-Teil, einem Computational-Teil (auch Bottleneck genannt) und einem Up-Sampling-Teil.
+Die Netzwerkarchitektur, die beim Fast Neural Style Transfer verwendet wird, nachfolgend Transformer Net genannt, orientiert sich an dem Github-Repository \cite{PyTorchFastNeuralStyle}, dass den Fast Neural Style Transfer implementiert.
+Sie besteht aus drei Teilen. Einem Down-Sampling-Teil, einem Computational-Teil (auch Bottleneck genannt) und einem Up-Sampling-Teil.
 
 \begin{figure}[H]
 	\centering
