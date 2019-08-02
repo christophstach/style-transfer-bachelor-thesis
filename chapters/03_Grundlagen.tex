@@ -319,14 +319,14 @@ Zwischen den \gls{activation_map}s $ P $  des Contentbildes $ \vec{p} $ und den 
 
 Das Style-Loss verwendet die \gls{activation_map}s nicht direkt, sondern bildet vorher deren Gram-Matrix. Das hat zur Folge, dass räumliche Informationen verworfen werden, jedoch Farben und Muster erhalten bleiben, die beim Übertragen des Stils die wichtigste Rolle spielen.
 
-Um die Gram-Matrix mehrerer \gls{activation_map}s zu berechnen, werden die Matrizen geflächt und Height- und Width-Dimension werden zu einer Dimension zusammengefügt. Daraus ergibt sich eine 2-dimensionale Matrix der Form $ C \times HW $. Diese wird transponiert mit sich selbst multipliziert.
+Um die Gram-Matrix mehrerer \gls{activation_map}s zu berechnen, werden die Matrizen geflächt und Height- und Width-Dimension werden zu einer Dimension zusammengefügt. Daraus ergibt sich eine 2-dimensionale Matrix der Form $ C \times HW $. Diese wird transponiert und mit sich selbst multipliziert.
 
 \begin{equation}
 	\label{eq:gram_matrix_1}
 	G_{ij}^{l} = \sum_{k} F_{ik}^{l} F_{jk}^{l}
 \end{equation}
 
-Es wird die Gram-Matrix, $ G $ aus dem Stilbild und $ A $ aus dem generierten Bild, anhand der gebenen Layer $ l $ berechnet, anschließend normalisiert und das \gls{mse_loss} gebildet.
+Es wird die Gram-Matrix, $ G $ aus dem Stilbild und $ A $ aus dem generierten Bild, anhand der gegebenen Layer $ l $ berechnet, anschließend normalisiert und das \gls{mse_loss} gebildet.
 
 \begin{equation}
 	\label{eq:gram_matrix_2}
@@ -343,7 +343,7 @@ Das Style-Loss ergibt sich aus der gewichteten Summe der Layer-Losses.
 \subsubsection{Total-Variation-Loss}
 \label{sec:total_variation_Loss}
 
-Bei der Total-Variation-Loss-Funktion handelt es sich um einen Signal-Denoising-Algorithmus \cite{RUDIN1992259, DBLP:journals/corr/EstrelaMS16}. Sie sorgt dafür das die Pixel der generierten Bilder sanft in einander überlaufen. Farblich sehr unterschiedliche, nah aneinanderliegende Pixel erzeugen ein hohes Loss. So können Verpixelungseffekte vermieden werden. Sie kann optional eingesetzt werden um das Resultat der generierten Bilder zu verbessern.
+Bei der Total-Variation-Loss-Funktion handelt es sich um einen Signal-Denoising-Algorithmus \cite{RUDIN1992259, DBLP:journals/corr/EstrelaMS16}. Sie sorgt dafür, dass die Pixel der generierten Bilder sanft in einander überlaufen. Farblich sehr unterschiedliche, nah aneinanderliegende Pixel erzeugen ein hohes Loss. So können Verpixelungseffekte vermieden werden. Das Total-Variation-Loss kann optional eingesetzt werden um das Resultat der generierten Bilder zu verbessern.
 
 \begin{equation}
 	\label{eq:total_variation_loss}
@@ -372,4 +372,4 @@ Im Gegensatz zum im Kapitel \ref{sec:neural_style_transfer} vorgestellten Algori
 	\label{img:fast_neural_style_transfer}
 \end{figure}
 
-Durch die Verwendung eines Image Transformer Networks kann die Berechnungszeit verbessert werden, da das neu gestylte Bild mit einem Forward-Pass durch das Netzwerk erstellt wird. Die rechenintensive Optimierung und Berechnung der Pixel-Gradienten durch den Backpropagation-Algorithmus \ref{sec:backpropagation} entfällt. Das Training eines Image Transformer Netzworks nimmt jedoch viel Zeit in Anspruch.
+Durch die Verwendung eines Image Transformer Networks kann die Berechnungszeit verbessert werden, da das neu gestylte Bild mit einem Forward-Pass durch das Netzwerk erstellt wird. Die rechenintensive Optimierung und Berechnung der Pixel-Gradienten durch den Backpropagation-Algorithmus \ref{sec:backpropagation} entfällt. Das Training eines Image Transformer Networks nimmt jedoch viel Zeit in Anspruch.
