@@ -84,8 +84,7 @@ Die Abkürzungen in der Grafik stehen für folgende Werte:
 	\item UF = Upsampling Factor
 \end{itemize}
 
-Im ersten Teil, bestehend aus Convolutional Blöcken, wird durch die Verwendung des Stride Paramters das Eingangsbild hinter jedem Layer verkleinert.
-Mit einem Stride von zwei, wird das Bild ungefähr um die Hälfte der ursprünglichen Größe verkleinert, vgl Kapitel \ref{cha:fundamentals}. Dabei wird die Anzahl der Channels mit jedem Block vergrößert um den Informationsverlust, der durch die verkleinerten Bilder entsteht, auszugleichen.
+Im ersten Teil, bestehend aus Convolutional Blöcken, wird durch die Verwendung des Stride Parameters das Eingangsbild hinter jedem Layer verkleinert. Mit einem Stride von 2 wird das Bild ungefähr auf die Hälfte der ursprünglichen Größe verkleinert, vgl. Kapitel \ref{cha:fundamentals}. Dabei wird die Anzahl der Channels mit jedem Block vergrößert, um den Informationsverlust, der durch die verkleinerten Bilder entsteht, auszugleichen.
 
 \begin{figure}[H]
 	\centering
@@ -94,16 +93,16 @@ Mit einem Stride von zwei, wird das Bild ungefähr um die Hälfte der ursprüngl
 	\label{img:residual_block_img}
 \end{figure}
 
-Der zweite Teil besteht aus Residual Blöcken, beschrieben in \cite{DBLP:journals/corr/HeZRS15}. Diese bestehen aus zwei aufeinanderfolgenden Convolutional Layern, die mit einer sogennanten Skip-Connection mit ihren Eingangsdaten verbunden sind. Das hat den Vorteil, dass die ursprünglichen Eingangsdaten nach jedem Layer noch vorhanden sind. Das beugt dem \gls{vanishing_gradient} Problem vor. In diesem Teil des Netzwerk entsteht die meiste Berechnung und die meisten Daten des Stils werden hier in den Gewichten der Kernels gespeichert.
+Der zweite Teil besteht aus Residual Blöcken, beschrieben in \cite{DBLP:journals/corr/HeZRS15}. Diese bestehen aus zwei aufeinanderfolgenden Convolutional Layern, die mit einer sogenannten Skip-Connection mit ihren Eingangsdaten verbunden sind. Das hat den Vorteil, dass die ursprünglichen Eingangsdaten nach jedem Layer noch vorhanden sind. Dies beugt dem \gls{vanishing_gradient} Problem vor. In diesem Teil des Netzwerk entsteht die meiste Berechnung und die meisten Daten des Stils werden hier in den Gewichten der Kernels gespeichert.
 
-Im dritten Teil wird das Bild durch Upsampling wieder auf seine ursprüngliche Maße vergrößert. Außerdem werden die Channels auf drei reduziert um es als RGB-Bild anzeigen zu können. Die Vergrößerung wird durch Nearest Neighbor Interplolation kombiniert mit einem Convolutional Layer realisiert.
+Im dritten Teil wird das Bild durch Upsampling wieder auf seine ursprünglichen Maße vergrößert. Außerdem werden die Channels auf drei reduziert um es als RGB-Bild anzeigen zu können. Die Vergrößerung wird durch Nearest Neighbor Interpolation kombiniert mit einem Convolutional Layer realisiert.
 Es wird zusammen mit seinen Vorteilen in \cite{odena2016deconvolution} näher beschrieben.
 
 \pagebreak
 
 \subsection{Unterschiedliche Netzwerkgrößen}
 
-Wie auf der Grafik \ref{img:transformer_net_img} zu erkennen ergibt sich die Anzahl der Channels jeweils aus dem einem Potenzwert der Basis $ 2 $ multipliziert mit eine Multiplikator $ m $, in diesem Fall der Wert $ 32 $.
+Wie auf der Grafik \ref{img:transformer_net_img} zu erkennen, ergibt sich die Anzahl der Channels jeweils aus einem Potenzwert der Basis $ 2 $ multipliziert mit einem Multiplikator $ m $, in diesem Fall der Wert $ 32 $.
 
 \begin{align}
 	& c_{1}(m) = m * 2^{0}
@@ -120,6 +119,6 @@ Wie auf der Grafik \ref{img:transformer_net_img} zu erkennen ergibt sich die Anz
 	& 128 = 32 * x^{2}
 \end{align}
 
-Durch den Multiplikator $ m $ lässt sich Netzwerkgröße und somit die Anzahl der Parameter einstellen. Unterschiedliche Netzwerkgrößen sind der Lage die Stile unterschiedlich gut festzuhalten. Auch wirkt sich die Netzwerkgröße auf die Berechnungs- und Trainingszeit des Netzwerks aus, was unter dem Gesichtspunkt der Verwedung auf Geräten mit leistungsarmer Hardware eine Rolle spielt.
+Durch den Multiplikator $ m $ lässt sich Netzwerkgröße und somit die Anzahl der Parameter einstellen. Unterschiedliche Netzwerkgrößen sind in der Lage, die Stile unterschiedlich gut festzuhalten. Auch wirkt sich die Netzwerkgröße auf die Berechnungs- und Trainingszeit des Netzwerks aus, was unter dem Gesichtspunkt der Verwendung auf Geräten mit leistungsarmer Hardware eine Rolle spielt.
 
-Neben dem Multiplikator gibt es einen weiteren Parameter der die Netzwerkgröße verändert. Der Anzahl der ResidualBlocks im Computational-Teil als $ s $ bezeichnet. Im Kapitel \ref{cha:tests} werden unterschiedliche Netzwerkgrößen und ihre Performanz getestet.
+Neben dem Multiplikator gibt es einen weiteren Parameter, der die Netzwerkgröße verändert. Der Parameter $ s $ legt die Anzahl der ResidualBlocks im Computational-Teil fest. Im Kapitel \ref{cha:tests} werden unterschiedliche Netzwerkgrößen und ihre Performanz getestet.
