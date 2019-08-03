@@ -5,13 +5,13 @@ Im Kapitel Tests und Experimente werden unterschiedliche Hyperparameter-Konfigur
 
 \section{Auswirkungen der Hyperparameter}
 
-Im Folgenden werden unterschiedliche Kombinationen der Gewichtungsparameter Content-Weight $ \alpha $, Style-Weight $ \beta $ und Total-Variation-Weight $ \gamma $ getestet. Dabei wird als Inhaltsbild  eine eigene Abbildung der HTW-Berlin benutzt. Als Stilbild wird das Kunstwerk The Starry Night des Künstlers Vincent Van Gogh und The Scream von Edvard Munch verwendet. Die generierten Bilder entsprechen einer Größe von 768 * 768 Pixel. Die restlichen Hyperparameter werden aus dem Kapitel Methodologie \ref{sec:method_neural_style_transfer} übernommen.
+Im Folgenden werden unterschiedliche Kombinationen der Gewichtungsparameter Content-Weight $ \alpha $, Style-Weight $ \beta $ und Total-Variation-Weight $ \gamma $ getestet. Dabei wird als Inhaltsbild  eine eigene Abbildung der HTW-Berlin benutzt. Als Stilbild wird das Kunstwerk \textit{The Starry Night} des Künstlers Vincent Van Gogh und \textit{The Scream} von Edvard Munch verwendet. Die generierten Bilder entsprechen einer Größe von 768 * 768 Pixel. Die restlichen Hyperparameter werden aus dem Kapitel Methodologie \ref{sec:method_neural_style_transfer} übernommen.
 
 \pagebreak
 
 \subsection{Experiment 1: Starry Night}
 
-In diesem Experiment wird das Stilbild The Starry Night von Vincent Van Gogh verwendet.
+In diesem Experiment wird das Stilbild \textit{The Starry Night} von Vincent Van Gogh verwendet.
 
 \begin{figure}[H]
     \centering
@@ -23,11 +23,11 @@ In diesem Experiment wird das Stilbild The Starry Night von Vincent Van Gogh ver
         \centering
         \includegraphics[width=\textwidth]{resources/content/style/starry_night.jpg}
     \end{subfigure}
-    \caption{HTW kombiniert mit The Starry Night \cite{the_starry_night_img}}
+    \caption{HTW kombiniert mit \textit{The Starry Night} \cite{the_starry_night_img}}
 \end{figure}
 
 In der ersten Abbildungen werden die verschiedenen
-Stilgewichtungen $ \beta = 10^{5} $, $ \beta = 10^{6} $, $ \beta = 10^{7} $, $ \beta = 10^{8} $ und $ \beta = 10^{9} $ für The Starry Night getestet.
+Stilgewichtungen $ \beta = 10^{5} $, $ \beta = 10^{6} $, $ \beta = 10^{7} $, $ \beta = 10^{8} $ und $ \beta = 10^{9} $ für \textit{The Starry Night} getestet.
 
 \begin{figure}[H]
     \centering
@@ -51,7 +51,7 @@ Stilgewichtungen $ \beta = 10^{5} $, $ \beta = 10^{6} $, $ \beta = 10^{7} $, $ \
         \centering
         \includegraphics[width=\textwidth]{resources/content/experiments/a__starry_night__768x768__style-weight_1e+09__tv-weight_0e+00.jpg}
     \end{subfigure}
-    \caption{The Starry Night mit $ \alpha = 1 $, $ \beta = 10^{5} - 10^{9} $, $ \gamma = 0 $}
+    \caption{\textit{The Starry Night} mit $ \alpha = 1 $, $ \beta = 10^{5} - 10^{9} $, $ \gamma = 0 $}
 \end{figure}
 
 In der zweiten Abbildungen werden die verschiedenen Total-Variation-Gewichtungen $ \gamma = 10^{-7} $, $ \gamma = 10^{-6} $, $ \gamma = 10^{-5} $, $ \gamma = 10^{-4} $ und $ \gamma = 10^{-3} $  für Starry Night getestet.
@@ -95,12 +95,12 @@ In der zweiten Abbildungen werden die verschiedenen Total-Variation-Gewichtungen
         \centering
         \includegraphics[width=\textwidth]{resources/content/style/the_scream.jpg}
     \end{subfigure}
-    \caption{HTW kombiniert mit The Scream \cite{the_scream_img}}
+    \caption{HTW kombiniert mit \textit{The Scream} \cite{the_scream_img}}
 \end{figure}
 
 
 In der ersten Abbildungen werden verschiedene die verschiedenen  \\
-Stilgewichtungen $ \beta = 10^{5} $, $ \beta = 10^{6} $, $ \beta = 10^{7} $, $ \beta = 10^{8} $ und $ \beta = 10^{9} $ für The Scream getestet.
+Stilgewichtungen $ \beta = 10^{5} $, $ \beta = 10^{6} $, $ \beta = 10^{7} $, $ \beta = 10^{8} $ und $ \beta = 10^{9} $ für \textit{The Scream} getestet.
 
 \begin{figure}[H]
     \centering
@@ -124,10 +124,10 @@ Stilgewichtungen $ \beta = 10^{5} $, $ \beta = 10^{6} $, $ \beta = 10^{7} $, $ \
         \centering
         \includegraphics[width=\textwidth]{resources/content/experiments/a__the_scream__768x768__style-weight_1e+09__tv-weight_0e+00.jpg}
     \end{subfigure}
-    \caption{The Scream mit $ \alpha = 1 $, $ \beta = 10^{5} - 10^{9} $, $ \gamma = 0 $}
+    \caption{\textit{The Scream} mit $ \alpha = 1 $, $ \beta = 10^{5} - 10^{9} $, $ \gamma = 0 $}
 \end{figure}
 
-In der zweiten Abbildungen werden verschiedene die verschiedenen Total-Variation-Gewichtungen $ \gamma = 10^{-7} $, $ \gamma = 10^{-6} $, $ \gamma = 10^{-5} $, $ \gamma = 10^{-4} $ und $ \gamma = 10^{-3} $ für The Scream getestet.
+In der zweiten Abbildungen werden verschiedene die verschiedenen Total-Variation-Gewichtungen $ \gamma = 10^{-7} $, $ \gamma = 10^{-6} $, $ \gamma = 10^{-5} $, $ \gamma = 10^{-4} $ und $ \gamma = 10^{-3} $ für \textit{The Scream} getestet.
 
 \begin{figure}[H]
     \centering
@@ -151,28 +151,26 @@ In der zweiten Abbildungen werden verschiedene die verschiedenen Total-Variation
         \centering
         \includegraphics[width=\textwidth]{resources/content/experiments/b__the_scream__768x768__style-weight_1e+07__tv-weight_1e-03.jpg}
     \end{subfigure}
-    \caption{The Scream mit $ \alpha = 1 $, $ \beta = 10^{7} $, $ \gamma = 10^{-7} - 10^{-3} $}
+    \caption{\textit{The Scream} mit $ \alpha = 1 $, $ \beta = 10^{7} $, $ \gamma = 10^{-7} - 10^{-3} $}
 \end{figure}
 
 \pagebreak
 
 \subsection{Interpretation der Ergebnisse}
 
-Wie beiden Tests zu sehen ist, werden die Muster mit zunehmendem Style-Weight $ \beta $ auf dem Ausgangsbild immer stärker generiert. Mit $ b = 10^{5} $ sind bei beiden Stilen die Muster des Gemäldes kaum noch zu erkennen. Lediglich wird das Ausgangsbild den Farben des Stilbildes angepasst. Ein optisch ansprechender Effekt ergibt sich bei beiden Stilen ab $ \beta = 10^{7} $. 
+Wie bei beiden Tests zu sehen ist, werden die Muster mit zunehmendem Style-Weight $ \beta $ auf dem Ausgangsbild immer stärker generiert. Mit $ b = 10^{5} $ sind bei beiden Stilen die Muster des Gemäldes kaum noch zu erkennen. Lediglich wird das Ausgangsbild den Farben des Stilbildes angepasst. Ein optisch ansprechender Effekt ergibt sich bei beiden Stilen ab $ \beta = 10^{7} $. 
 
-Mit zunehmendem Total-Variation-Weight $ \gamma $ fließen die Farben mehr ineinander und das Ausgangsbild wird verschommener. Das ist besonders gut zu sehen bei The Starry Night mit $ \gamma = 10^{-3} $ und \text{The Scream} mit $ \gamma = 10^{-4} $. Für The Scream ist eine Gewichtung von $ \gamma = 10^{-3} $ bereits zu hoch gewählt. Das Ausgangsbild entwickelt sich zu einem grauen Rauschen.
+Mit zunehmendem Total-Variation-Weight $ \gamma $ fließen die Farben mehr ineinander und das Ausgangsbild wird verschwommener. Das ist besonders gut zu sehen bei \textit{The Starry Night} mit $ \gamma = 10^{-3} $ und \text{\textit{The Scream}} mit $ \gamma = 10^{-4} $. Für \textit{The Scream} ist eine Gewichtung von $ \gamma = 10^{-3} $ bereits zu hoch gewählt. Das Ausgangsbild entwickelt sich zu einem grauen Rauschen.
 
 
 \section{Auswirkungen der Netzwerkarchitekturen}
 
-Im diesem Experiment wurden drei unterschiedlichen Bildgrößen auf unterschiedlichen Geräten auf Durchführbarkeit und Performanz getestet.
-Gemessen wird die Berechnungsgeschwindigkeit beim Forward-Pass durch das Netzwerk. Ein bereits erster Indikator für die Performanz eines Neuronalen Netzwerks ist die Anzahl der lernbaren Parameter, die bei der Trainingsphase optimiert werden. Erstellt wurden 16 unterschiedliche Netzwerke mit unterschiedlichen Kombinationen für $ m $ und $ s $. 
-
-\ref{tab:networks}
+In diesem Experiment wurden drei unterschiedliche Bildgrößen auf verschiedenen Geräten auf Durchführbarkeit und Performanz getestet.
+Gemessen wird die Berechnungsgeschwindigkeit beim Forward-Pass durch das Netzwerk. Ein bereits erster Indikator für die Performanz eines Neuronalen Netzwerks ist die Anzahl der lernbaren Parameter, die bei der Trainingsphase optimiert werden. Erstellt wurden 16 unterschiedliche Netzwerke mit verschiedenen Kombinationen für $ m $ und $ s $, vgl. \ref{tab:networks}. 
 
 \subsection{Verwendete Geräte}
 
-Bei der Berechnung des Forward-Pass macht es einen Unterschied ob sie auf dem CPU oder dem GPU eines Geräts durchgeführt wird. Neuronale Netzwerke können auf einer GPU schneller als auf einem CPU berechnet werden. Das liegt daran, dass eine GPU besonders auf die Berechnung von Matrix-Operationen (wie Sie auch bei grafischen Anwendungen verwendet werden) spezialisiert ist.
+Bei der Berechnung des Forward-Pass macht es einen Unterschied, ob sie auf dem CPU oder dem GPU eines Geräts durchgeführt wird. Neuronale Netzwerke können auf einer GPU schneller als auf einem CPU berechnet werden. Das liegt daran, dass eine GPU besonders auf die Berechnung von Matrix-Operationen (wie Sie auch bei grafischen Anwendungen benutzt werden) spezialisiert ist.
 
 Die Daten werden beim Einsatz des GPUs in den Grafikspeicher geladen. Bei der Berechnung über den CPU wird der Arbeitsspeicher (RAM) des Geräts verwendet.
 
