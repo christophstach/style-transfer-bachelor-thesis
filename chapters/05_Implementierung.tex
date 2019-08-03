@@ -1,19 +1,18 @@
 \chapter{Implementierung}
 \label{cha:implementation}
 
-Im Bereich des Machine Learning und Deep Learning gibt es viele verschiedene Frameworks, die bei der Umsetzung und dem Training von Neuronalen Netzwerken behilflich sind. Beispiele hierfür sind Tensorflow\footnote{\url{https://www.tensorflow.org/}} von Google, PyTorch\footnote{\url{https://pytorch.org/}} von Facebook und Apache MXNet\footnote{\url{https://mxnet.apache.org/}}. Da ich bereits im Vorfeld, während meiner Universitätsveranstaltungen, Erfahrungen mit PyTorch sammeln konnten, habe ich mich für dieses Framework entschieden.
+Im Bereich des Machine Learning und Deep Learning gibt es viele verschiedene Frameworks, die bei der Umsetzung und dem Training von Neuronalen Netzwerken behilflich sind. Beispiele hierfür sind Tensorflow\footnote{\url{https://www.tensorflow.org/}} von Google, PyTorch\footnote{\url{https://pytorch.org/}} von Facebook und Apache MXNet\footnote{\url{https://mxnet.apache.org/}}. Da ich bereits im Vorfeld während meiner Universitätsveranstaltungen Erfahrungen mit PyTorch sammeln konnte, habe ich mich für dieses Framework entschieden.
 
 \section{Loss-Funktion}
 
-Im ersten Schritt wird die Loss-Funktion implementiert, die das Kernstück des modelbasierten und des optimisierenden Ansatz ist.
-PyTorch behinhaltet bereits vortrainierte Versionen verschiedener Model Architekuren. In dieser Arbeit wird das \gls{vgg16}-Model benutzt, auf dieses
-wird mit \mintinline{python}{model = torchvision.models.vgg16(pretrained=True).features} zugegriffen. Das PyTorch-Model ist dabei in die Bereiche \textit{features} und \textit{classifier} aufgeteilt. Es wird lediglich der Bereich \textit{features} benötigt, welcher die bereits vortrainierten Convolutional-Layer enthält. Der Bereich \textit{classifier} enthält die Fully-Connected-Layer des Models, welche für die Aufgabenstellen ungenutzt bleiben.
+Im ersten Schritt wird die Loss-Funktion implementiert, die das Kernstück des modellbasierten und des optimisierenden Ansatzes ist.
+PyTorch beinhaltet bereits vortrainierte Versionen verschiedener Modellarchitekturen. In dieser Arbeit wird das \gls{vgg16}-Modell benutzt, auf dieses wird mit \mintinline{python}{model = torchvision.models.vgg16(pretrained=True).features} zugegriffen. Das PyTorch-Modell ist dabei in die Bereiche \textit{features} und \textit{classifier} aufgeteilt. Es wird lediglich der Bereich \textit{features} benötigt, welcher die bereits vortrainierten Convolutional-Layer enthält. Der Bereich \textit{classifier} enthält die Fully-Connected-Layer des Modells, welche für die Aufgabenstellen ungenutzt bleiben.
 
 \pagebreak
 
 \subsection{Zugriff auf Hidden-Layer-Ergebnisse}
 
-Um bei PyTorch auf Zwischenergebnisse der Hidden-Layer zuzugreifen, werden hinter diesen Hooks implementiert. Das kann in eine Funktion ausgelagert werden, welche die \gls{activation_map}s während der Berechnung des Forward-Pass durch das \gls{vgg16}-Model extrahiert.
+Um bei PyTorch auf Zwischenergebnisse der Hidden-Layer zuzugreifen, werden hinter diesen Hooks implementiert. Das kann in eine Funktion ausgelagert werden, welche die \gls{activation_map}s während der Berechnung des Forward-Pass durch das \gls{vgg16}-Modell extrahiert.
 
 \begin{listing}[H]
 \begin{minted}{python}
@@ -42,8 +41,8 @@ def extract_activation_maps(image_batch, model, layers, detach=False):
 
 \subsection{Content-Loss}
 
-Um das Content-Loss zu bilden wird mit der zuvor definierten Funktion auf die Zwischenergebnisse der Hidden-Layer zugegriffen.
-Das Ergebnis ist das \gls{mse_loss} aller Zwischenergebnisse der Eingangsdaten (Inhaltsbild) verglichen mit den Zwischenergebnisse der Ausgangsdaten (generierte Bilder), vgl. Kapitel \ref{sec:content_loss}.
+Um das Content-Loss zu bilden, wird mit der zuvor definierten Funktion auf die Zwischenergebnisse der Hidden-Layer zugegriffen.
+Das Ergebnis ist das \gls{mse_loss} aller Zwischenergebnisse der Eingangsdaten (Inhaltsbild) verglichen mit den Zwischenergebnissen der Ausgangsdaten (generierte Bilder), vgl. Kapitel \ref{sec:content_loss}.
 
 \begin{listing}[H]
 \begin{minted}{python}
@@ -60,7 +59,7 @@ def content_loss(self, y, x):
 
 \subsection{Style-Loss}
 
-Für das Style-Loss wird eine Funktion benötigt um die Gram-Matrix eines \gls{tensor}s zu bilden. Die Anzahl der Dimensionen des Eingangstensors wird auf zwei Dimensionen geflächt. Diese Matrix wird einer von sich selbst transponierten Version multipliziert. Danach wird das Ergebnis über das Produkt der Anzahl der Channel, Höhe und Breite des Eingangstensors normalisiert.
+Für das Style-Loss wird eine Funktion benötigt, um die Gram-Matrix eines \gls{tensor}s zu bilden. Die Anzahl der Dimensionen des Eingangstensors wird auf zwei Dimensionen geflächt. Diese Matrix wird mit einer von sich selbst transponierten Version multipliziert. Danach wird das Ergebnis über das Produkt der Anzahl der Channel, Höhe und Breite des Eingangstensors normalisiert.
 
 \begin{listing}[H]
 \begin{minted}{python}
@@ -77,7 +76,7 @@ def gram_matrix(tensor):
 \captionof{lstlisting}{Berechnung der Gram-Matrix, vgl. Gleichungen \eqref{eq:gram_matrix_1} u. \eqref{eq:gram_matrix_2}}
 \end{listing}
 
-Die Gram-Matrix-Funktion wird dazu benutzt das Style-Loss zu berechnen. Wie beim Content-Loss wird das \gls{mse_loss} gebildet. Dieses mal werden vorher die Gram-Matrizen aller \gls{activation_map}s berechnet. Auf diese Weise wird das berechnete Ausgangsbild mit dem vorher eingestellten Stilbild verglichen. In dieser Implementierung wurde die Gewichtung der einzelnen Layer nicht berücksichtigt. Die Implementierung weicht daher geringfügig von der in den Grundlagen verwendeten Gleichung \eqref{eq:style_loss} ab.
+Die Gram-Matrix-Funktion wird dazu benutzt, das Style-Loss zu berechnen. Wie beim Content-Loss wird das \gls{mse_loss} gebildet. Dazu werden vorher die Gram-Matrizen aller \gls{activation_map}s berechnet. Auf diese Weise wird das berechnete Ausgangsbild mit dem vorher eingestellten Stilbild verglichen. In dieser Implementierung wurde die Gewichtung der einzelnen Layer nicht berücksichtigt. Die Implementierung weicht daher geringfügig von der in den Grundlagen verwendeten Gleichung \eqref{eq:style_loss} ab.
 
 \begin{listing}[H]
 \begin{minted}{python}
@@ -165,13 +164,9 @@ optimizer = optim.Adam(model.parameters())
 
 \subsection{COCO-Datensatz}
 
-Um das Neuronale Netzwerk zu trainieren, wird ein großer Bilddatensatz benötigt. In dieser Arbeit wird dafür der \gls{coco}-Datensatz der Firma Microsoft verwendet \cite{DBLP:journals/corr/LinMBHPRDZ14}. Es handelt sich dabei um einen öffentlichen, freiverfügbaren Datensatz vieler verschiedener Bilder, verschiedener Kategorien. Während des Trainingsverlauf werden zufällige Bilder aus dem \gls{coco}-Datensatz genutzt, und das Loss  (Style-, Content- und Total-Variation-Loss) über die Ausgaben, die das Netzwerk generiert, berechnet.
-Mit dem berechnete Loss ist PyTorch in der Lage die Gradienten der Gewichte des Neuronalen Netzwerks zu berechnen und diese 
-Schrittweise zu optimieren.
+Um das Neuronale Netzwerk zu trainieren, wird ein großer Bilddatensatz benötigt. In dieser Arbeit wird dafür der \gls{coco}-Datensatz der Firma Microsoft verwendet \cite{DBLP:journals/corr/LinMBHPRDZ14}. Es handelt sich dabei um einen öffentlichen, freiverfügbaren Datensatz vieler verschiedener Bilder verschiedener Kategorien. Während des Trainingsverlaufs werden zufällige Bilder aus dem \gls{coco}-Datensatz genutzt und das Loss  (Style-, Content- und Total-Variation-Loss) über die Ausgaben, die das Netzwerk generiert, berechnet. Mit dem berechneten Loss ist PyTorch in der Lage, die Gradienten der Gewichte des Neuronalen Netzwerks zu berechnen und diese schrittweise zu optimieren.
 
-Der \gls{coco}-Datensatz liegt in Form vieler verschiedener \gls{jpeg}-Bilder vor. 
-Um nicht alle Bilder gleichzeitig laden zu müssen, bietet PyTorch die Möglichkeit einen Dataloader\footnote{Weitere Information zum PyTorch-Dataloader: \url{https://pytorch.org/tutorials/beginner/data_loading_tutorial.html}}
-zu nutzen, welcher die Bilder in der gewünschten Batchgröße Schritt für Schritt lädt.
+Der \gls{coco}-Datensatz liegt in Form vieler verschiedener \gls{jpeg}-Bilder vor. Um nicht alle Bilder gleichzeitig laden zu müssen, bietet PyTorch die Möglichkeit, einen Dataloader\footnote{Weitere Information zum PyTorch-Dataloader: \url{https://pytorch.org/tutorials/beginner/data_loading_tutorial.html}} zu nutzen, welcher die Bilder in der gewünschten Batchgröße Schritt für Schritt lädt.
 
 \begin{listing}[H]
 \begin{minted}{python}
@@ -189,7 +184,7 @@ dataloader = data.DataLoader(dataset, batch_size=config['batch_size'], shuffle=T
 \captionof{lstlisting}{Der PyTorch-Dataloader lädt Bilder in der gewünschten Batchgröße}
 \end{listing}
 
-Der Dataloader lädt alle Bilder in allen Unterordnern innerhalbes des konfigurierten Pfades.
+Der Dataloader lädt alle Bilder in allen Unterordnern innerhalb des konfigurierten Pfades.
 
 \subsection{Netzwerkarchitektur}
 \label{sec:network_architecture}
@@ -208,19 +203,17 @@ Um in Kapitel \ref{cha:tests} das Testen unterschiedlicher Netzwerkarchitekturen
 
 \subsection{Aktivierungsfunktionen}
 
-Für den dynamischen Aufbau des Netzwerks wird eine Funktion benötigt, die entsprechende PyTorch-Aktivierungsfunktionen zurück gibt. Hardtanh und Sigmoid eigenen sich als finale Aktivierungsfunktionen des Netzwerks, da Sie Werte zwischen $ 0.0 $ und $ 1.0 $ zurückliefern. Das eignet sich für die Generierung von Bildern, welche in PyTorch ebenfals Pixelwerte zwischen $ 0.0 $ und $ 1.0 $ besitzen. Zu beachten ist das die Hardtanh-Funktion mit den Parametern \mintinline{python}{min_val=0.0} und \mintinline{python}{max_val=1.0} initialisiert wird, welche den Wertebereich verschieben. Mit den Standardeinstellungen liegt der Wertebereich der Hardtanh-Funktion zwischen $ -1.0 $ und $ 1.0 $. Die Parameter \mintinline{python}{final_activation_fn} und \mintinline{python}{intermediate_activation_fn} werden dabei auf die entsprechenden PyTorch-Aktivierungsfunktionen überführt.
+Für den dynamischen Aufbau des Netzwerks wird eine Funktion benötigt, die entsprechende PyTorch-Aktivierungsfunktionen zurückgibt. Hardtanh und Sigmoid kommen als finale Aktivierungsfunktionen des Netzwerks in Betracht, da Sie Werte zwischen $ 0.0 $ und $ 1.0 $ zurückliefern. Das eignet sich für die Generierung von Bildern, welche in PyTorch ebenfalls Pixelwerte zwischen $ 0.0 $ und $ 1.0 $ besitzen. Zu beachten ist, dass die Hardtanh-Funktion mit den Parametern \mintinline{python}{min_val=0.0} und \mintinline{python}{max_val=1.0} initialisiert wird, die den Wertebereich verschieben. Mit den Standardeinstellungen liegt der Wertebereich der Hardtanh-Funktion zwischen $ -1.0 $ und $ 1.0 $. Die Parameter \mintinline{python}{final_activation_fn} und \mintinline{python}{intermediate_activation_fn} werden dabei auf die entsprechenden PyTorch-Aktivierungsfunktionen überführt.
 
 \subsection{ConvBlock}
 
-Desweiteren müssen die in Kapitel \ref{sec:aufbau} konzipierten Layer-Blöcke implementiert werden.
-Der ConvBlock besteht aus den PyTorch-Layern \mintinline{python}{Conv2d}, \mintinline{python}{InstanceNorm2d} und der gewählten Aktivierungsfunktion.
-\mintinline{python}{InstanceNorm2d} wurde auf Grund des Papers \cite{DBLP:journals/corr/UlyanovVL16} gewählt und dort näher in Bezug auf die Verwendung mit Style Transfer-Methoden erläutert.
+Desweiteren müssen die in Kapitel \ref{sec:aufbau} konzipierten Layer-Blöcke implementiert werden. Der ConvBlock besteht aus den PyTorch-Layern \mintinline{python}{Conv2d}, \mintinline{python}{InstanceNorm2d} und der gewählten Aktivierungsfunktion. \mintinline{python}{InstanceNorm2d} wurde aufgrund des Papers \cite{DBLP:journals/corr/UlyanovVL16} gewählt und dort näher in Bezug auf die Verwendung mit Style Transfer-Methoden erläutert.
 
 Die Parameter \mintinline{python}{in_channels} und \mintinline{python}{out_channels} ergeben sich aus dem Parameter \mintinline{python}{channel_multiplier} ($ m $) multipliziert mit einem festen Wert, der je nach Layer $ 1 $, $ 2 $ oder $ 4 $ beträgt.
 
 \subsection{ResidualBlock}
 
-Der ResidualBlock, vgl. \ref{img:residual_block_img}, besteht aus zwei aufeinanderfolgenden \mintinline{python}{Conv2d}-Layern. Wie beim vorherigen ConvBlock werden die Daten über \mintinline{python}{InstanceNorm2d} normalisiert, anschließend wird die Aktivierungsfunktion angewendet. Die Besonderheit ist das die Eingangdaten kopiert werden und danach mit den berechneten Daten der Convolutional-Layer addiert werden. Durch \mintinline{python}{Conv2d} verkleinert sich die Dimension der Daten, vgl. \ref{sec:conv_networks}, welches durch den \mintinline{python}{ReflectionPad2d}-Layer wieder ausgeglichen wird. Eingangsdaten und berechnete Daten müssen die gleichen Dimensionen aufweisen um addiert werden zu können. Die Parameter \mintinline{python}{in_channels} und \mintinline{python}{out_channels} ergeben sich aus \mintinline{python}{channel_multiplier} multipliziert mit $ 4 $.
+Der ResidualBlock, vgl. \ref{img:residual_block_img}, besteht aus zwei aufeinanderfolgenden \mintinline{python}{Conv2d}-Layern. Wie beim vorherigen ConvBlock werden die Daten über \mintinline{python}{InstanceNorm2d} normalisiert, anschließend wird die Aktivierungsfunktion angewendet. Die Besonderheit ist, dass die Eingangsdaten kopiert werden und danach mit den berechneten Daten der Convolutional-Layer addiert werden. Durch \mintinline{python}{Conv2d} verkleinert sich die Dimension der Daten, vgl. \ref{sec:conv_networks}, was durch den \mintinline{python}{ReflectionPad2d}-Layer wieder ausgeglichen wird. Eingangsdaten und berechnete Daten müssen die gleichen Dimensionen aufweisen, um addiert werden zu können. Die Parameter \mintinline{python}{in_channels} und \mintinline{python}{out_channels} ergeben sich aus \mintinline{python}{channel_multiplier} multipliziert mit $ 4 $.
 
 \subsection{UpSampleBlock}
 
@@ -228,16 +221,15 @@ Der UpSampleBlock schaltet lediglich dem ConvBlock ein Upsampling-Verfahren vor,
 
 \subsection{TransformerNet}
 
-Neben den Layer-Blöcken wurde noch die eigentliche Netzwerkarchitektur implementiert. Die Implementierung nimmt die in \ref{sec:network_architecture} beschriebenen Parameter im Konstruktor entgegen um eine entsprechende Netzwerkarchitektur zu generieren. Neben den bereits beschriebenen Einstellungen gibt \mintinline{python}{bottleneck_size} die Anzahl der hintereinander geschalteten ResidualBlocks an. Der \mintinline{python}{bottleneck_type} ist für zukünftige Erweiterungen vorgesehen, damit der ResidualBlock durch einen anders aufgebauten Block ersetzt werden kann. Außerdem wurde ein anfängliches Padding eingefügt um die ursprüngliche Bildgröße beizubehalten.
+Neben den Layer-Blöcken wurde noch die eigentliche Netzwerkarchitektur implementiert. Die Implementierung nimmt die in \ref{sec:network_architecture} beschriebenen Parameter im Konstruktor entgegen um eine entsprechende Netzwerkarchitektur zu generieren. Neben den bereits beschriebenen Einstellungen gibt \mintinline{python}{bottleneck_size} die Anzahl der hintereinander geschalteten ResidualBlocks an. Der \mintinline{python}{bottleneck_type} ist für zukünftige Erweiterungen vorgesehen, damit der ResidualBlock durch einen anders aufgebauten Block ersetzt werden kann. Außerdem wurde ein anfängliches Padding eingefügt, um die ursprüngliche Bildgröße beizubehalten.
 
 \subsection{Weitere Implementierungen}
 
-Zusätzlich zu den bereits vorgestellten Implementierungen wurden Hilfsskripte und Jupyter Notebooks zum Testen erstellt.
-Außerdem wurde eine Trainer-Klasse entworfen die in der Lage ist Einstellungen für Trainingsläufe aus einer Konfiguration Datei zu lesen und somit 
-ein aufeinanderfolgendes Training mehrerer Modelle zu ermöglichen. Auf diese Arte ist es möglich viele unterschiedliche Parametereinstellungen zu testen.
+Zusätzlich zu den bereits vorgestellten Implementierungen wurden Hilfsskripte und Jupyter Notebooks zum Testen erstellt. Außerdem wurde eine Trainer-Klasse entworfen, die in der Lage ist, Einstellungen für Trainingsläufe aus einer Konfigurationdatei zu lesen und somit 
+ein aufeinanderfolgendes Training mehrerer Modelle zu ermöglichen. Auf diese Art kann man viele unterschiedliche Parametereinstellungen testen.
 
-Zur Realisierung eines Prototypens wurde eine JSON-API mit dem Framework Flask\footnote{Flask: \url{http://flask.pocoo.org/}} erstellt. Die API stellt einen Endpunkt zur Verfügung, welche den Style Transfer mit einem gewünschten Model durchführt. Sie wurde in einen Docker\footnote{Docker: \url{https://www.docker.com/}}-Container überführt um das Hosting auf unterschiedlichen Geräten zu erleichtern.
+Zur Realisierung eines Prototyps wurde eine JSON-API mit dem Framework Flask\footnote{Flask: \url{http://flask.pocoo.org/}} erstellt. Die API stellt einen Endpunkt zur Verfügung, welche den Style Transfer mit einem gewünschten Modell durchführt. Sie wurde in einen Docker\footnote{Docker: \url{https://www.docker.com/}}-Container überführt, um das Hosting auf unterschiedlichen Geräten zu erleichtern.
 
-Um die Ergebnisse zu visualisieren wurde eine Frontend-Applikation mit dem Framework Angular\footnote{Angular: \url{https://angular.io/}} erstellt. Diese kann Bilder über die Webcam eines Handys oder eines Computers aufnehmen und sie an die Flask-API senden, welche folgend das geschossene Bild in einen vorher ausgewählten Stil überführt.
+Um die Ergebnisse zu visualisieren, wurde eine Frontend-Applikation mit dem Framework Angular\footnote{Angular: \url{https://angular.io/}} erstellt. Diese kann Bilder über die Webcam eines Handys oder eines Computers aufnehmen und sie an die Flask-API senden, die nachfolgend das geschossene Bild in einen vorher ausgewählten Stil überführt.
 
 Skripte, Frontend-Applikationen und JSON-API sind nicht Bestandteil dieser Arbeit und befinden sich in einem protypischen Zustand. Der komplette Code zu diesem Projekt ist unter \url{https://github.com/christophstach/style-transfer-project} öffentlich einsehbar. Der Code des Frontends unter \url{https://github.com/christophstach/style-transfer-frontend}. Ein gehosteter Prototyp zum Testen des Style Transfers ist unter \url{https://stylized.christophstach.me/} verfügbar.
