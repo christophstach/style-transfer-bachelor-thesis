@@ -4,7 +4,7 @@ Im Kapitel Evaluation werden die restlichen Kapitel dieser Arbeit beleuchtet und
 
 \section{Grundlagen}
 
-Im Kapitel Grundlagen \ref{cha:fundamentals} werden die Grundlagen von Neuronalen Netzwerken erläutert. Besonders der Backprogation-Algorithmus \ref{sec:backpropagation} und die Beschreibung sowie tieferes Auseinandersetzen mit Convolutions \ref{sec:conv_networks} waren für das Verständniss der Problemstellung hilfreich.
+Im Kapitel Grundlagen \ref{cha:fundamentals} werden die Grundlagen von Neuronalen Netzwerken erläutert. Besonders der Backpropagation-Algorithmus \ref{sec:backpropagation} und die Beschreibung sowie tieferes Auseinandersetzen mit Convolutions \ref{sec:conv_networks} waren für das Verständniss der Problemstellung hilfreich.
 
 Anhand der Paper von Gatys \cite{DBLP:journals/corr/GatysEB15a} und Johnson \cite{DBLP:journals/corr/JohnsonAL16} konnte die Problemstellung des Style Transfer nachvollzogen werden. Die in den Papern verwendete Loss-Funktion ist bei beiden die Gleiche. Jedoch werden unterschiedliche Notationen verwendet. Die Loss-Funktion konnte für das Trainieren eines Neuronalen Netzwerks erneut gebraucht werden. Das Paper \cite{DBLP:journals/corr/JohnsonAL16} geht jedoch nicht auf die genaue Architektur des verwendenten Netzwerks ein. Hierzu war es hilfreich die offizielle Implementierung \cite{Johnson2016} oder die Referenz-Implementierungen im PyTorch-Repository \cite{OnlineToturialNeuralStylePyTorch} zu analysieren.
 
@@ -24,9 +24,9 @@ Das in \ref{sec:method_neural_style_transfer} entworfene Skript zur Durchführun
 
 \section{Tests und Experimente}
 
-Im Kapitel Tests und Experimente \ref{cha:tests} wurden verschiedene Tests mit verschiedenen Hyperparametereinstellungen durchgeführt.
-Es wurde demonstriert wie sich verschiedene Content-, Style- und Total-Variation-Loss-Gewichtungen zueinander verhalten. Style Transfer im Allgemeinen hat weitere Hyperparameter, welche bei den durchgeführten Tests nicht berücktsichtigt wurden.
+Im Kapitel Tests und Experimente \ref{cha:tests} wurden verschiedene Tests mit unterschiedlichen Hyperparametereinstellungen durchgeführt.
+Es wurde demonstriert, wie sich verschiedene Content-, Style- und Total-Variation-Loss-Gewichtungen zueinander verhalten. Style Transfer im Allgemeinen hat weitere Hyperparameter, welche bei den durchgeführten Tests nicht berücktsichtigt wurden.
 
-Außerdem wurden verschiedene Tests hinsichtlich der Netzwerkarchitektur und Performanz durchgeführt. Es wurde gezeigt, dass auch Netzwerkarchitekturen mit weniger lernbaren Parametern in der Lage sein können Stile zu erlernen. Zudem wurde gezeigt, dass die gewählten Netzwerkarchitekturen größtenteils auf Geräten mit leistungsarmer Hardware zu berechnen sind.
+Außerdem wurden verschiedene Tests hinsichtlich der Netzwerkarchitektur und Performanz durchgeführt. Es wurde gezeigt, dass auch Netzwerkarchitekturen mit weniger lernbaren Parametern in der Lage sein können, Stile zu erlernen. Zudem wurde gezeigt, dass die gewählten Netzwerkarchitekturen größtenteils auf Geräten mit leistungsarmer Hardware zu berechnen sind.
 
-Die im Laufe der Experimente trainierten Modelle wurden alle ohne die Verwendung des Total-Variation-Loss erstellt. Mehr Experimente könnten zukünftig die Qualität der Modelle verbessern, indem eine passende Gewichtung für das Total-Variation-Loss gefunden wird. Diese müsste für jeden Stil durch Ausprobieren herausgefunden werden.
+Die im Laufe der Experimente trainierten Modelle wurden alle ohne die Verwendung des Total-Variation-Loss erstellt. Mehr Experimente könnten zukünftig die Qualität der Modelle verbessern, indem eine passende Gewichtung für das Total-Variation-Loss gefunden wird. Diese müsste für jeden Stil durch empirische Beobachtungen herausgefunden werden.

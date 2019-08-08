@@ -5,7 +5,7 @@ Im Kapitel Tests und Experimente werden unterschiedliche Hyperparameter-Konfigur
 
 \section{Auswirkungen der Hyperparameter}
 
-Im Folgenden werden unterschiedliche Kombinationen der Gewichtungsparameter Content-Weight $ \alpha $, Style-Weight $ \beta $ und Total-Variation-Weight $ \gamma $ getestet. Dabei wird als Inhaltsbild  eine eigene Abbildung der HTW-Berlin benutzt. Als Stilbild wird das Kunstwerk \textit{The Starry Night} des Künstlers Vincent Van Gogh und \textit{The Scream} von Edvard Munch verwendet. Die generierten Bilder entsprechen einer Größe von 768 * 768 Pixel. Die restlichen Hyperparameter werden aus dem Kapitel Methodologie \ref{sec:method_neural_style_transfer} übernommen.
+Im Folgenden werden unterschiedliche Kombinationen der Gewichtungsparameter Content-Weight $ \alpha $, Style-Weight $ \beta $ und Total-Variation-Weight $ \gamma $ getestet. Dabei wird als Inhaltsbild  eine eigene Abbildung der HTW-Berlin benutzt. Als Stilbild wird das Kunstwerk \textit{The Starry Night} des Künstlers Vincent Van Gogh und \textit{The Scream} von Edvard Munch verwendet. Die generierten Bilder entsprechen einer Größe von 768 * 768 Pixeln. Die restlichen Hyperparameter werden aus dem Kapitel Methodologie \ref{sec:method_neural_style_transfer} übernommen.
 
 \pagebreak
 
@@ -90,8 +90,7 @@ In der zweiten Abbildungen werden die verschiedenen Total-Variation-Gewichtungen
     \caption{HTW kombiniert mit \textit{The Scream} \cite{the_scream_img}}
 \end{figure}
 
-In der ersten Abbildungen werden verschiedene die verschiedenen  \\
-Stilgewichtungen $ \beta = 10^{6} $, $ \beta = 10^{7} $, $ \beta = 10^{8} $ und $ \beta = 10^{9} $ für \textit{The Scream} getestet.
+In der ersten Abbildungen werden die verschiedene Stilgewichtungen $ \beta = 10^{6} $, $ \beta = 10^{7} $, $ \beta = 10^{8} $ und $ \beta = 10^{9} $ für \textit{The Scream} getestet.
 
 \begin{figure}[H]
     \centering
@@ -114,7 +113,7 @@ Stilgewichtungen $ \beta = 10^{6} $, $ \beta = 10^{7} $, $ \beta = 10^{8} $ und 
     \caption{\textit{The Scream} mit $ \alpha = 1 $, $ \beta = 10^{6} - 10^{9} $, $ \gamma = 0 $}
 \end{figure}
 
-In der zweiten Abbildungen werden verschiedene die verschiedenen Total-Variation-Gewichtungen $ \gamma = 10^{-6} $, $ \gamma = 10^{-5} $, $ \gamma = 10^{-4} $ und $ \gamma = 10^{-3} $ für \textit{The Scream} getestet.
+In der zweiten Abbildungen werden die verschiedenen Total-Variation-Gewichtungen $ \gamma = 10^{-6} $, $ \gamma = 10^{-5} $, $ \gamma = 10^{-4} $ und $ \gamma = 10^{-3} $ für \textit{The Scream} getestet.
 
 \begin{figure}[H]
     \centering
@@ -193,7 +192,7 @@ Beim Jetson TX2 handelt es sich um ein leistungsarmes Gerät für die Realiserun
 
 \subsection{Durchführung der Experimente}
 
-Alle Netzwerke wurden mit einer Batch-Size von $ 24 $, Bildgrößen von 224 * 224 Pixel und einer Learning-Rate von $ 10^{-3} $ trainiert. Es wurden 6 Epochen der Trainingsdaten aus dem Jahr 2017 des COCO-Datensatzes verwendet, welche $ 118287 $ Bilder enthalten. Insgesamt wurden die Modelle mit $ 709722 $ Bildern trainiert. Dabei lag die Trainingszeit auf einem Server mit einem GeForce GTX 1080 Ti GPU pro Modell zwischen 5 und 10 Stunden.
+Alle Netzwerke wurden mit einer Batch-Size von $ 24 $, Bildgrößen von 224 * 224 Pixeln und einer Learning-Rate von $ 10^{-3} $ trainiert. Es wurden 6 Epochen der Trainingsdaten aus dem Jahr 2017 des COCO-Datensatzes verwendet, welche $ 118287 $ Bilder enthalten. Insgesamt wurden die Modelle mit $ 709722 $ Bildern trainiert. Dabei lag die Trainingszeit auf einem Server mit einem GeForce GTX 1080 Ti GPU pro Modell zwischen 5 und 10 Stunden.
 
 Beim Training fiel auf, dass die generierten Bilder großflächige, schwarze oder weiße Artefakte enthielten. Ein Austausch der finalen Aktivierungsfunktion HardTanH, vgl. \ref{sec:hardtanh}, mit der Sigmoid-Aktivierungsfunktion, vgl. \ref{sec:sigmoid}, konnte das Problem lösen.
 
@@ -201,17 +200,15 @@ Abschließend wurden die unterschiedlichen Netzwerkarchitekturen auf ihre Perfor
 
 \subsection{Interpretation der Ergebnisse}
 
-Die Performanz-Tests haben ergeben, dass der Jetson TX2 mit fast allen Netzwerkarchitekturen in der Lage war den Style-Transfer durchzuführen. Für Bilder der Größe 1920 * 768  war es jedoch nicht möglich Netzwerk 1 und Netzwerk 5 zu verwenden, vlg. \ref{tab:1920x1080}. Alle anderen Netzwerkarchitekturen konnten für Full HD Bilder in weniger als einer Sekunde berechnet werden.
+Die Performanz-Tests haben ergeben, dass der Jetson TX2 mit fast allen Netzwerkarchitekturen in der Lage war, den Style-Transfer durchzuführen. Für Bilder der Größe 1920 * 768 Pixel war es jedoch nicht möglich, Netzwerk 1 und Netzwerk 5 zu verwenden, vlg. \ref{tab:1920x1080}. Alle anderen Netzwerkarchitekturen konnten für Full HD Bilder in weniger als einer Sekunde berechnet werden.
 
-Die Abbildungen \ref{img:loss_the_starry_night} und \ref{img:loss_the_scream} stellen die Loss-Kurven beim Trainingsverlauf aller Netzwerke dar. Die Loss-Kurven wurden dabei mit einem laufenden arithmetischen Mittel über 100 Iterationen geflächt, um die Ergebnisse besser darstellen zu können. Für beide Stilbilder ergibt sich ein ähnlicher Trainingsverlauf. Die Netzwerkarchitekturen mit mehr lernbaren Parametern erreichen ein niedrigeres Endloss. Eine Ausnahme sind dabei die Netzwerke mit dem Parameter $ m = 16 $. Sie erreichen in allen Fällen das niedrigste Endloss. In den Abbildungen sind die Loss-Kurven dieser Netzwerke mit einer stärkeren Linie gekennzeichnet.
+Die Abbildungen \ref{img:loss_the_starry_night} und \ref{img:loss_the_scream} stellen die Loss-Kurven beim Trainingsverlauf aller Netzwerke dar. Die Loss-Kurven wurden dabei mit einem laufenden arithmetischen Mittel über 100 Iterationen geflächt, um die Ergebnisse besser darstellen zu können. Für beide Stilbilder ergibt sich ein ähnlicher Trainingsverlauf. Die Netzwerkarchitekturen mit mehr lernbaren Parametern erreichen ein niedrigeres Endloss. Eine Ausnahme bilden dabei die Netzwerke mit dem Parameter $ m = 16 $. Sie erreichen in allen Fällen das niedrigste Endloss. In den Abbildungen sind die Loss-Kurven dieser Netzwerke mit einer stärkeren Linie gekennzeichnet.
 
 Desweiteren wurden die optischen Ergebnisse aller Netzwerkarchitekturen getestet. Die Ergebnisse sind in \ref{img:results_the_starry_night} und \ref{img:results_the_scream} dargestellt. Wieder zeigt sich, dass Netzwerke mit dem Parameter $ m = 16 $ optisch vielfältigere Bilder generieren als die anderen Netzwerke. Daraus wird geschlussfolgert, dass die optische Vielfalt der generierten Bilder mit dem Loss zusammenhängt.
 
-
-
 \subsection{Weitere Ergebnisse}
 
-Auf Basis der zuvor gewonnen Erkenntniss wurden weitere Modelle mit unterschiedlichen Stilbildern trainiert. Für das Training wurde jeweils die Netzwerkarchitektur 2, $ m = 16 $ und $ s = 5 $, verwendet, die in den durchgeführten Tests am besten abschnitt. Folgende Abbildung zeigt Beispiele von gut gelungenen Stilmodelle.
+Auf Basis der zuvor gewonnen Erkenntniss wurden weitere Modelle mit unterschiedlichen Stilbildern trainiert. Für das Training wurde jeweils die Netzwerkarchitektur 2, $ m = 16 $ und $ s = 5 $, verwendet, die in den durchgeführten Tests am besten abschnitt. Die folgende Abbildung zeigt Beispiele erfolgreicher Stilmodelle.
 
 \pagebreak
 
