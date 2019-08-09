@@ -33,19 +33,19 @@ Stilgewichtungen $ \beta = 10^{6} $, $ \beta = 10^{7} $, $ \beta = 10^{8} $ und 
     \centering
     \begin{subfigure}[h]{0.24\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{resources/content/experiments/a__starry_night__768x768__style-weight_1e+06__tv-weight_0e+00.jpg}
+        \includegraphics[width=\textwidth]{resources/content/experiments/a__the_starry_night__768x768__style-weight_1e+06__tv-weight_0e+00.jpg}
     \end{subfigure}
     \begin{subfigure}[h]{0.24\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{resources/content/experiments/a__starry_night__768x768__style-weight_1e+07__tv-weight_0e+00.jpg}
+        \includegraphics[width=\textwidth]{resources/content/experiments/a__the_starry_night__768x768__style-weight_1e+07__tv-weight_0e+00.jpg}
     \end{subfigure}
     \begin{subfigure}[h]{0.24\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{resources/content/experiments/a__starry_night__768x768__style-weight_1e+08__tv-weight_0e+00.jpg}
+        \includegraphics[width=\textwidth]{resources/content/experiments/a__the_starry_night__768x768__style-weight_1e+08__tv-weight_0e+00.jpg}
     \end{subfigure}
     \begin{subfigure}[h]{0.24\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{resources/content/experiments/a__starry_night__768x768__style-weight_1e+09__tv-weight_0e+00.jpg}
+        \includegraphics[width=\textwidth]{resources/content/experiments/a__the_starry_night__768x768__style-weight_1e+09__tv-weight_0e+00.jpg}
     \end{subfigure}
     \caption{\textit{The Starry Night} mit $ \alpha = 1 $, $ \beta = 10^{6} - 10^{9} $, $ \gamma = 0 $}
 \end{figure}
@@ -56,19 +56,19 @@ In der zweiten Abbildungen werden die verschiedenen Total-Variation-Gewichtungen
     \centering
     \begin{subfigure}[h]{0.24\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{resources/content/experiments/b__starry_night__768x768__style-weight_1e+08__tv-weight_1e-06.jpg}
+        \includegraphics[width=\textwidth]{resources/content/experiments/b__the_starry_night__768x768__style-weight_1e+08__tv-weight_1e-06.jpg}
     \end{subfigure}
     \begin{subfigure}[h]{0.24\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{resources/content/experiments/b__starry_night__768x768__style-weight_1e+08__tv-weight_1e-05.jpg}
+        \includegraphics[width=\textwidth]{resources/content/experiments/b__the_starry_night__768x768__style-weight_1e+08__tv-weight_1e-05.jpg}
     \end{subfigure}
     \begin{subfigure}[h]{0.24\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{resources/content/experiments/b__starry_night__768x768__style-weight_1e+08__tv-weight_1e-04.jpg}
+        \includegraphics[width=\textwidth]{resources/content/experiments/b__the_starry_night__768x768__style-weight_1e+08__tv-weight_1e-04.jpg}
     \end{subfigure}
     \begin{subfigure}[h]{0.24\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{resources/content/experiments/b__starry_night__768x768__style-weight_1e+08__tv-weight_1e-03.jpg}
+        \includegraphics[width=\textwidth]{resources/content/experiments/b__the_starry_night__768x768__style-weight_1e+08__tv-weight_1e-03.jpg}
     \end{subfigure}
     \caption{Starry Night mit $ \alpha = 1 $, $ \beta = 10^{8} $, $ \gamma = 10^{-6} - 10^{-3} $}
 \end{figure}
@@ -142,7 +142,7 @@ In der zweiten Abbildungen werden die verschiedenen Total-Variation-Gewichtungen
 
 Wie bei beiden Tests zu sehen ist, werden die Muster mit zunehmendem Style-Weight $ \beta $ auf dem Ausgangsbild immer stärker generiert. Mit $ b = 10^{5} $ sind bei beiden Stilen die Muster des Gemäldes kaum noch zu erkennen. Lediglich wird das Ausgangsbild den Farben des Stilbildes angepasst. Ein optisch ansprechender Effekt ergibt sich bei beiden Stilen ab $ \beta = 10^{7} $. 
 
-Mit zunehmendem Total-Variation-Weight $ \gamma $ fließen die Farben mehr ineinander und das Ausgangsbild wird verschwommener. Das ist besonders gut zu sehen bei \textit{The Starry Night} mit $ \gamma = 10^{-3} $ und \text{\textit{The Scream}} mit $ \gamma = 10^{-4} $. Für \textit{The Scream} ist eine Gewichtung von $ \gamma = 10^{-3} $ bereits zu hoch gewählt. Das Ausgangsbild entwickelt sich zu einem grauen Rauschen.
+Mit zunehmendem Total-Variation-Weight $ \gamma $ fließen die Farben mehr ineinander und das Ausgangsbild wird verschwommener. Das ist besonders gut zu sehen bei \textit{The Starry Night} mit $ \gamma = 10^{-3} $ und \text{\textit{The Scream}} mit $ \gamma = 10^{-4} $.
 
 
 \section{Auswirkungen der Netzwerkarchitekturen}
@@ -155,6 +155,8 @@ Gemessen wird die Berechnungsgeschwindigkeit beim Forward-Pass durch das Netzwer
 Bei der Berechnung des Forward-Pass macht es einen Unterschied, ob sie auf dem CPU oder dem GPU eines Geräts durchgeführt wird. Neuronale Netzwerke können auf einer GPU schneller als auf einem CPU berechnet werden. Das liegt daran, dass eine GPU besonders auf die Berechnung von Matrix-Operationen (wie Sie auch bei grafischen Anwendungen benutzt werden) spezialisiert ist.
 
 Die Daten werden beim Einsatz des GPUs in den Grafikspeicher geladen. Bei der Berechnung über den CPU wird der Arbeitsspeicher (RAM) des Geräts verwendet.
+
+\pagebreak
 
 \subsubsection{Gerät 1: Dell XPS 15 9550}
 
@@ -208,124 +210,4 @@ Desweiteren wurden die optischen Ergebnisse aller Netzwerkarchitekturen getestet
 
 \subsection{Weitere Ergebnisse}
 
-Auf Basis der zuvor gewonnen Erkenntniss wurden weitere Modelle mit unterschiedlichen Stilbildern trainiert. Für das Training wurde jeweils die Netzwerkarchitektur 2, $ m = 16 $ und $ s = 5 $, verwendet, die in den durchgeführten Tests am besten abschnitt. Die folgende Abbildung zeigt Beispiele erfolgreicher Stilmodelle.
-
-\pagebreak
-
-\begin{figure}[H]
-    \centering
-
-    \begin{subfigure}[h]{0.21\textwidth}
-        \centering
-        Inhaltsbild
-    \end{subfigure}
-    \begin{subfigure}[h]{0.21\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/style/crystal_glass_on_a_colorful_background.jpg}
-    \end{subfigure}
-    \begin{subfigure}[h]{0.21\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/style/portrait_of_joseph_roulin.jpg}
-    \end{subfigure}
-    \begin{subfigure}[h]{0.21\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/style/teal_and_black_abstract_painting.jpg}
-    \end{subfigure}
-
-
-    \begin{subfigure}[h]{0.21\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/content/htw.jpg}
-    \end{subfigure}
-    \begin{subfigure}[h]{0.21\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/experiments/htw-vgg16_crystal_glass_on_a_colorful_background.jpg}
-    \end{subfigure}
-    \begin{subfigure}[h]{0.21\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/experiments/htw-vgg16_portrait_of_joseph_roulin.jpg}
-    \end{subfigure}
-    \begin{subfigure}[h]{0.21\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/experiments/htw-vgg16_teal_and_black_abstract_painting.jpg}
-    \end{subfigure}
-
-    \begin{subfigure}[h]{0.21\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/content/ich.jpg}
-    \end{subfigure}
-    \begin{subfigure}[h]{0.21\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/experiments/ich-vgg16_crystal_glass_on_a_colorful_background.jpg}
-    \end{subfigure}
-    \begin{subfigure}[h]{0.21\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/experiments/ich-vgg16_portrait_of_joseph_roulin.jpg}
-    \end{subfigure}
-    \begin{subfigure}[h]{0.21\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/experiments/ich-vgg16_teal_and_black_abstract_painting.jpg}
-    \end{subfigure}
-
-    \caption{Eigene Abbildungen kombiniert mit verschiedenen Stilen: \cite{crystal_glass_on_a_colorful_background_img}, \cite{portrait_of_joseph_roulin_img}, \cite{teal_and_black_abstract_painting_img}}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-
-    \begin{subfigure}[h]{0.21\textwidth}
-        \centering
-        Inhaltsbild
-    \end{subfigure}
-    \begin{subfigure}[h]{0.21\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/style/multicolored_abstract_artwork.jpg}
-    \end{subfigure}
-    \begin{subfigure}[h]{0.21\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/style/still_life_with_liqueur_bottle.jpg}
-    \end{subfigure}
-    \begin{subfigure}[h]{0.21\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/style/the_olive_trees.jpg}
-    \end{subfigure}
-
-
-
-    \begin{subfigure}[h]{0.21\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/content/htw.jpg}
-    \end{subfigure}
-    \begin{subfigure}[h]{0.21\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/experiments/htw-vgg16_multicolored_abstract_artwork.jpg}
-    \end{subfigure}
-    \begin{subfigure}[h]{0.21\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/experiments/htw-vgg16_still_life_with_liqueur_bottle.jpg}
-    \end{subfigure}
-    \begin{subfigure}[h]{0.21\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/experiments/htw-vgg16_the_olive_trees.jpg}
-    \end{subfigure}
-
-
-    \begin{subfigure}[h]{0.21\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/content/ich.jpg}
-    \end{subfigure}
-    \begin{subfigure}[h]{0.21\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/experiments/ich-vgg16_multicolored_abstract_artwork.jpg}
-    \end{subfigure}
-    \begin{subfigure}[h]{0.21\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/experiments/ich-vgg16_still_life_with_liqueur_bottle.jpg}
-    \end{subfigure}
-    \begin{subfigure}[h]{0.21\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{resources/content/experiments/ich-vgg16_the_olive_trees.jpg}
-    \end{subfigure}
-
-    \caption{Eigene Abbildungen kombiniert mit verschiedenen Stilen: \cite{multicolored_abstract_artwork_img}, \cite{still_life_with_liqueur_bottle_img}, \cite{the_olive_trees_img}}
-\end{figure}
+Auf Basis der zuvor gewonnen Erkenntniss wurden weitere Modelle mit unterschiedlichen Stilbildern trainiert. Für das Training wurde jeweils die Netzwerkarchitektur 2, $ m = 16 $ und $ s = 5 $, verwendet, die in den durchgeführten Tests am besten abschnitt. Die Abbildungen \ref{img:trained_models1} und \ref{img:trained_models1} zeigen Beispiele erfolgreich trainierter Stilmodelle.
