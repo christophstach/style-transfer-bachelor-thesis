@@ -320,7 +320,7 @@ class TransformerNet(nn.Module):
     \centering
     \begin{tabular}{ |c|c|c|c|c| }
         \hline
-        \textbf{Name} & \textbf{XPS 15 - CPU} & \textbf{XPS 15 - GPU} & \textbf{Jetson TX2 - CPU} & \textbf{Jetson TX2 - GPU}   \\ \hline
+        \textbf{Name} & \textbf{XPS - CPU} & \textbf{XPS - GPU} & \textbf{Jetson - CPU} & \textbf{Jetson - GPU}   \\ \hline
         Network  1 & 9,53208                                & \textcolor{danger}{nicht durchführbar} & \textcolor{danger}{nicht durchführbar} & \textcolor{danger}{nicht durchführbar} \\ \hline
         Network  2 & 4,10052                                & \textcolor{danger}{nicht durchführbar} & \textcolor{danger}{nicht durchführbar} & 0,86413                                \\ \hline
         Network  3 & 1,77594                                & \textcolor{danger}{nicht durchführbar} & \textcolor{danger}{nicht durchführbar} & 0,48424                                \\ \hline
@@ -347,7 +347,7 @@ class TransformerNet(nn.Module):
     \centering
     \begin{tabular}{ |c|c|c|c|c| }
         \hline
-        \textbf{Name} & \textbf{XPS 15 - CPU} & \textbf{XPS 15 - GPU} & \textbf{Jetson TX2 - CPU} & \textbf{Jetson TX2 - GPU}   \\ \hline
+        \textbf{Name} & \textbf{XPS - CPU} & \textbf{XPS - GPU} & \textbf{Jetson - CPU} & \textbf{Jetson - GPU}   \\ \hline
         Network  1 & 3,35983                                & \textcolor{danger}{nicht durchführbar} & \textcolor{danger}{nicht durchführbar} & 0,73296                                \\ \hline
         Network  2 & 1,40631                                & 0,04695                                & \textcolor{danger}{nicht durchführbar} & 0,38569                                \\ \hline
         Network  3 & 0,63503                                & 0,02816                                & 28,13781                               & 0,31154                                \\ \hline
@@ -374,7 +374,7 @@ class TransformerNet(nn.Module):
     \centering
     \begin{tabular}{ |c|c|c|c|c| }
         \hline
-        \textbf{Name} & \textbf{XPS 15 - CPU} & \textbf{XPS 15 - GPU} & \textbf{Jetson TX2 - CPU} & \textbf{Jetson TX2 - GPU}   \\ \hline
+        \textbf{Name} & \textbf{XPS - CPU} & \textbf{XPS - GPU} & \textbf{Jetson - CPU} & \textbf{Jetson - GPU}   \\ \hline
         Network  1 & 1,33538                                & 0,05155                                & \textcolor{danger}{nicht durchführbar} & 0,50566                                \\ \hline
         Network  2 & 0,53889                                & 0,02326                                & 36,90058                               & 0,25883                                \\ \hline
         Network  3 & 0,25448                                & 0,01054                                & 10,93982                               & 0,24857                                \\ \hline
@@ -396,8 +396,11 @@ class TransformerNet(nn.Module):
     \label{tab:640x480}
 \end{table}
 
+\pagebreak
 
 \section{Loss: The Starry Night}
+\footnotetext[1]{Die Druckversion entspricht nicht der digitalen Qualität der Bilder.}
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1.00\textwidth]{resources/content/experiments/fast_image_grid_experiment1.jpg}
@@ -405,13 +408,19 @@ class TransformerNet(nn.Module):
 	\label{img:loss_the_starry_night}
 \end{figure}
 
+\pagebreak
+
 \section{Loss: The Scream}
+\footnotetext[1]{Die Druckversion entspricht nicht der digitalen Qualität der Bilder.}
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1.00\textwidth]{resources/content/experiments/fast_image_grid_experiment2.jpg}
 	\caption{Loss: The Scream}
 	\label{img:loss_the_scream}
 \end{figure}
+
+\pagebreak
 
 \section{Ergebnisse: The Starry Night}
 \begin{figure}[H]
@@ -428,6 +437,8 @@ class TransformerNet(nn.Module):
 	\caption{Ergebnisse: The Scream}
 	\label{img:results_the_scream}
 \end{figure}
+
+\pagebreak
 
 \section{Trainierte Modelle}
 \footnotetext[1]{Die Druckversion entspricht nicht der digitalen Qualität der Bilder.}
