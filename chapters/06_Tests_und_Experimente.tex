@@ -180,7 +180,7 @@ Beim Dell XPS 15 9550 handelt es sich um einen handelsüblichen Laptop aus dem J
 
 \subsubsection{Gerät 2: Jetson TX2}
 
-Beim Jetson TX2 handelt es sich um ein leistungsarmes Gerät für die Realiserung von Algorithmen der künstlichen Intelligenz auf eingebetteten Systemen.
+Beim Jetson TX2 handelt es sich um ein leistungsarmes Gerät für die Realisierung von Algorithmen der künstlichen Intelligenz auf eingebetteten Systemen.
 
 \begin{table}[H]
     \centering
@@ -201,16 +201,16 @@ Alle Netzwerke wurden mit einer Batch-Size von $ 24 $, Bildgrößen von 224 * 22
 
 Beim Training fiel auf, dass die generierten Bilder großflächige, schwarze oder weiße Artefakte enthielten. Ein Austausch der finalen Aktivierungsfunktion HardTanH, vgl. \ref{sec:hardtanh}, mit der Sigmoid-Aktivierungsfunktion, vgl. \ref{sec:sigmoid}, konnte das Problem lösen.
 
-Abschließend wurden die unterschiedlichen Netzwerkarchitekturen auf ihre Performanz getestet. Tests, die wegen unzureichendem Arbeitsspeicher oder Grafikspeicher fehlschlugen, wurden als \textcolor{danger}{nicht durchführbar} gekennzeichnet. Um die Tests durchzuführen, wurden Bilder der Größen 1920 * 1080 Pixel, 1024 * 786 Pixel und 640 * 480 Pixel jeweils 10 mal mit jedem Netzwerk berechnet, die Berechnugnsgeschwindigkeit gemessen, und das arithmische Mittel der 10 Durchläufe gebildet. Die Ergebnisse sind in den Anlagen \ref{tab:1920x1080}, \ref{tab:1024x768} und \ref{tab:640x480} angefügt.
+Abschließend wurden die unterschiedlichen Netzwerkarchitekturen auf ihre Performanz getestet. Tests, die wegen unzureichendem Arbeitsspeicher oder Grafikspeicher fehlschlugen, wurden als \textcolor{danger}{nicht durchführbar} gekennzeichnet. Um die Tests durchzuführen, wurden Bilder der Größen 1920 * 1080 Pixel, 1024 * 786 Pixel und 640 * 480 Pixel jeweils 10 mal mit jedem Netzwerk berechnet, die Berechnungsgeschwindigkeit gemessen, und das arithmetische Mittel der 10 Durchläufe gebildet. Die Ergebnisse sind in den Anlagen \ref{tab:1920x1080}, \ref{tab:1024x768} und \ref{tab:640x480} angefügt.
 
 \subsection{Interpretation der Ergebnisse}
 
-Die Performanz-Tests haben ergeben, dass der Jetson TX2 mit fast allen Netzwerkarchitekturen in der Lage war, den Style-Transfer durchzuführen. Für Bilder der Größe 1920 * 768 Pixel war es jedoch nicht möglich, Netzwerk 1 und Netzwerk 5 zu verwenden, vlg. \ref{tab:1920x1080}. Alle anderen Netzwerkarchitekturen konnten für Full HD Bilder in weniger als einer Sekunde berechnet werden.
+Die Performanz-Tests haben ergeben, dass der Jetson TX2 mit fast allen Netzwerkarchitekturen in der Lage war, den Style-Transfer durchzuführen. Für Bilder der Größe 1920 * 768 Pixel war es jedoch nicht möglich, Netzwerk 1 und Netzwerk 5 zu verwenden, vgl. \ref{tab:1920x1080}. Alle anderen Netzwerkarchitekturen konnten für Full HD Bilder in weniger als einer Sekunde berechnet werden.
 
 Die Abbildungen \ref{img:loss_the_starry_night} und \ref{img:loss_the_scream} stellen die Loss-Kurven beim Trainingsverlauf aller Netzwerke dar. Die Loss-Kurven wurden dabei mit einem laufenden arithmetischen Mittel über 100 Iterationen geflächt, um die Ergebnisse besser darstellen zu können. Für beide Stilbilder ergibt sich ein ähnlicher Trainingsverlauf. Die Netzwerkarchitekturen mit mehr lernbaren Parametern erreichen ein niedrigeres Endloss. Eine Ausnahme bilden dabei die Netzwerke mit dem Parameter $ m = 16 $. Sie erreichen in allen Fällen das niedrigste Endloss. In den Abbildungen sind die Loss-Kurven dieser Netzwerke mit einer stärkeren Linie gekennzeichnet.
 
-Desweiteren wurden die optischen Ergebnisse aller Netzwerkarchitekturen getestet. Die Ergebnisse sind in \ref{img:results_the_starry_night} und \ref{img:results_the_scream} dargestellt. Wieder zeigt sich, dass Netzwerke mit dem Parameter $ m = 16 $ optisch vielfältigere Bilder generieren als die anderen Netzwerke. Daraus wird geschlussfolgert, dass die optische Vielfalt der generierten Bilder mit dem Loss zusammenhängt.
+Des weiteren wurden die optischen Ergebnisse aller Netzwerkarchitekturen getestet. Die Ergebnisse sind in \ref{img:results_the_starry_night} und \ref{img:results_the_scream} dargestellt. Wieder zeigt sich, dass Netzwerke mit dem Parameter $ m = 16 $ optisch vielfältigere Bilder generieren als die anderen Netzwerke. Daraus wird geschlussfolgert, dass die optische Vielfalt der generierten Bilder mit dem Loss zusammenhängt.
 
 \subsection{Weitere Ergebnisse}
 
-Auf Basis der zuvor gewonnen Erkenntniss wurden weitere Modelle mit unterschiedlichen Stilbildern trainiert. Für das Training wurde jeweils die Netzwerkarchitektur 2, $ m = 16 $ und $ s = 5 $, verwendet, die in den durchgeführten Tests am besten abschnitt. Die Abbildungen \ref{img:trained_models1}, \ref{img:trained_models2} und \ref{img:trained_models3} zeigen Beispiele erfolgreich trainierter Stilmodelle.
+Auf Basis der zuvor gewonnen Erkenntnis wurden weitere Modelle mit unterschiedlichen Stilbildern trainiert. Für das Training wurde jeweils die Netzwerkarchitektur 2, $ m = 16 $ und $ s = 5 $, verwendet, die in den durchgeführten Tests am besten abschnitt. Die Abbildungen \ref{img:trained_models1}, \ref{img:trained_models2} und \ref{img:trained_models3} zeigen Beispiele erfolgreich trainierter Stilmodelle.

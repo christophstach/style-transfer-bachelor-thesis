@@ -21,5 +21,13 @@
         "**/*.out": true,
         "**/*.synctex.gz": true,
         "_minted-main": true
-    }
+    },
+    "spellright.language": [
+        "German_de_DE"
+    ],
+    "spellright.documentTypes": [
+        "markdown",
+        "plaintext",
+        "latex"
+    ]
 }

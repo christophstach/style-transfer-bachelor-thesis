@@ -1,10 +1,10 @@
 \chapter{Fazit}
 
-Dieses Kapitel beinhaltet eine kurze Zusammenfassung der Abschlussarbeit. Das Thema wird kritisch betrachtet und es wird auf mögliche Probleme eingangen. Letztlich wird ein Ausblick über zukünftige Entwicklungen und Möglichkeiten gegeben.
+Dieses Kapitel beinhaltet eine kurze Zusammenfassung der Abschlussarbeit. Das Thema wird kritisch betrachtet und es wird auf mögliche Probleme eingegangen. Letztlich wird ein Ausblick über zukünftige Entwicklungen und Möglichkeiten gegeben.
 
 \section{Zusammenfassung}
 
-In der Abschlussarbeit wurde sich intensiv mit Style Transfer Algorithmen beschäftig und diese auf Geräten mit leistungsarmer Hardware getestet. Anfangs wurde die Theorie zu Neuronalen Netzwerken und Style Transfer analysiert. Es wurde eine Implementierung geplant und abschließend mit dem Framework PyTorch umgesetzt. Unterschiedliche Netzwerke wurden erfolgreich trainiert und Stile extrahiert. Verschiedene Hyperparametereinstellungen wurden getestet und die Performanz der Netzwerke gemessen.
+In der Abschlussarbeit wurde sich intensiv mit Style Transfer Algorithmen beschäftigt und diese auf Geräten mit leistungsarmer Hardware getestet. Anfangs wurde die Theorie zu Neuronalen Netzwerken und Style Transfer analysiert. Es wurde eine Implementierung geplant und abschließend mit dem Framework PyTorch umgesetzt. Unterschiedliche Netzwerke wurden erfolgreich trainiert und Stile extrahiert. Verschiedene Hyperparametereinstellungen wurden getestet und die Performanz der Netzwerke gemessen.
 
 
 \section{Kritischer Rückblick}
@@ -26,7 +26,7 @@ In dieser Arbeit wurden für die Berechnung des Style-Loss die Layer relu1\_2, r
 \subsection{Kombination aus mehreren Stilen}
 \label{sec:combination_many_styles}
 
-Vorstellbar ist eine Vermischung von mehrern Stilen. Hierzu müsste man das Style-Loss aus den Gram-Matrizen mehrerer Gemälde kombinieren. Im Paper \cite{stanfordStyleTransfer} wurde dies und andere Erweiterungen beschrieben.
+Vorstellbar ist eine Vermischung von mehreren Stilen. Hierzu müsste man das Style-Loss aus den Gram-Matrizen mehrerer Gemälde kombinieren. Im Paper \cite{stanfordStyleTransfer} wurde dies und andere Erweiterungen beschrieben.
 
 \subsection{Superresolution}
 \label{sec:superresolution}
@@ -36,7 +36,7 @@ Neben Style Transfer kann eine ähnliche Methodik für einen Super-Resolution-Al
 \subsection{Alternativen zum ResidualBlock}
 \label{sec:alternatives_to_residual_block}
 
-Performanztechnisch können weitere Experimente mit kleineren Netzwerkarchitekturen durchgeführt werden. Außerdem kann der ResidualBlock durch eine andere Art von Block ersetzt werden. Die Paper \cite{DBLP:journals/corr/HowardZCKWWAA17} und \cite{DBLP:journals/corr/abs-1801-04381} behandeln sogenannte MobileNets, welche besonders auf die Verwendung von Geräten mit leistungsarmer Hardware abzielen. Vorstellbar wäre es, die verwendeten Blöcke anstelle des ResidualBlocks zu benutzen und damit weitere Experimente durchzuführen.
+Hinsichtlich der Performanz können weitere Experimente mit kleineren Netzwerkarchitekturen durchgeführt werden. Außerdem kann der ResidualBlock durch eine andere Art von Block ersetzt werden. Die Paper \cite{DBLP:journals/corr/HowardZCKWWAA17} und \cite{DBLP:journals/corr/abs-1801-04381} behandeln sogenannte MobileNets, welche besonders auf die Verwendung von Geräten mit leistungsarmer Hardware abzielen. Vorstellbar wäre es, die verwendeten Blöcke anstelle des ResidualBlocks zu benutzen und damit weitere Experimente durchzuführen.
 
 \subsection{Video Stylization}
 \label{sec:video_stylization}

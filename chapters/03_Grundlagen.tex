@@ -7,7 +7,7 @@ Im Kapitel Grundlagen werden die erforderlichen Grundlagen erläutert, die notwe
 
 Feedforward Neural Networks werden im Bereich des Deep Learning eingesetzt. Dabei werden unterschiedliche Arten von Layern zu einem Neuronalen Netzwerk zusammengesetzt. Je nach Aufgabenstellung sind verschiedene Arten von Layer-Kombinationen sinnvoll.
 
-Ein Feedforward Neural Network definiert eine Abildung von $ y = f(x; \phi) $, wobei $ \phi $ (auch mit $ w $ notiert) Gewichtungsparameter des Netzwerks sind. Es wird Feedforward genannt, da die Informationen $ x $ von vorne nach hinten durch die einzelnen Layer des Netwerks fließen und am Ende $ y $ ausgeben. Die Layer des Netzwerks sind dabei wiederum Unterfunktionen die in einer Kettenstruktur ineinander übergehen. Bei einem Neuronalen Netzwerk mit den drei Layern $ f^{(1)} $, $ f^{(2)} $, $ f^{(2)} $ ergibt sich der Aufbau $ f(x) = f^{(3)}(f^{(2)}(f^{(1)}(x))) $. Der erste Layer eines Netzwerks nennt sich Input-Layer, der letzte Output-Layer. Alle zwischenliegenden Layer werden Hidden-Layer genannt. Je mehr Layer ein Netzwerk besitzt, desto komplexere mathematische Funktionen kann es abbilden und desto tiefer ist es. Daher rührt auch der Name Deep Neural Network und Deep Learning \cite[164-165]{Goodfellow-et-al-2016}.
+Ein Feedforward Neural Network definiert eine Abbildung von $ y = f(x; \phi) $, wobei $ \phi $ (auch mit $ w $ notiert) Gewichtungsparameter des Netzwerks sind. Es wird Feedforward genannt, da die Informationen $ x $ von vorne nach hinten durch die einzelnen Layer des Networks fließen und am Ende $ y $ ausgeben. Die Layer des Netzwerks sind dabei wiederum Unterfunktionen die in einer Kettenstruktur ineinander übergehen. Bei einem Neuronalen Netzwerk mit den drei Layern $ f^{(1)} $, $ f^{(2)} $, $ f^{(2)} $ ergibt sich der Aufbau $ f(x) = f^{(3)}(f^{(2)}(f^{(1)}(x))) $. Der erste Layer eines Netzwerks nennt sich Input-Layer, der letzte Output-Layer. Alle dazwischenliegenden Layer werden Hidden-Layer genannt. Je mehr Layer ein Netzwerk besitzt, desto komplexere mathematische Funktionen kann es abbilden und desto tiefer ist es. Daher rührt auch der Name Deep Neural Network und Deep Learning \cite[164-165]{Goodfellow-et-al-2016}.
 
 \pagebreak
 
@@ -29,9 +29,9 @@ Eine solche Struktur kann mit einer einzigen Matrix-Multiplikation berechnet wer
 	f(x) = \sigma(x * w + b)
 \end{align}
 
-In der Formel steht $ x $ für die Eingangsdaten, $ w $ für die Gewichtungsfaktoren, $ b $ für einen Biaswert. Letztlich läuft das berechnete Ergebniss durch eine Aktivierungsfunktion $ \sigma $, die nachfolgend in \ref{sec:activation_functions} beschrieben wird.
+In der Formel steht $ x $ für die Eingangsdaten, $ w $ für die Gewichtungsfaktoren, $ b $ für einen Biaswert. Letztlich läuft das berechnete Ergebnis durch eine Aktivierungsfunktion $ \sigma $, die nachfolgend in \ref{sec:activation_functions} beschrieben wird.
 
-Ausgehend von einem Neuronalen Netzwerk mit einem Input-Layer mit zwei Neuronen, einem Hidden-Layer mit drei Neuronen, einem Output-Layer mit einem Neuron, einer Minibatchgröße von drei und der Aktvierungsfunktion $ \sigma(x) = {\begin{cases}0&{\text{if }}x<0\\x&{\text{if }}x\geq 0\end{cases}} $ ergibt sich folgendes Beispiel:
+Ausgehend von einem Neuronalen Netzwerk mit einem Input-Layer mit zwei Neuronen, einem Hidden-Layer mit drei Neuronen, einem Output-Layer mit einem Neuron, einer Minibatchgröße von drei und der Aktivierungsfunktion $ \sigma(x) = {\begin{cases}0&{\text{if }}x<0\\x&{\text{if }}x\geq 0\end{cases}} $ ergibt sich folgendes Beispiel:
 
 \begin{equation}
 	\vspace{5pt}
@@ -105,7 +105,7 @@ Wiederholt wird dieser Vorgang mit der Gewichtsmatrix $ w_{2} $ des zweiten Laye
 \section{Aktivierungsfunktionen}
 \label{sec:activation_functions}
 
-Die im voherigen Beispiel verwendete Aktivierungsfunktion nennt sich ReLU \cite{Nair:2010:RLU:3104322.3104425}.
+Die im vorherigen Beispiel verwendete Aktivierungsfunktion nennt sich ReLU \cite{Nair:2010:RLU:3104322.3104425}.
 
 \begin{figure}[H]
 	\centering
@@ -115,12 +115,12 @@ Die im voherigen Beispiel verwendete Aktivierungsfunktion nennt sich ReLU \cite{
 \end{figure}
 
 
-Neben der ReLU-Aktivierungsfunktion existieren weitere Aktiverungsfunktionen, die im Zusammenhang mit Neuronalen Netzwerken verwendet werden.
+Neben der ReLU-Aktivierungsfunktion existieren weitere Aktivierungsfunktionen, die im Zusammenhang mit Neuronalen Netzwerken verwendet werden.
 Im Folgenden werden die in dieser Arbeit verwendeten Aktivierungsfunktionen beschrieben.
 
 \subsection{LeakyReLU, PReLU}
 
-Die Aktiverungsfunktionen LeakyReLU und PReLU sind Abwandlungen von ReLU und werden um den Parameter $ \alpha $ ergänzt. Bei LeakyReLU handelt es sich bei $ \alpha $ um einen fixen, einstellbaren Wert und bei PReLU wird dieser im Laufe der Trainingsphase gelernt \cite{DBLP:journals/corr/XuWCL15}. ReLU hat gegenüber PReLU und LeakyReLU den Nachteil, dass Neuronen deaktiviert werden können, da die linke Seite der Aktiverungsfunktion 0 beträgt. Somit ergeben sich auch bei der Berechnung der Gradienten keine Veränderungen.
+Die Aktivierungsfunktionen LeakyReLU und PReLU sind Abwandlungen von ReLU und werden um den Parameter $ \alpha $ ergänzt. Bei LeakyReLU handelt es sich bei $ \alpha $ um einen fixen, einstellbaren Wert und bei PReLU wird dieser im Laufe der Trainingsphase gelernt \cite{DBLP:journals/corr/XuWCL15}. ReLU hat gegenüber PReLU und LeakyReLU den Nachteil, dass Neuronen deaktiviert werden können, da die linke Seite der Aktivierungsfunktion 0 beträgt. Somit ergeben sich auch bei der Berechnung der Gradienten keine Veränderungen.
 
 \begin{equation}
 	\sigma(\alpha ,x) = {
@@ -131,7 +131,7 @@ Die Aktiverungsfunktionen LeakyReLU und PReLU sind Abwandlungen von ReLU und wer
 	}
 \end{equation}
 
-Visualisiert besitzen beide Aktiverungsfunktionen folgende Form:
+Visualisiert besitzen beide Aktivierungsfunktionen folgende Form:
 
 \begin{figure}[H]
 	\centering
@@ -143,7 +143,7 @@ Visualisiert besitzen beide Aktiverungsfunktionen folgende Form:
 \subsection{Hardtanh}
 \label{sec:hardtanh}
 
-Die Hardtanh Funktion wird in dieser Arbeit als abschließende Aktiverungsfunktion genutzt \cite{DBLP:journals/corr/abs-1811-03378, Collobert:2011:NLP:1953048.2078186}.
+Die Hardtanh Funktion wird in dieser Arbeit als abschließende Aktivierungsfunktion genutzt \cite{DBLP:journals/corr/abs-1811-03378, Collobert:2011:NLP:1953048.2078186}.
 
 \begin{equation}
 	\sigma(x) = {
@@ -177,7 +177,7 @@ Die Sigmoid-Funktion wird in dieser Arbeit als alternative, abschließende Aktiv
 	}
 \end{equation}
 
-Die Ergebnisse der Sigmoid-Funktion konvergieren zu 0 und 1, ereichen diese jedoch nie komplett.
+Die Ergebnisse der Sigmoid-Funktion konvergieren zu 0 und 1, erreichen diese jedoch nie komplett.
 
 \begin{figure}[H]
 	\centering
@@ -269,7 +269,7 @@ Beispielrechnungen des Backward-Pass der letzten drei Knoten:
 	& -0,1 \approx -0,77 * e^{-2}
 \end{align}
 
-Durch die Berechnung der Gradienten der Gewichtsvariable $ w $ ist der Optimizer in der Lage, $ w $ Schritt für Schritt anzupassen und somit das Loss zu verringern.
+Durch die Berechnung der Gradienten der Gewichtsvariablen $ w $ ist der Optimizer in der Lage, $ w $ Schritt für Schritt anzupassen und somit das Loss zu verringern.
 
 \pagebreak
 
@@ -284,7 +284,7 @@ Hierbei handelt es sich um eine Technik, die den Stil von artistischen Bildern a
 Das Verfahren nutzt dabei einen optimierenden Ansatz. Dabei werden die Pixel eines Eingangsbildes Schritt für Schritt den Pixeln 
 des gewünschten Ausgangsbildes angepasst. 
 
-Der Neural Style Transfer Algorithmus, beschrieben im Paper \cite{DBLP:journals/corr/GatysEB15a}, optimiert direkt die Pixel eines Bildes anhand eines sogenannten Perceptual-Loss. Die entsprechende Loss-Funktion besteht aus mehreren Teilen, einem Content-Loss und einem Style-Loss. Optional kann zusätztlich ein Total-Variation-Loss verwendet werden. Das gesamte Perceptual-Loss wird über Hyperparameter konfiguriert, welche die Gewichtung der Unterfunktionen auf das Gesamt-Loss wiederspiegeln.
+Der Neural Style Transfer Algorithmus, beschrieben im Paper \cite{DBLP:journals/corr/GatysEB15a}, optimiert direkt die Pixel eines Bildes anhand eines sogenannten Perceptual-Loss. Die entsprechende Loss-Funktion besteht aus mehreren Teilen, einem Content-Loss und einem Style-Loss. Optional kann zusätzlich ein Total-Variation-Loss verwendet werden. Das gesamte Perceptual-Loss wird über Hyperparameter konfiguriert, welche die Gewichtung der Unterfunktionen auf das Gesamt-Loss wiederspiegeln.
 
 Content-Loss und Style-Loss benutzen dabei ein bereits auf einem großen Datensatz vortrainiertes Modell. In dieser Arbeit wird das VGG16-Modell \cite{DBLP:journals/corr/SimonyanZ14a} verwendet. Das Content-Loss vergleicht Features eines Inhaltsbildes mit den Features des Ausgangsbild. Das Style-Loss vergleicht Features eines Stilbildes mit den Features des Ausgangsbildes.
 
@@ -333,7 +333,7 @@ Es wird die Gram-Matrix, $ G $ aus dem Stilbild und $ A $ aus dem generierten Bi
 	E_{l} = \frac{1}{4N_{l}^{2} M_{l}^2} = \sum_{i, j} ( G_{ij}^{l} - A_{ij}^{l} )^2
 \end{equation}
 
-Das Style-Loss ergibt sich aus der gewichteten Summe der Layer-Losses.
+Das Style-Loss ergibt sich aus der gewichteten Summe der Layer-Losse.
 
 \begin{equation}
 	\label{eq:style_loss}
@@ -353,7 +353,7 @@ Bei der Total-Variation-Loss-Funktion handelt es sich um einen Signal-Denoising-
 \subsubsection{Perceptual-Loss}
 \label{sec:perceptual_loss}
 
-Das Perceptual-Loss ist die Kombination aus Content-, Style- und Total-Variation-Loss und wird um die Parameter $ \alpha $, $ \beta $ und $ \gamma $ ergänzt, mit denen die Gewichtung der Losses eingestellt wird.
+Das Perceptual-Loss ist die Kombination aus Content-, Style- und Total-Variation-Loss und wird um die Parameter $ \alpha $, $ \beta $ und $ \gamma $ ergänzt, mit denen die Gewichtung der Losse eingestellt wird.
 
 \begin{equation}
 	\label{eq:perceptual_loss}

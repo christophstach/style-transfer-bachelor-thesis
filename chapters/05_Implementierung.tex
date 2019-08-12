@@ -5,7 +5,7 @@ Im Bereich des Machine Learning und Deep Learning gibt es viele verschiedene Fra
 
 \section{Loss-Funktion}
 
-Im ersten Schritt wird die Loss-Funktion implementiert, die das Kernstück des modellbasierten und des optimisierenden Ansatzes ist.
+Im ersten Schritt wird die Loss-Funktion implementiert, die das Kernstück des modellbasierten und des optimierenden Ansatzes ist.
 PyTorch beinhaltet bereits vortrainierte Versionen verschiedener Modellarchitekturen. In dieser Arbeit wird das \gls{vgg16}-Modell benutzt, auf dieses wird mit \mintinline{python}{model = torchvision.models.vgg16(pretrained=True).features} zugegriffen. Das PyTorch-Modell ist dabei in die Bereiche \textit{features} und \textit{classifier} aufgeteilt. Es wird lediglich der Bereich \textit{features} benötigt, welcher die bereits vortrainierten Convolutional-Layer enthält. Der Bereich \textit{classifier} enthält die Fully-Connected-Layer des Modells, welche für die Aufgabenstellen ungenutzt bleiben.
 
 \pagebreak
@@ -132,7 +132,7 @@ def forward(self, y, x):
 Die Implementierung des Neural Style Transfer Algorithmus wird in einem Jupyter Notebook\footnote{\url{https://jupyter.org/}} durchgeführt. 
 Dadurch können im späteren Verlauf unterschiedliche Tests durchgeführt werden, da die Hyperparameter schnell angepasst werden können.
 
-Das Notebook, vgl. \ref{sec:nootebook_neural_style_transfer}, orientiert sich am zuvor erstellten Programmablaufplan, vlg. Abbildung \ref{img:neural_style_pap_img}. Es bietet außerdem die Auswahl zwischen den PyTorch-Optimizern \gls{adam} und L-BFGS \cite{Liu1989}. Folgender Code zeigt die  generele Optimierung von Parametern mit PyTorch.
+Das Notebook, vgl. \ref{sec:nootebook_neural_style_transfer}, orientiert sich am zuvor erstellten Programmablaufplan, vlg. Abbildung \ref{img:neural_style_pap_img}. Es bietet außerdem die Auswahl zwischen den PyTorch-Optimizern \gls{adam} und L-BFGS \cite{Liu1989}. Folgender Code zeigt die Optimierung von Parametern mit PyTorch.
 
 \begin{listing}[H]
 \begin{minted}{python}
@@ -152,7 +152,7 @@ for epoch in range(epochs):
 
 \section{Fast Neural Style Transfer}
 
-Das Verfahren des Fast Neural Style funtkioniert ähnlich wie beim vorher vorgestellten Neural Style Transfer. Anstatt der Pixel des Ausgangsbildes werden jedoch die Gewichte eines Neuronalen Netzwerks optimiert. Der bestehende Code kann aus  dem vorherigen Kapitel wiederverwendet werden. Lediglich die Initialisierung des PyTorch Optimizers muss angepasst werden.
+Das Verfahren des Fast Neural Style funktioniert ähnlich wie beim vorher vorgestellten Neural Style Transfer. Anstatt der Pixel des Ausgangsbildes werden jedoch die Gewichte eines Neuronalen Netzwerks optimiert. Der bestehende Code kann aus  dem vorherigen Kapitel wiederverwendet werden. Lediglich die Initialisierung des PyTorch Optimizers muss angepasst werden.
 
 \begin{listing}[H]
 \begin{minted}{python}
@@ -207,7 +207,7 @@ Für den dynamischen Aufbau des Netzwerks wird eine Funktion benötigt, die ents
 
 \subsection{ConvBlock}
 
-Desweiteren müssen die in Kapitel \ref{sec:aufbau} konzipierten Layer-Blöcke implementiert werden. Der ConvBlock besteht aus den PyTorch-Layern \mintinline{python}{Conv2d}, \mintinline{python}{InstanceNorm2d} und der gewählten Aktivierungsfunktion. \mintinline{python}{InstanceNorm2d} wurde aufgrund des Papers \cite{DBLP:journals/corr/UlyanovVL16} gewählt und dort näher in Bezug auf die Verwendung mit Style Transfer-Methoden erläutert.
+Des weiteren müssen die in Kapitel \ref{sec:aufbau} konzipierten Layer-Blöcke implementiert werden. Der ConvBlock besteht aus den PyTorch-Layern \mintinline{python}{Conv2d}, \mintinline{python}{InstanceNorm2d} und der gewählten Aktivierungsfunktion. \mintinline{python}{InstanceNorm2d} wurde aufgrund des Papers \cite{DBLP:journals/corr/UlyanovVL16} gewählt und dort näher in Bezug auf die Verwendung mit Style Transfer-Methoden erläutert.
 
 Die Parameter \mintinline{python}{in_channels} und \mintinline{python}{out_channels} ergeben sich aus dem Parameter \mintinline{python}{channel_multiplier} ($ m $) multipliziert mit einem festen Wert, der je nach Layer die Werte $ 1 $, $ 2 $ oder $ 4 $ beträgt.
 
@@ -225,11 +225,11 @@ Neben den Layer-Blöcken wurde noch die eigentliche Netzwerkarchitektur implemen
 
 \subsection{Weitere Implementierungen}
 
-Zusätzlich zu den bereits vorgestellten Implementierungen wurden Hilfsskripte und Jupyter Notebooks zum Testen erstellt. Außerdem wurde eine Trainer-Klasse entworfen, die in der Lage ist, Einstellungen für Trainingsläufe aus einer Konfigurationdatei zu lesen und somit 
+Zusätzlich zu den bereits vorgestellten Implementierungen wurden Hilfsskripte und Jupyter Notebooks zum Testen erstellt. Außerdem wurde eine Trainer-Klasse entworfen, die in der Lage ist, Einstellungen für Trainingsläufe aus einer Konfigurationsdatei zu lesen und somit 
 ein aufeinanderfolgendes Training mehrerer Modelle zu ermöglichen. Auf diese Art kann man viele unterschiedliche Parametereinstellungen testen.
 
 Zur Realisierung eines Prototyps wurde eine JSON-API mit dem Framework Flask\footnote{Flask: \url{http://flask.pocoo.org/}} erstellt. Die API stellt einen Endpunkt zur Verfügung, welche den Style Transfer mit einem gewünschten Modell durchführt. Sie wurde in einen Docker\footnote{Docker: \url{https://www.docker.com/}}-Container überführt, um das Hosting auf unterschiedlichen Geräten zu erleichtern.
 
 Um die Ergebnisse zu visualisieren, wurde eine Frontend-Applikation mit dem Framework Angular\footnote{Angular: \url{https://angular.io/}} erstellt. Diese kann Bilder über die Webcam eines Handys oder eines Computers aufnehmen und sie an die Flask-API senden, die nachfolgend das aufgenommene Bild in einen vorher ausgewählten Stil überführt.
 
-Skripte, Frontend-Applikationen und JSON-API sind nicht Bestandteil dieser Arbeit und befinden sich in einem protypischen Zustand. Der komplette Code zu diesem Projekt ist unter \url{https://github.com/christophstach/style-transfer-project} öffentlich einsehbar. Der Code des Frontends unter \url{https://github.com/christophstach/style-transfer-frontend}. Ein gehosteter Prototyp zum Testen des Style Transfers ist unter \url{https://stylized.christophstach.me/} verfügbar.
+Skripte, Frontend-Applikationen und JSON-API sind nicht Bestandteil dieser Arbeit und befinden sich in einem prototypischen Zustand. Der komplette Code zu diesem Projekt ist unter \url{https://github.com/christophstach/style-transfer-project} öffentlich einsehbar. Der Code des Frontends unter \url{https://github.com/christophstach/style-transfer-frontend}. Ein gehosteter Prototyp zum Testen des Style Transfers ist unter \url{https://stylized.christophstach.me/} verfügbar.

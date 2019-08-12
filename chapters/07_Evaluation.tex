@@ -4,28 +4,28 @@ Im Kapitel Evaluation werden die restlichen Kapitel dieser Arbeit beleuchtet und
 
 \section{Grundlagen}
 
-Im Kapitel Grundlagen \ref{cha:fundamentals} werden die Grundlagen von Neuronalen Netzwerken erläutert. Besonders der Backpropagation-Algorithmus \ref{sec:backpropagation} und die Beschreibung sowie tieferes Auseinandersetzen mit Convolutions \ref{sec:conv_networks} waren für das Verständniss der Problemstellung hilfreich.
+Im Kapitel Grundlagen \ref{cha:fundamentals} werden die Grundlagen von Neuronalen Netzwerken erläutert. Besonders der Backpropagation-Algorithmus \ref{sec:backpropagation} und die Beschreibung sowie tieferes Auseinandersetzen mit Convolutions \ref{sec:conv_networks} waren für das Verständnis der Problemstellung hilfreich.
 
-Anhand der Paper von Gatys \cite{DBLP:journals/corr/GatysEB15a} und Johnson \cite{DBLP:journals/corr/JohnsonAL16} konnte die Problemstellung des Style Transfer nachvollzogen werden. Die in den Papern verwendete Loss-Funktion ist bei beiden die Gleiche. Jedoch werden unterschiedliche Notationen verwendet. Die Loss-Funktion konnte für das Trainieren eines Neuronalen Netzwerks erneut gebraucht werden. Das Paper \cite{DBLP:journals/corr/JohnsonAL16} geht jedoch nicht auf die genaue Architektur des verwendenten Netzwerks ein. Hierzu war es hilfreich die offizielle Implementierung \cite{Johnson2016} oder die Referenz-Implementierungen im PyTorch-Repository \cite{OnlineToturialNeuralStylePyTorch} zu analysieren.
+Anhand der Paper von Gatys \cite{DBLP:journals/corr/GatysEB15a} und Johnson \cite{DBLP:journals/corr/JohnsonAL16} konnte die Problemstellung des Style Transfer nachvollzogen werden. Die in den Papern verwendete Loss-Funktion ist bei beiden die Gleiche. Jedoch werden unterschiedliche Notationen verwendet. Die Loss-Funktion konnte für das Trainieren eines Neuronalen Netzwerks erneut gebraucht werden. Das Paper \cite{DBLP:journals/corr/JohnsonAL16} geht jedoch nicht auf die genaue Architektur des verwendeten Netzwerks ein. Hierzu war es hilfreich die offizielle Implementierung \cite{Johnson2016} oder die Referenz-Implementierungen im PyTorch-Repository \cite{OnlineToturialNeuralStylePyTorch} zu analysieren.
 
-Das Konzept von Total-Variation-Denoising wurde in den Referenz-Implementierungen eingebaut, ist dort jedoch unzureichend beschrieben. Eine detailierte Beschreibung ist in den Papern \cite{RUDIN1992259, DBLP:journals/corr/EstrelaMS16} vorhanden.
+Das Konzept von Total-Variation-Denoising wurde in den Referenz-Implementierungen eingebaut, ist dort jedoch unzureichend beschrieben. Eine detaillierte Beschreibung ist in den Papern \cite{RUDIN1992259, DBLP:journals/corr/EstrelaMS16} vorhanden.
 
 \section{Methodologie}
 
-Im Kapitel \ref{cha:methodology} wurde die Vorgehensweise der geplanten Implementierung beschrieben. Das bereits in \cite{DBLP:journals/corr/JohnsonAL16} dargestellte Konzept des Image Transformer Networks wird um die Parameter der Bottleneck-Size $ s $ und Channnel-Multiplikator $ m $ erweitert. Dadurch können beliebig viele Netzwerkarchitekturen dynamisch erstellt werden und es wurde die Grundlage für weitreichende Performanz-Tests geschaffen.
+Im Kapitel \ref{cha:methodology} wurde die Vorgehensweise der geplanten Implementierung beschrieben. Das bereits in \cite{DBLP:journals/corr/JohnsonAL16} dargestellte Konzept des Image Transformer Networks wird um die Parameter der Bottleneck-Size $ s $ und Channel-Multiplikator $ m $ erweitert. Dadurch können beliebig viele Netzwerkarchitekturen dynamisch erstellt werden und es wurde die Grundlage für weitreichende Performanz-Tests geschaffen.
 
 Das Konzept des ResidualBlocks ist dahingehend interessant, da es auch für andere Problemstellungen verwendet werden kann. Der Effekt des \gls{vanishing_gradient} kann mit ihm bei jeglicher Art von Convolutional-Neural-Network verringert werden und ein effizientes Training der Netzwerke erleichtern.
 
 \section{Implementierung}
 
-Bei der Implementierung der Netzwerkarchtiktur erwies es sich als vorteilhaft, diese möglichst dynamisch aufzubauen. Die ursprünglich geplante, abschließende Aktivierungs-Funktion Hardtanh \ref{sec:hardtanh} konnte somit problemlos durch die Sigmoid-Aktivierungs-Funktion \ref{sec:sigmoid} ausgetauscht werden. Es wurde außerdem die Möglichkeit geplant, die im Bottleneck-Teil des Netzwerks verwendeten ResidualBlocks durch andere Arten von Blöcken auszutauschen.
+Bei der Implementierung der Netzwerkarchitektur erwies es sich als vorteilhaft, diese möglichst dynamisch aufzubauen. Die ursprünglich geplante, abschließende Aktivierungs-Funktion Hardtanh \ref{sec:hardtanh} konnte somit problemlos durch die Sigmoid-Aktivierungs-Funktion \ref{sec:sigmoid} ausgetauscht werden. Es wurde außerdem die Möglichkeit geplant, die im Bottleneck-Teil des Netzwerks verwendeten ResidualBlocks durch andere Arten von Blöcken auszutauschen.
 
 Das in \ref{sec:method_neural_style_transfer} entworfene Skript zur Durchführung des Neural-Style-Algorithmus konnte zum Training der Netzwerke nicht wiederverwendet werden. Hierzu wurde eine Trainer-Klasse entworfen, die weitreichende Konfigurationsmöglichkeiten bietet und das aufeinanderfolgende Training mehrerer Netzwerke erleichtert.
 
 \section{Tests und Experimente}
 
 Im Kapitel Tests und Experimente \ref{cha:tests} wurden verschiedene Tests mit unterschiedlichen Hyperparametereinstellungen durchgeführt.
-Es wurde demonstriert, wie sich verschiedene Content-, Style- und Total-Variation-Loss-Gewichtungen zueinander verhalten. Style Transfer im Allgemeinen hat weitere Hyperparameter, welche bei den durchgeführten Tests nicht berücktsichtigt wurden.
+Es wurde demonstriert, wie sich verschiedene Content-, Style- und Total-Variation-Loss-Gewichtungen zueinander verhalten. Style Transfer im Allgemeinen hat weitere Hyperparameter, welche bei den durchgeführten Tests nicht berücksichtigt wurden.
 
 Außerdem wurden verschiedene Tests hinsichtlich der Netzwerkarchitektur und Performanz durchgeführt. Es wurde gezeigt, dass auch Netzwerkarchitekturen mit weniger lernbaren Parametern in der Lage sein können, Stile zu erlernen. Zudem wurde gezeigt, dass die gewählten Netzwerkarchitekturen größtenteils auf Geräten mit leistungsarmer Hardware zu berechnen sind.
 

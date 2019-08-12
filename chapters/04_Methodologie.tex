@@ -7,18 +7,18 @@ Im Kapitel Methodologie wird das allgemeine Vorgehen beschrieben, dass notwendig
 
 Bereits vor Erstellung dieser Arbeit gab es Ansätze, den Neural Style Transfer zu realisieren. Diese Arbeit orientiert sich dabei an den bereits bestehenden Entwicklungen und versucht diese zu verbessern sowie auf Geräten mit leistungsarmer Hardware zu testen. Im GIT-Repository von Justin Johnson \cite{Johnson2015} ist der Neural Style Transfer \ref{sec:neural_style_transfer} auf Basis des Papers \cite{DBLP:journals/corr/GatysEB15a} mit dem Framework Torch \cite{torch} implementiert. Außerdem existiert ein online Toturial des Frameworks PyTorch \cite{OnlineToturialNeuralStylePyTorch}.
 
-Der Fast Neural Style Transfer \ref{sec:fast_neural_style_transfer} orientiert sich ebenfalls an einem GIT-Repository von Justin Johnson \cite{Johnson2016}, dass den Algorithmus im Framework Torch implementiert. Desweiteren ist er als Beispielalgorithmus im PyTorch GIT-Repository \cite{PyTorchFastNeuralStyle} vorhanden.
+Der Fast Neural Style Transfer \ref{sec:fast_neural_style_transfer} orientiert sich ebenfalls an einem GIT-Repository von Justin Johnson \cite{Johnson2016}, dass den Algorithmus im Framework Torch implementiert. Des weiteren ist er als Beispielalgorithmus im PyTorch GIT-Repository \cite{PyTorchFastNeuralStyle} vorhanden.
 
-Neben den vorgestellten Implementierungen existieren viele weitere Implementierungen in unterschiedlichen Frameworks verschiedener Authoren sowie entsprechende Blogeinträge auf beispielslweise \url{https://towardsdatascience.com/}.
+Neben den vorgestellten Implementierungen existieren viele weitere Implementierungen in unterschiedlichen Frameworks verschiedener Autoren sowie entsprechende Blogeinträge auf beispielsweise \url{https://towardsdatascience.com/}.
 
 \pagebreak
 
 \section{Neural Style Transfer}
 \label{sec:method_neural_style_transfer}
 
-Als erster Schritt wird die Loss-Funktion entwickelt. Da das Loss aus drei Teilen besteht, eignet es sich, dieses als Klasse zu realisieren. Style-Loss, Content-Loss sowie Total-Variation-Loss können als einzelne Methoden dieser Klasse implementiert werden und als Gesamt-Loss mit Gewichtung zusammengefasst werden. Außerdem können die notwendigen Hyperparameter des Perceptual-Loss der Klasse bei Instanziierung übergeben werden. Desweiteren werden unterschiedliche Hilfsfunktionen benötigt, um die Gram-Matrix zu berechnen sowie das Laden und Speichern von Bildern und deren Umwandlung in und von \gls{tensor}en\footnote{Als \gls{tensor}en werden Matrizen/Vektoren jeglicher Dimensionen bezeichnet} zu ermöglichen.
+Als erster Schritt wird die Loss-Funktion entwickelt. Da das Loss aus drei Teilen besteht, eignet es sich, dieses als Klasse zu realisieren. Style-Loss, Content-Loss sowie Total-Variation-Loss können als einzelne Methoden dieser Klasse implementiert werden und als Gesamt-Loss mit Gewichtung zusammengefasst werden. Außerdem können die notwendigen Hyperparameter des Perceptual-Loss der Klasse bei Instanziierung übergeben werden. Des weiteren werden unterschiedliche Hilfsfunktionen benötigt, um die Gram-Matrix zu berechnen sowie das Laden und Speichern von Bildern und deren Umwandlung in und von \gls{tensor}en\footnote{Als \gls{tensor}en werden Matrizen/Vektoren jeglicher Dimensionen bezeichnet} zu ermöglichen.
 
-Um mathematische Operationen durchzuführen, die bei Berechung der Gram-Matrix oder des Loss verwendet werden, benötigt man außerdem unterschiedliche Funktionen, die das Rechnen mit Vektoren und Matrizen ermöglichen.
+Um mathematische Operationen durchzuführen, die bei Berechnung der Gram-Matrix oder des Loss verwendet werden, benötigt man außerdem unterschiedliche Funktionen, die das Rechnen mit Vektoren und Matrizen ermöglichen.
 
 
 % https://drive.google.com/file/d/1gn8Q9fPT6ZOsA8DkEg-lpwexMV28C-Px/view?usp=sharing
@@ -29,7 +29,7 @@ Um mathematische Operationen durchzuführen, die bei Berechung der Gram-Matrix o
 	\label{img:neural_style_class_diagram_img}
 \end{figure}
 
-Der Algorithmus wird in einer interaktiven Umgebung erstellt, damit unterschiedliche Kombinationen der Hyperparameter schnell verändert und getestet werden können. Folgender Programmablaufplan skizziert ein entsprechendes Script. Für die Berechnung der mathematisch aufwendigen Aufgaben (z.B. Backpropagation \ref{sec:backpropagation}) wird eine ensprechende externe Library, die für diesbezügliche Aufgaben optimiert wurde, benutzt.
+Der Algorithmus wird in einer interaktiven Umgebung erstellt, damit unterschiedliche Kombinationen der Hyperparameter schnell verändert und getestet werden können. Folgender Programmablaufplan skizziert ein entsprechendes Script. Für die Berechnung der mathematisch aufwendigen Aufgaben (z.B. Backpropagation \ref{sec:backpropagation}) wird eine entsprechende externe Library, die für diesbezügliche Aufgaben optimiert wurde, benutzt.
 
 % https://drive.google.com/file/d/1OVpNUtWEs0HbToxkkzMw6EZe5UUVHyme/view?usp=sharing
 \begin{figure}[H]
@@ -44,7 +44,7 @@ Bei Start des Programms werden das Content-Bild \mintinline{python}{content_imag
 Es wird ein Objekt der Klasse \mintinline{python}{PerceptualLoss} erstellt. Bei der Instanziierung werden die folgenden benötigten Hyperparameter als Argumente dem Konstruktor übergeben:
 
 \begin{itemize}
-	\item \mintinline{python}{model}: Das Netzwerk, hier VVG16, dessen \gls{activation_map}s genutzt werden.
+	\item \mintinline{python}{model}: Das Netzwerk, hier VGG16, dessen \gls{activation_map}s genutzt werden.
 	\item \mintinline{python}{content_layers}: Eine Liste von Layern für die Berechnung des Content-Loss.\\ $ \{ relu3\_3 \} $
 	\item \mintinline{python}{style_layers}: Eine Liste von Layern für die Berechnung des Style-Loss.\\ $ \{ relu1\_2, relu2\_2, relu3\_3, relu4\_3 \} $
 	\item \mintinline{python}{content_weight}: Die Gewichtung des Content-Loss. $ 1 $ 
