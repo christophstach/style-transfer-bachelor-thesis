@@ -5,9 +5,9 @@ Im Kapitel Grundlagen werden die erforderlichen Grundlagen erläutert, die notwe
 
 \section{Feedforward Neural Network}
 
-Feedforward Neural Networks werden im Bereich des Deep Learning eingesetzt. Dabei werden unterschiedliche Arten von Layern zu einem Neuronalen Netzwerk zusammengesetzt. Je nach Aufgabenstellung sind verschiedene Arten von Layer-Kombinationen sinnvoll.
+Feedforward Neural Networks werden im Bereich des Deep Learning eingesetzt. Es werden unterschiedliche Arten von Layern zu einem Neuronalen Netzwerk zusammengesetzt. Je nach Aufgabenstellung sind verschiedene Arten von Layer-Kombinationen sinnvoll.
 
-Ein Feedforward Neural Network definiert eine Abbildung von $ y = f(x; \phi) $, wobei $ \phi $ (auch mit $ w $ notiert) Gewichtungsparameter des Netzwerks sind. Es wird Feedforward genannt, da die Informationen $ x $ von vorne nach hinten durch die einzelnen Layer des Networks fließen und am Ende $ y $ ausgeben. Die Layer des Netzwerks sind dabei wiederum Unterfunktionen die in einer Kettenstruktur ineinander übergehen. Bei einem Neuronalen Netzwerk mit den drei Layern $ f^{(1)} $, $ f^{(2)} $, $ f^{(2)} $ ergibt sich der Aufbau $ f(x) = f^{(3)}(f^{(2)}(f^{(1)}(x))) $. Der erste Layer eines Netzwerks nennt sich Input-Layer, der letzte Output-Layer. Alle dazwischenliegenden Layer werden Hidden-Layer genannt. Je mehr Layer ein Netzwerk besitzt, desto komplexere mathematische Funktionen kann es abbilden und desto tiefer ist es. Daher rührt auch der Name Deep Neural Network und Deep Learning \cite[164-165]{Goodfellow-et-al-2016}.
+Ein Feedforward Neural Network definiert eine Abbildung von $ y = f(x; \phi) $, wobei $ \phi $ (auch mit $ w $ notiert) Gewichtungsparameter des Netzwerks sind. Es wird Feedforward genannt, da die Informationen $ x $ von vorne nach hinten durch die einzelnen Layer des Networks fließen und am Ende $ y $ ausgeben. Die Layer des Netzwerks sind wiederum Unterfunktionen die in einer Kettenstruktur ineinander übergehen. Bei einem Neuronalen Netzwerk mit den drei Layern $ f^{(1)} $, $ f^{(2)} $, $ f^{(2)} $ ergibt sich der Aufbau $ f(x) = f^{(3)}(f^{(2)}(f^{(1)}(x))) $. Der erste Layer eines Netzwerks nennt sich Input-Layer, der letzte Output-Layer. Alle dazwischenliegenden Layer werden Hidden-Layer genannt. Je mehr Layer ein Netzwerk besitzt, desto komplexere mathematische Funktionen kann es abbilden und desto tiefer ist es. Daher rührt auch der Name Deep Neural Network und Deep Learning \cite[164-165]{Goodfellow-et-al-2016}.
 
 \pagebreak
 
@@ -219,7 +219,7 @@ Die Ergebnisse nach Durchlauf eines Convolutional-Layer werden Feature Maps oder
 \section{Backpropagation}
 \label{sec:backpropagation}
 
-Um ein Neuronales Netzwerk zu trainieren, muss das Loss, welches durch das Neuronale Netzwerk erzeugt wird, minimiert werden. Dabei berechnet eine Funktion das Loss des Netzwerks. Beispielsweise berechnet sich das \gls{mse_loss} aus der Differenz zwischen $ y $ und $ \hat{y} $, wobei $ y $ die echten gelabelten Ergebnisse bezeichnet und $ \hat{y} $ die Vorhersage, die das Neuronale Netzwerk erzeugt.
+Um ein Neuronales Netzwerk zu trainieren, muss das Loss, welches durch das Neuronale Netzwerk erzeugt wird, minimiert werden. Eine Funktion berechnet das Loss des Netzwerks. Beispielsweise berechnet sich das \gls{mse_loss} aus der Differenz zwischen $ y $ und $ \hat{y} $, wobei $ y $ die echten gelabelten Ergebnisse bezeichnet und $ \hat{y} $ die Vorhersage, die das Neuronale Netzwerk erzeugt.
 Anhand dieser Daten kann ein Optimizer, wie beispielsweise \gls{adam} \cite{kingma2015adam}, die Gewichte des Netzwerks anpassen, um das Loss zu minimieren.
 
 \begin{figure}[H]
