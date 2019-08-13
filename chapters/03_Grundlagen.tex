@@ -229,7 +229,7 @@ Anhand dieser Daten kann ein Optimizer, wie beispielsweise \gls{adam} \cite{king
 	\label{img:perceptron_img}
 \end{figure}
 
-Als Beispiel dient die mathematische Funktion eines 2-dimensionalen Neurons mit angehängter Sigmoid-Aktivierungsfunktion. Dabei werden die Eingabewerte durch die Variable $ x $ und die Gewichte des Neurons durch die Variable $ w $ beschrieben.
+Als Beispiel dient die mathematische Funktion eines 2-dimensionalen Neurons mit angehängter Sigmoid-Aktivierungsfunktion. Die Eingabewerte werden durch die Variable $ x $ und die Gewichte des Neurons durch die Variable $ w $ beschrieben.
 
 \begin{align}
 	f(w, x) = \frac{1}{ 1 + e^{ - (w_{0}x_{0} + w_{1}x_{1} + w_{2}) } }
@@ -281,12 +281,12 @@ Diese Arbeit basiert auf den bereits bestehenden Lösungen von Johnson et. al. u
 \label{sec:neural_style_transfer}
 
 Hierbei handelt es sich um eine Technik, die den Stil von artistischen Bildern auf ein anderes willkürliches Bild überträgt.
-Das Verfahren nutzt dabei einen optimierenden Ansatz. Dabei werden die Pixel eines Eingangsbildes Schritt für Schritt den Pixeln 
+Das Verfahren nutzt einen optimierenden Ansatz. Es werden die Pixel eines Eingangsbildes Schritt für Schritt den Pixeln 
 des gewünschten Ausgangsbildes angepasst. 
 
 Der Neural Style Transfer Algorithmus, beschrieben im Paper \cite{DBLP:journals/corr/GatysEB15a}, optimiert direkt die Pixel eines Bildes anhand eines sogenannten Perceptual-Loss. Die entsprechende Loss-Funktion besteht aus mehreren Teilen, einem Content-Loss und einem Style-Loss. Optional kann zusätzlich ein Total-Variation-Loss verwendet werden. Das gesamte Perceptual-Loss wird über Hyperparameter konfiguriert, welche die Gewichtung der Unterfunktionen auf das Gesamt-Loss wiederspiegeln.
 
-Content-Loss und Style-Loss benutzen dabei ein bereits auf einem großen Datensatz vortrainiertes Modell. In dieser Arbeit wird das VGG16-Modell \cite{DBLP:journals/corr/SimonyanZ14a} verwendet. Das Content-Loss vergleicht Features eines Inhaltsbildes mit den Features des Ausgangsbild. Das Style-Loss vergleicht Features eines Stilbildes mit den Features des Ausgangsbildes.
+Content-Loss und Style-Loss benutzen ein bereits auf einem großen Datensatz vortrainiertes Modell. In dieser Arbeit wird das VGG16-Modell \cite{DBLP:journals/corr/SimonyanZ14a} verwendet. Das Content-Loss vergleicht Features eines Inhaltsbildes mit den Features des Ausgangsbild. Das Style-Loss vergleicht Features eines Stilbildes mit den Features des Ausgangsbildes.
 
 \begin{figure}[H]
 	\centering
@@ -363,7 +363,7 @@ Das Perceptual-Loss ist die Kombination aus Content-, Style- und Total-Variation
 \subsection{Fast Neural Style Transfer}
 \label{sec:fast_neural_style_transfer}
 
-Im Gegensatz zum im Kapitel \ref{sec:neural_style_transfer} vorgestellten Algorithmus, in dem die Pixel des Eingangsbildes direkt optimiert werden, wird ein Neuronales Netzwerk darauf trainiert, die Konzepte eines Stils zu erlernen. Dieses Verfahren wird im Paper \cite{DBLP:journals/corr/JohnsonAL16} genauer beschrieben. Pro Stil wird dabei ein Modell trainiert. Die verwendete Loss-Funktion ist das bereits zuvor beschriebene Perceptual-Loss \ref{sec:perceptual_loss}.
+Im Gegensatz zum im Kapitel \ref{sec:neural_style_transfer} vorgestellten Algorithmus, in dem die Pixel des Eingangsbildes direkt optimiert werden, wird ein Neuronales Netzwerk darauf trainiert, die Konzepte eines Stils zu erlernen. Dieses Verfahren wird im Paper \cite{DBLP:journals/corr/JohnsonAL16} genauer beschrieben. Pro Stil wird ein Modell trainiert. Die verwendete Loss-Funktion ist das bereits zuvor beschriebene Perceptual-Loss \ref{sec:perceptual_loss}.
 
 \begin{figure}[H]
 	\centering

@@ -17,9 +17,9 @@ Die Auswahl der verwendeten Gemälde in dieser Arbeit geschah unter besonderer B
 
 \section{Ausblick}
 
-Nachfolgend wird ein Ausblick auf Erweiterungen des Algorithmus gewährt. Dabei wird auf vorstellbare Funktionen und Einstellungen eingegangen.
+Nachfolgend wird ein Ausblick auf Erweiterungen des Algorithmus gewährt. Es wird auf vorstellbare Funktionen und Einstellungen eingegangen.
 
-\subsection{Verwendung von anderer Layer-Kombination}
+\subsection{Verwendung anderer Layer-Kombinationen}
 
 In dieser Arbeit wurden für die Berechnung des Style-Loss die Layer relu1\_2, relu2\_2, relu3\_3, relu4\_3 und für die Berechnung des Content-Loss der Layer relu3\_3 des \gls{vgg16}-Modells verwendet. Man kann ein anderes Loss-Network und andere Kombinationen von Layern für die Berechnung des Loss benutzen. Das hätte zur Folge, dass die generierten Stile sich unterscheiden würden. Im GitHub-Repository von Logan Engstrom  \cite{engstrom2016faststyletransfer} wurde dies bereits implementiert.
 
@@ -31,7 +31,7 @@ Vorstellbar ist eine Vermischung von mehreren Stilen. Hierzu müsste man das Sty
 \subsection{Superresolution}
 \label{sec:superresolution}
 
-Neben Style Transfer kann eine ähnliche Methodik für einen Super-Resolution-Algorithmus verwendet werden. Dieser wird ebenfalls im Paper von Johnson et al. \cite{DBLP:journals/corr/JohnsonAL16} beschrieben. Dabei muss eine Netzwerkarchitektur verwendet werden, die in der Lage ist, Bilder auf eine höhere Auflösung zu skalieren. Die verwendete Loss-Funktion wäre das bereits vorgestellte Perceptual-Loss jedoch ohne den Style-Loss-Anteil.
+Neben Style Transfer kann eine ähnliche Methodik für einen Super-Resolution-Algorithmus verwendet werden. Dieser wird ebenfalls im Paper von Johnson et al. \cite{DBLP:journals/corr/JohnsonAL16} beschrieben. Es muss eine Netzwerkarchitektur verwendet werden, die in der Lage ist, Bilder auf eine höhere Auflösung zu skalieren. Die verwendete Loss-Funktion wäre das bereits vorgestellte Perceptual-Loss jedoch ohne den Style-Loss-Anteil.
 
 \subsection{Alternativen zum ResidualBlock}
 \label{sec:alternatives_to_residual_block}

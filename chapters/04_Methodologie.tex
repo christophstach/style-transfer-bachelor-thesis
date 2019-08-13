@@ -5,7 +5,7 @@ Im Kapitel Methodologie wird das allgemeine Vorgehen beschrieben, dass notwendig
 
 \section{Vorherige Arbeiten}
 
-Bereits vor Erstellung dieser Arbeit gab es Ansätze, den Neural Style Transfer zu realisieren. Diese Arbeit orientiert sich dabei an den bereits bestehenden Entwicklungen und versucht diese zu verbessern sowie auf Geräten mit leistungsarmer Hardware zu testen. Im GIT-Repository von Justin Johnson \cite{Johnson2015} ist der Neural Style Transfer \ref{sec:neural_style_transfer} auf Basis des Papers \cite{DBLP:journals/corr/GatysEB15a} mit dem Framework Torch \cite{torch} implementiert. Außerdem existiert ein online Toturial des Frameworks PyTorch \cite{OnlineToturialNeuralStylePyTorch}.
+Bereits vor Erstellung dieser Arbeit gab es Ansätze, den Neural Style Transfer zu realisieren. Diese Arbeit orientiert sich an den bereits bestehenden Entwicklungen und versucht diese zu verbessern sowie auf Geräten mit leistungsarmer Hardware zu testen. Im GIT-Repository von Justin Johnson \cite{Johnson2015} ist der Neural Style Transfer \ref{sec:neural_style_transfer} auf Basis des Papers \cite{DBLP:journals/corr/GatysEB15a} mit dem Framework Torch \cite{torch} implementiert. Außerdem existiert ein online Toturial des Frameworks PyTorch \cite{OnlineToturialNeuralStylePyTorch}.
 
 Der Fast Neural Style Transfer \ref{sec:fast_neural_style_transfer} orientiert sich ebenfalls an einem GIT-Repository von Justin Johnson \cite{Johnson2016}, dass den Algorithmus im Framework Torch implementiert. Des weiteren ist er als Beispielalgorithmus im PyTorch GIT-Repository \cite{PyTorchFastNeuralStyle} vorhanden.
 
@@ -84,7 +84,7 @@ Die Abkürzungen in der Grafik stehen für folgende Werte:
 	\item UF = Upsampling Factor
 \end{itemize}
 
-Im ersten Teil, bestehend aus Convolutional Blöcken, wird durch die Verwendung des Stride Parameters das Eingangsbild hinter jedem Layer verkleinert. Mit einem Stride von 2 wird das Bild ungefähr auf die Hälfte der ursprünglichen Größe verkleinert, vgl. Kapitel \ref{cha:fundamentals}. Dabei wird die Anzahl der Channels mit jedem Block vergrößert, um den Informationsverlust, der durch die verkleinerten Bilder entsteht, auszugleichen.
+Im ersten Teil, bestehend aus Convolutional Blöcken, wird durch die Verwendung des Stride Parameters das Eingangsbild hinter jedem Layer verkleinert. Mit einem Stride von 2 wird das Bild ungefähr auf die Hälfte der ursprünglichen Größe verkleinert, vgl. Kapitel \ref{cha:fundamentals}. Die Anzahl der Channels wird mit jedem Block vergrößert, um den Informationsverlust, der durch die verkleinerten Bilder entsteht, auszugleichen.
 
 \begin{figure}[H]
 	\centering

@@ -6,7 +6,7 @@ Im Bereich des Machine Learning und Deep Learning gibt es viele verschiedene Fra
 \section{Loss-Funktion}
 
 Im ersten Schritt wird die Loss-Funktion implementiert, die das Kernstück des modellbasierten und des optimierenden Ansatzes ist.
-PyTorch beinhaltet bereits vortrainierte Versionen verschiedener Modellarchitekturen. In dieser Arbeit wird das \gls{vgg16}-Modell benutzt, auf dieses wird mit \mintinline{python}{model = torchvision.models.vgg16(pretrained=True).features} zugegriffen. Das PyTorch-Modell ist dabei in die Bereiche \textit{features} und \textit{classifier} aufgeteilt. Es wird lediglich der Bereich \textit{features} benötigt, welcher die bereits vortrainierten Convolutional-Layer enthält. Der Bereich \textit{classifier} enthält die Fully-Connected-Layer des Modells, welche für die Aufgabenstellen ungenutzt bleiben.
+PyTorch beinhaltet bereits vortrainierte Versionen verschiedener Modellarchitekturen. In dieser Arbeit wird das \gls{vgg16}-Modell benutzt, auf dieses wird mit \mintinline{python}{model = torchvision.models.vgg16(pretrained=True).features} zugegriffen. Das PyTorch-Modell ist in die Bereiche \textit{features} und \textit{classifier} aufgeteilt. Es wird lediglich der Bereich \textit{features} benötigt, welcher die bereits vortrainierten Convolutional-Layer enthält. Der Bereich \textit{classifier} enthält die Fully-Connected-Layer des Modells, welche für die Aufgabenstellen ungenutzt bleiben.
 
 \pagebreak
 
@@ -159,12 +159,12 @@ Das Verfahren des Fast Neural Style funktioniert ähnlich wie beim vorher vorges
 model = TransformerNet(...)
 optimizer = optim.Adam(model.parameters())
 \end{minted}
-\captionof{lstlisting}{Optimierung der Gewichte des Netzwerk}
+\captionof{lstlisting}{Optimierung der Gewichte des Netzwerks}
 \end{listing}
 
 \subsection{COCO-Datensatz}
 
-Um das Neuronale Netzwerk zu trainieren, wird ein großer Bilddatensatz benötigt. In dieser Arbeit wird dafür der \gls{coco}-Datensatz der Firma Microsoft verwendet \cite{DBLP:journals/corr/LinMBHPRDZ14}. Es handelt sich dabei um einen öffentlichen, frei verfügbaren Datensatz vieler verschiedener Bilder unterschiedlicher Kategorien. Während des Trainingsverlaufs werden zufällige Bilder aus dem \gls{coco}-Datensatz genutzt und das Loss  (Style-, Content- und Total-Variation-Loss) über die Ausgaben, die das Netzwerk generiert, berechnet. Mit dem berechneten Loss ist PyTorch in der Lage, die Gradienten der Gewichte des Neuronalen Netzwerks zu berechnen und diese schrittweise zu optimieren.
+Um das Neuronale Netzwerk zu trainieren, wird ein großer Bilddatensatz benötigt. In dieser Arbeit wird dafür der \gls{coco}-Datensatz der Firma Microsoft verwendet \cite{DBLP:journals/corr/LinMBHPRDZ14}. Es handelt sich um einen öffentlichen, frei verfügbaren Datensatz vieler verschiedener Bilder unterschiedlicher Kategorien. Während des Trainingsverlaufs werden zufällige Bilder aus dem \gls{coco}-Datensatz genutzt und das Loss  (Style-, Content- und Total-Variation-Loss) über die Ausgaben, die das Netzwerk generiert, berechnet. Mit dem berechneten Loss ist PyTorch in der Lage, die Gradienten der Gewichte des Neuronalen Netzwerks zu berechnen und diese schrittweise zu optimieren.
 
 Der \gls{coco}-Datensatz liegt in Form vieler verschiedener \gls{jpeg}-Bilder vor. Um nicht alle Bilder gleichzeitig laden zu müssen, bietet PyTorch die Möglichkeit, einen Dataloader\footnote{Weitere Information zum PyTorch-Dataloader: \url{https://pytorch.org/tutorials/beginner/data_loading_tutorial.html}} zu nutzen, der die Bilder in der gewünschten Batchgröße Schritt für Schritt lädt.
 
@@ -189,9 +189,9 @@ Der Dataloader lädt alle Bilder in allen Unterordnern innerhalb des konfigurier
 \subsection{Netzwerkarchitektur}
 \label{sec:network_architecture}
 
-Die Architektur des Neuronalen Netzes spielt eine wichtige Rolle. Sie muss in der Lage sein, die Eigenschaften eines Stils möglichst gut zu erlernen und dabei performant bleiben. Dabei wurde die in Kapitel \ref{sec:fast_neural_style_transfer} vorgestellte Netzwerkarchitektur des Image Transformer Networks implementiert. Dies geschieht in PyTorch in Form einer Klasse, welche von \mintinline{python}{Module} erbt.
+Die Architektur des Neuronalen Netzes spielt eine wichtige Rolle. Sie muss in der Lage sein, die Eigenschaften eines Stils möglichst gut zu erlernen und gleichzeitig performant bleiben. Es wurde die in Kapitel \ref{sec:fast_neural_style_transfer} vorgestellte Netzwerkarchitektur des Image Transformer Networks implementiert. Dies geschieht in PyTorch in Form einer Klasse, welche von \mintinline{python}{Module} erbt.
 
-Um in Kapitel \ref{cha:tests} das Testen unterschiedlicher Netzwerkarchitekturen zu ermöglichen, wird die Klasse des Image Transformer Networks möglichst dynamisch implementiert. Einstellbar sind dabei folgende Parameter, die im weiteren Verlauf erklärt werden:
+Um in Kapitel \ref{cha:tests} das Testen unterschiedlicher Netzwerkarchitekturen zu ermöglichen, wird die Klasse des Image Transformer Networks möglichst dynamisch implementiert. Einstellbar sind folgende Parameter, die im weiteren Verlauf erklärt werden:
 
 \begin{itemize}
     \item channel\_multiplier
@@ -203,7 +203,7 @@ Um in Kapitel \ref{cha:tests} das Testen unterschiedlicher Netzwerkarchitekturen
 
 \subsection{Aktivierungsfunktionen}
 
-Für den dynamischen Aufbau des Netzwerks wird eine Funktion benötigt, die entsprechende PyTorch-Aktivierungsfunktionen zurückgibt. Hardtanh und Sigmoid kommen als finale Aktivierungsfunktionen des Netzwerks in Betracht, da Sie Werte zwischen $ 0.0 $ und $ 1.0 $ zurückliefern. Das eignet sich für die Generierung von Bildern, welche in PyTorch ebenfalls Pixelwerte zwischen $ 0.0 $ und $ 1.0 $ besitzen. Zu beachten ist, dass die Hardtanh-Funktion mit den Parametern \mintinline{python}{min_val=0.0} und \mintinline{python}{max_val=1.0} initialisiert wird, die den Wertebereich verschieben. Mit den Standardeinstellungen liegt der Wertebereich der Hardtanh-Funktion zwischen $ -1.0 $ und $ 1.0 $. Die Parameter \mintinline{python}{final_activation_fn} und \mintinline{python}{intermediate_activation_fn} werden dabei auf die entsprechenden PyTorch-Aktivierungsfunktionen überführt.
+Für den dynamischen Aufbau des Netzwerks wird eine Funktion benötigt, die entsprechende PyTorch-Aktivierungsfunktionen zurückgibt. Hardtanh und Sigmoid kommen als finale Aktivierungsfunktionen des Netzwerks in Betracht, da Sie Werte zwischen $ 0.0 $ und $ 1.0 $ zurückliefern. Das eignet sich für die Generierung von Bildern, welche in PyTorch ebenfalls Pixelwerte zwischen $ 0.0 $ und $ 1.0 $ besitzen. Zu beachten ist, dass die Hardtanh-Funktion mit den Parametern \mintinline{python}{min_val=0.0} und \mintinline{python}{max_val=1.0} initialisiert wird, die den Wertebereich verschieben. Mit den Standardeinstellungen liegt der Wertebereich der Hardtanh-Funktion zwischen $ -1.0 $ und $ 1.0 $. Die Parameter \mintinline{python}{final_activation_fn} und \mintinline{python}{intermediate_activation_fn} werden auf die entsprechenden PyTorch-Aktivierungsfunktionen überführt.
 
 \subsection{ConvBlock}
 
