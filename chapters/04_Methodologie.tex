@@ -41,7 +41,7 @@ Der Algorithmus wird in einer interaktiven Umgebung erstellt, damit unterschiedl
 
 Bei Start des Programms werden das Content-Bild \mintinline{python}{content_image} und das Style-Bild \mintinline{python}{style_image} geladen. Danach wird eine Kopie von \mintinline{python}{content_image} in \mintinline{python}{output_image} erstellt. Die Bilder liegen dann als \gls{tensor}en der Form $ Channel \times Height \times Width $ vor, wobei $ Channel = 3 $ beträgt, da Bilder im RGB-Farbraum drei Farbkanäle aufweisen.
 
-Es wird ein Objekt der Klasse \mintinline{python}{PerceptualLoss} erstellt. Bei der Instanziierung werden die folgenden benötigten Hyperparameter als Argumente dem Konstruktor übergeben:
+Es wird ein Objekt der Klasse \mintinline{python}{PerceptualLoss} erstellt. Bei der Instanziierung werden die folgenden, benötigten Hyperparameter als Argumente dem Konstruktor übergeben:
 
 \begin{itemize}
 	\item \mintinline{python}{model}: Das Netzwerk, hier VGG16, dessen \gls{activation_map}s genutzt werden.
@@ -93,7 +93,7 @@ Im ersten Teil, bestehend aus Convolutional Blöcken, wird durch die Verwendung 
 	\label{img:residual_block_img}
 \end{figure}
 
-Der zweite Teil besteht aus Residual Blöcken, beschrieben in \cite{DBLP:journals/corr/HeZRS15}. Diese bestehen aus zwei aufeinanderfolgenden Convolutional Layern, die mit einer sogenannten Skip-Connection mit ihren Eingangsdaten verbunden sind. Das hat den Vorteil, dass die ursprünglichen Eingangsdaten nach jedem Layer noch vorhanden sind. Dies beugt dem \gls{vanishing_gradient} Problem vor. In diesem Teil des Netzwerk entsteht die meiste Berechnung und die meisten Daten des Stils werden hier in den Gewichten der Kernels gespeichert.
+Der zweite Teil besteht aus Residual Blöcken, beschrieben in \cite{DBLP:journals/corr/HeZRS15}. Diese bestehen aus zwei aufeinanderfolgenden Convolutional Layern, die mit einer sogenannten Skip-Connection mit ihren Eingangsdaten verbunden sind. Das hat den Vorteil, dass die ursprünglichen Eingangsdaten nach jedem Layer noch vorhanden sind. Dies beugt dem \gls{vanishing_gradient} Problem vor. In diesem Teil des Netzwerks entsteht die meiste Berechnung und die meisten Daten des Stils werden hier in den Gewichten der Kernels gespeichert.
 
 Im dritten Teil wird das Bild durch Upsampling wieder auf seine ursprünglichen Maße vergrößert. Außerdem werden die Channels auf drei reduziert, um es als RGB-Bild anzeigen zu können. Die Vergrößerung wird durch Nearest Neighbor Interpolation kombiniert mit einem Convolutional Layer realisiert. Es wird zusammen mit seinen Vorteilen in \cite{odena2016deconvolution} näher beschrieben.
 

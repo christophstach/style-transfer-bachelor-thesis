@@ -7,7 +7,7 @@ Im Kapitel Grundlagen werden die erforderlichen Grundlagen erläutert, die notwe
 
 Feedforward Neural Networks werden im Bereich des Deep Learning eingesetzt. Es werden unterschiedliche Arten von Layern zu einem Neuronalen Netzwerk zusammengesetzt. Je nach Aufgabenstellung sind verschiedene Arten von Layer-Kombinationen sinnvoll.
 
-Ein Feedforward Neural Network definiert eine Abbildung von $ y = f(x; \phi) $, wobei $ \phi $ (auch manchmal mit $ w $ notiert) Gewichtungsparameter des Netzwerks sind. Es wird Feedforward genannt, da die Informationen $ x $ von vorne nach hinten durch die einzelnen Layer des Networks fließen und am Ende $ y $ ausgeben. Die Layer des Netzwerks sind wiederum Unterfunktionen die in einer Kettenstruktur ineinander übergehen. Bei einem Neuronalen Netzwerk mit den drei Layern $ f^{(1)} $, $ f^{(2)} $, $ f^{(2)} $ ergibt sich der Aufbau $ f(x) = f^{(3)}(f^{(2)}(f^{(1)}(x))) $. Der erste Layer eines Netzwerks nennt sich Input-Layer, der letzte Output-Layer. Alle dazwischenliegenden Layer werden Hidden-Layer genannt. Je mehr Layer ein Netzwerk besitzt, desto komplexere mathematische Funktionen kann es abbilden und desto tiefer ist es. Daher rührt auch der Name Deep Neural Network und Deep Learning \cite[164-165]{Goodfellow-et-al-2016}.
+Ein Feedforward Neural Network definiert eine Abbildung von $ y = f(x; \phi) $, wobei $ \phi $ (auch manchmal mit $ w $ notiert) Gewichtungsparameter des Netzwerks sind. Es wird Feedforward genannt, da die Informationen $ x $ von vorne nach hinten durch die einzelnen Layer des Networks fließen und am Ende $ y $ ausgeben. Die Layer des Netzwerks sind wiederum Unterfunktionen, die in einer Kettenstruktur ineinander übergehen. Bei einem Neuronalen Netzwerk mit den drei Layern $ f^{(1)} $, $ f^{(2)} $, $ f^{(2)} $ ergibt sich der Aufbau $ f(x) = f^{(3)}(f^{(2)}(f^{(1)}(x))) $. Der erste Layer eines Netzwerks nennt sich Input-Layer, der letzte Output-Layer. Alle dazwischenliegenden Layer werden Hidden-Layer genannt. Je mehr Layer ein Netzwerk besitzt, desto komplexere mathematische Funktionen kann es abbilden und desto tiefer ist es. Daher rührt auch der Name Deep Neural Network und Deep Learning \cite[164-165]{Goodfellow-et-al-2016}.
 
 \pagebreak
 
@@ -343,7 +343,7 @@ Das Style-Loss ergibt sich aus der gewichteten Summe der Layer-Losse.
 \subsubsection{Total-Variation-Loss}
 \label{sec:total_variation_Loss}
 
-Bei der Total-Variation-Loss-Funktion handelt es sich um einen Signal-Denoising-Algorithmus \cite{RUDIN1992259, DBLP:journals/corr/EstrelaMS16}. Sie sorgt dafür, dass die Pixel der generierten Bilder sanft in einander überlaufen. Farblich sehr unterschiedliche, nah aneinanderliegende Pixel erzeugen ein hohes Loss. So können Verpixelungseffekte vermieden werden. Das Total-Variation-Loss kann optional eingesetzt werden um das Resultat der generierten Bilder zu verbessern.
+Bei der Total-Variation-Loss-Funktion handelt es sich um einen Signal-Denoising-Algorithmus \cite{RUDIN1992259, DBLP:journals/corr/EstrelaMS16}. Sie sorgt dafür, dass die Pixel der generierten Bilder sanft in einander überlaufen. Farblich sehr unterschiedliche, nah aneinanderliegende Pixel erzeugen ein hohes Loss. So können Verpixelungseffekte vermieden werden. Das Total-Variation-Loss kann optional eingesetzt werden, um das Resultat der generierten Bilder zu verbessern.
 
 \begin{equation}
 	\label{eq:total_variation_loss}
