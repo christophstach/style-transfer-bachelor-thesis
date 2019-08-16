@@ -6,7 +6,7 @@ Im Bereich des Machine Learning und Deep Learning gibt es viele verschiedene Fra
 \section{Loss-Funktion}
 
 Im ersten Schritt wird die Loss-Funktion implementiert, die das Kernstück des modellbasierten und des optimierenden Ansatzes ist.
-PyTorch beinhaltet bereits vortrainierte Versionen verschiedener Modellarchitekturen. In dieser Arbeit wird das \gls{vgg16}-Modell benutzt, auf dieses wird mit \mintinline{python}{model = torchvision.models.vgg16(pretrained=True).features} zugegriffen. Das PyTorch-Modell ist in die Bereiche \textit{features} und \textit{classifier} aufgeteilt. Es wird lediglich der Bereich \textit{features} benötigt, welcher die bereits vortrainierten Convolutional-Layer enthält. Der Bereich \textit{classifier} enthält die Fully-Connected-Layer des Modells, welche für die Aufgabenstellung ungenutzt bleiben.
+PyTorch beinhaltet bereits vortrainierte Versionen verschiedener Modellarchitekturen. In dieser Arbeit wird das \gls{vgg16}-Modell benutzt, auf dieses wird mit \mintinline{python}{model = torchvision.models.vgg16(pretrained=True).features} zugegriffen. Das PyTorch-Modell ist in die Bereiche \textit{features} und \textit{classifier} aufgeteilt. Es wird der Bereich \textit{features} benötigt, welcher die bereits vortrainierten Convolutional-Layer enthält. Der Bereich \textit{classifier} enthält die Fully-Connected-Layer des Modells, welche für die Aufgabenstellung ungenutzt bleiben.
 
 \pagebreak
 
@@ -189,7 +189,7 @@ Der Dataloader lädt alle Bilder in allen Unterordnern innerhalb des konfigurier
 \subsection{Netzwerkarchitektur}
 \label{sec:network_architecture}
 
-Die Architektur des Neuronalen Netzes spielt eine wichtige Rolle. Sie muss in der Lage sein, die Eigenschaften eines Stils möglichst gut zu erlernen und gleichzeitig performant bleiben. Es wurde die in Kapitel \ref{sec:fast_neural_style_transfer} vorgestellte Netzwerkarchitektur des Image Transformer Networks implementiert. Dies geschieht in PyTorch in Form einer Klasse, welche von \mintinline{python}{Module} erbt.
+Die Architektur des Neuronalen Netzes spielt eine wichtige Rolle. Sie muss in der Lage sein, die Eigenschaften eines Stils möglichst gut zu erlernen und gleichzeitig performant bleiben. Daher wurde die in Kapitel \ref{sec:fast_neural_style_transfer} vorgestellte Netzwerkarchitektur des Image Transformer Networks implementiert. Dies geschieht in PyTorch in Form einer Klasse, welche von \mintinline{python}{Module} erbt.
 
 Um in Kapitel \ref{cha:tests} das Testen unterschiedlicher Netzwerkarchitekturen zu ermöglichen, wird die Klasse des Image Transformer Networks möglichst dynamisch implementiert. Einstellbar sind folgende Parameter, die im weiteren Verlauf erklärt werden:
 
@@ -203,7 +203,7 @@ Um in Kapitel \ref{cha:tests} das Testen unterschiedlicher Netzwerkarchitekturen
 
 \subsection{Aktivierungsfunktionen}
 
-Für den dynamischen Aufbau des Netzwerks wird eine Funktion benötigt, die entsprechende PyTorch-Aktivierungsfunktionen zurückgibt. Hardtanh und Sigmoid kommen als finale Aktivierungsfunktionen des Netzwerks in Betracht, da Sie Werte zwischen $ 0.0 $ und $ 1.0 $ zurückliefern. Das eignet sich für die Generierung von Bildern, welche in PyTorch ebenfalls Pixelwerte zwischen $ 0.0 $ und $ 1.0 $ besitzen. Zu beachten ist, dass die Hardtanh-Funktion mit den Parametern \mintinline{python}{min_val=0.0} und \mintinline{python}{max_val=1.0} initialisiert wird, die den Wertebereich verschieben. Mit den Standardeinstellungen liegt der Wertebereich der Hardtanh-Funktion zwischen $ -1.0 $ und $ 1.0 $. Die Parameter \mintinline{python}{final_activation_fn} und \mintinline{python}{intermediate_activation_fn} werden auf die entsprechenden PyTorch-Aktivierungsfunktionen überführt.
+Für den dynamischen Aufbau des Netzwerks wird eine Funktion benötigt, die entsprechende PyTorch-Aktivierungsfunktionen zurückgibt. Hardtanh und Sigmoid kommen als finale Aktivierungsfunktionen des Netzwerks in Betracht, da sie Werte zwischen $ 0.0 $ und $ 1.0 $ zurückliefern. Das Ergebnis eignet sich für die Generierung von Bildern, welche in PyTorch ebenfalls Pixelwerte zwischen $ 0.0 $ und $ 1.0 $ besitzen. Zu beachten ist, dass die Hardtanh-Funktion mit den Parametern \mintinline{python}{min_val=0.0} und \mintinline{python}{max_val=1.0} initialisiert wird, die den Wertebereich verschieben. Mit den Standardeinstellungen liegt der Wertebereich der Hardtanh-Funktion zwischen $ -1.0 $ und $ 1.0 $. Die Parameter \mintinline{python}{final_activation_fn} und \mintinline{python}{intermediate_activation_fn} werden auf die entsprechenden PyTorch-Aktivierungsfunktionen überführt.
 
 \subsection{ConvBlock}
 
@@ -213,11 +213,11 @@ Die Parameter \mintinline{python}{in_channels} und \mintinline{python}{out_chann
 
 \subsection{ResidualBlock}
 
-Der ResidualBlock, vgl. \ref{img:residual_block_img}, besteht aus zwei aufeinanderfolgenden \mintinline{python}{Conv2d}-Layern. Wie beim vorherigen ConvBlock werden die Daten über \mintinline{python}{InstanceNorm2d} normalisiert, anschließend wird die Aktivierungsfunktion angewendet. Die Besonderheit ist, dass die Eingangsdaten kopiert und danach mit den berechneten Daten der Convolutional-Layer addiert werden. Durch \mintinline{python}{Conv2d} verkleinert sich die Dimension der Daten, vgl. \ref{sec:conv_networks}, was durch den \mintinline{python}{ReflectionPad2d}-Layer wieder ausgeglichen wird. Eingangsdaten und berechnete Daten müssen die gleichen Dimensionen aufweisen, um addiert werden zu können. Die Parameter \mintinline{python}{in_channels} und \mintinline{python}{out_channels} ergeben sich aus \mintinline{python}{channel_multiplier} multipliziert mit $ 4 $.
+Der ResidualBlock, vgl. \ref{img:residual_block_img}, besteht aus zwei aufeinanderfolgenden \mintinline{python}{Conv2d}-Layern. Wie beim vorherigen ConvBlock werden die Daten über \mintinline{python}{InstanceNorm2d} normalisiert. Abschließend wird die Aktivierungsfunktion angewendet. Die Besonderheit ist, dass die Eingangsdaten kopiert und danach mit den berechneten Daten der Convolutional-Layer addiert werden. Durch \mintinline{python}{Conv2d} verkleinert sich die Dimension der Daten, vgl. \ref{sec:conv_networks}, was durch den \mintinline{python}{ReflectionPad2d}-Layer wieder ausgeglichen wird. Eingangsdaten und berechnete Daten müssen die gleichen Dimensionen aufweisen, um addiert werden zu können. Die Parameter \mintinline{python}{in_channels} und \mintinline{python}{out_channels} ergeben sich aus \mintinline{python}{channel_multiplier} multipliziert mit $ 4 $.
 
 \subsection{UpSampleBlock}
 
-Der UpSampleBlock schaltet lediglich dem ConvBlock ein Upsampling-Verfahren vor, um das Bild um einen entsprechenden Faktor zu vergrößern. In dieser Arbeit wird Nearest Neighbor Interpolation verwendet.
+Der UpSampleBlock schaltet dem ConvBlock ein Upsampling-Verfahren vor, um das Bild um einen entsprechenden Faktor zu vergrößern. In dieser Arbeit wird Nearest Neighbor Interpolation verwendet.
 
 \subsection{TransformerNet}
 
@@ -225,7 +225,7 @@ Neben den Layer-Blöcken wurde noch die eigentliche Netzwerkarchitektur implemen
 
 \subsection{Weitere Implementierungen}
 
-Zusätzlich zu den bereits vorgestellten Implementierungen wurden Hilfsskripte und Jupyter Notebooks zum Testen erstellt. Außerdem wurde eine Trainer-Klasse entworfen, die in der Lage ist, Einstellungen für Trainingsläufe aus einer Konfigurationsdatei zu lesen und somit 
+Zusätzlich zu den vorgestellten Implementierungen wurden Hilfsskripte und Jupyter Notebooks zum Testen erstellt. Außerdem wurde eine Trainer-Klasse entworfen, die in der Lage ist, Einstellungen für Trainingsläufe aus einer Konfigurationsdatei zu lesen und somit 
 ein aufeinanderfolgendes Training mehrerer Modelle zu ermöglichen. Auf diese Art kann man viele unterschiedliche Parametereinstellungen testen.
 
 Zur Realisierung eines Prototyps wurde eine JSON-API mit dem Framework Flask\footnote{Flask: \url{http://flask.pocoo.org/}} erstellt. Die API stellt einen Endpunkt zur Verfügung, welcher den Style Transfer mit einem gewünschten Modell durchführt. Sie wurde in einen Docker\footnote{Docker: \url{https://www.docker.com/}}-Container überführt, um das Hosting auf unterschiedlichen Geräten zu erleichtern.

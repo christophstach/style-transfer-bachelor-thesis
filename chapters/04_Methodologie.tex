@@ -1,7 +1,7 @@
 \chapter{Methodologie}
 \label{cha:methodology}
 
-Im Kapitel Methodologie wird das allgemeine Vorgehen beschrieben, dass notwendig ist, um die in Kapitel \ref{cha:fundamentals} vorgestellten Algorithmen zu implementieren.
+Das Kapitel Methodologie umfasst das allgemeine Vorgehen, das notwendig ist, um die in Kapitel \ref{cha:fundamentals} vorgestellten Algorithmen zu implementieren.
 
 \section{Vorherige Arbeiten}
 
@@ -39,7 +39,7 @@ Der Algorithmus wird in einer interaktiven Umgebung erstellt, damit unterschiedl
 	\label{img:neural_style_pap_img}
 \end{figure}
 
-Bei Start des Programms werden das Content-Bild \mintinline{python}{content_image} und das Style-Bild \mintinline{python}{style_image} geladen. Danach wird eine Kopie von \mintinline{python}{content_image} in \mintinline{python}{output_image} erstellt. Die Bilder liegen dann als \gls{tensor}en der Form $ Channel \times Height \times Width $ vor, wobei $ Channel = 3 $ beträgt, da Bilder im RGB-Farbraum drei Farbkanäle aufweisen.
+Bei Start des Programms werden das Content-Bild \mintinline{python}{content_image} und das Style-Bild \mintinline{python}{style_image} geladen. Danach wird eine Kopie von \mintinline{python}{content_image} in \mintinline{python}{output_image} erstellt. Die Bilder liegen als \gls{tensor}en der Form $ Channel \times Height \times Width $ vor, wobei $ Channel = 3 $ beträgt, da Bilder im RGB-Farbraum drei Farbkanäle aufweisen.
 
 Es wird ein Objekt der Klasse \mintinline{python}{PerceptualLoss} erstellt. Bei der Instanziierung werden die folgenden, benötigten Hyperparameter als Argumente dem Konstruktor übergeben:
 
@@ -53,7 +53,7 @@ Es wird ein Objekt der Klasse \mintinline{python}{PerceptualLoss} erstellt. Bei 
 	\item \mintinline{python}{style_image}: Der \gls{tensor} des gewünschten Style-Bildes.
 \end{itemize}
 
-Die Werte orientieren sich an den im Paper \cite{DBLP:journals/corr/JohnsonAL16} verwendeten Hyperparametern. Je nach gewähltem Stil sind jedoch abweichende Einstellungen erforderlich, um optisch ansprechende Ergebnisse zu erzielen. Auf unterschiedliche Kombinationen der Hyperparameter wird im Kapitel \ref{cha:tests} eingegangen.
+Die Werte orientieren sich an den im Paper \cite{DBLP:journals/corr/JohnsonAL16} verwendeten Hyperparametern. Je nach gewähltem Stil sind abweichende Einstellungen erforderlich, um optisch ansprechende Ergebnisse zu erzielen. Auf unterschiedliche Kombinationen der Hyperparameter wird im Kapitel \ref{cha:tests} eingegangen.
 
 \section{Fast Neural Style Transfer}
 
@@ -66,7 +66,7 @@ Im Zuge dieser Arbeit soll eine Netzwerkarchitektur gefunden werden, die in der 
 \label{sec:aufbau}
 
 Die Netzwerkarchitektur, die beim Fast Neural Style Transfer verwendet wird, nachfolgend Transformer Net genannt, orientiert sich an dem Github-Repository \cite{PyTorchFastNeuralStyle}, das den Fast Neural Style Transfer implementiert.
-Sie besteht aus drei Teilen. Einem Down-Sampling-Teil, einem Computational-Teil (auch Bottleneck genannt) und einem Up-Sampling-Teil.
+Sie besteht aus drei Teilen: Einem Down-Sampling-Teil, einem Computational-Teil (auch Bottleneck genannt) und einem Up-Sampling-Teil.
 
 \begin{figure}[H]
 	\centering
@@ -95,7 +95,7 @@ Im ersten Teil, bestehend aus Convolutional Blöcken, wird durch die Verwendung 
 
 Der zweite Teil besteht aus Residual Blöcken, beschrieben in \cite{DBLP:journals/corr/HeZRS15}. Diese bestehen aus zwei aufeinanderfolgenden Convolutional Layern, die mit einer sogenannten Skip-Connection mit ihren Eingangsdaten verbunden sind. Das hat den Vorteil, dass die ursprünglichen Eingangsdaten nach jedem Layer noch vorhanden sind. Dies beugt dem \gls{vanishing_gradient} Problem vor. In diesem Teil des Netzwerks entsteht die meiste Berechnung und die meisten Daten des Stils werden hier in den Gewichten der Kernels gespeichert.
 
-Im dritten Teil wird das Bild durch Upsampling wieder auf seine ursprünglichen Maße vergrößert. Außerdem werden die Channels auf drei reduziert, um es als RGB-Bild anzeigen zu können. Die Vergrößerung wird durch Nearest Neighbor Interpolation kombiniert mit einem Convolutional Layer realisiert. Es wird zusammen mit seinen Vorteilen in \cite{odena2016deconvolution} näher beschrieben.
+Im dritten Teil wird das Bild durch Upsampling auf seine ursprünglichen Maße vergrößert. Außerdem werden die Channels auf drei reduziert, um es als RGB-Bild anzeigen zu können. Die Vergrößerung wird durch Nearest Neighbor Interpolation kombiniert mit einem Convolutional Layer realisiert. Es wird zusammen mit seinen Vorteilen in \cite{odena2016deconvolution} näher beschrieben.
 
 \pagebreak
 

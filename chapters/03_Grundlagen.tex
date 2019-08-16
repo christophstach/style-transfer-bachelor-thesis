@@ -5,9 +5,11 @@ Im Kapitel Grundlagen werden die erforderlichen Grundlagen erläutert, die notwe
 
 \section{Feedforward Neural Network}
 
-Feedforward Neural Networks werden im Bereich des Deep Learning eingesetzt. Es werden unterschiedliche Arten von Layern zu einem Neuronalen Netzwerk zusammengesetzt. Je nach Aufgabenstellung sind verschiedene Arten von Layer-Kombinationen sinnvoll.
+Feedforward Neural Networks werden im Bereich des Deep Learning eingesetzt \cite[164-223]{Goodfellow-et-al-2016}. Es werden unterschiedliche Arten von Layern zu einem Neuronalen Netzwerk zusammengesetzt. Je nach Aufgabenstellung sind verschiedene Arten von Layer-Kombinationen sinnvoll.
 
-Ein Feedforward Neural Network definiert eine Abbildung von $ y = f(x; \phi) $, wobei $ \phi $ (auch manchmal mit $ w $ notiert) Gewichtungsparameter des Netzwerks sind. Es wird Feedforward genannt, da die Informationen $ x $ von vorne nach hinten durch die einzelnen Layer des Networks fließen und am Ende $ y $ ausgeben. Die Layer des Netzwerks sind wiederum Unterfunktionen, die in einer Kettenstruktur ineinander übergehen. Bei einem Neuronalen Netzwerk mit den drei Layern $ f^{(1)} $, $ f^{(2)} $, $ f^{(2)} $ ergibt sich der Aufbau $ f(x) = f^{(3)}(f^{(2)}(f^{(1)}(x))) $. Der erste Layer eines Netzwerks nennt sich Input-Layer, der letzte Output-Layer. Alle dazwischenliegenden Layer werden Hidden-Layer genannt. Je mehr Layer ein Netzwerk besitzt, desto komplexere mathematische Funktionen kann es abbilden und desto tiefer ist es. Daher rührt auch der Name Deep Neural Network und Deep Learning \cite[164-165]{Goodfellow-et-al-2016}.
+Ein Feedforward Neural Network definiert eine Abbildung von $ y = f(x; \phi) $, wobei $ \phi $ (auch manchmal mit $ w $ notiert) Gewichtungsparameter des Netzwerks sind. Es wird Feedforward genannt, da die Informationen $ x $ von vorne nach hinten durch die einzelnen Layer des Networks fließen und am Ende $ y $ ausgeben. Die Layer des Netzwerks sind wiederum Unterfunktionen, die in einer Kettenstruktur ineinander übergehen. Bei einem Neuronalen Netzwerk mit den drei Layern $ f^{(1)} $, $ f^{(2)} $, $ f^{(2)} $ ergibt sich der Aufbau $ f(x) = f^{(3)}(f^{(2)}(f^{(1)}(x))) $. 
+
+Der erste Layer eines Netzwerks nennt sich Input-Layer, der letzte Output-Layer. Alle dazwischenliegenden Layer werden Hidden-Layer genannt. Je mehr Layer ein Netzwerk besitzt, desto komplexere mathematische Funktionen kann es abbilden und desto tiefer ist es. Daher rührt der Name Deep Neural Network und Deep Learning.
 
 \pagebreak
 
@@ -120,7 +122,7 @@ Im Folgenden werden die in dieser Arbeit verwendeten Aktivierungsfunktionen besc
 
 \subsection{LeakyReLU, PReLU}
 
-Die Aktivierungsfunktionen LeakyReLU und PReLU sind Abwandlungen von ReLU und werden um den Parameter $ \alpha $ ergänzt. Bei LeakyReLU handelt es sich bei $ \alpha $ um einen fixen, einstellbaren Wert und bei PReLU wird dieser im Laufe der Trainingsphase gelernt \cite{DBLP:journals/corr/XuWCL15}. ReLU hat gegenüber PReLU und LeakyReLU den Nachteil, dass Neuronen deaktiviert werden können, da die linke Seite der Aktivierungsfunktion 0 beträgt. Somit ergeben sich auch bei der Berechnung der Gradienten keine Veränderungen.
+Die Aktivierungsfunktionen LeakyReLU und PReLU sind Abwandlungen von ReLU und werden um den Parameter $ \alpha $ ergänzt. Bei LeakyReLU handelt es sich bei $ \alpha $ um einen fixen, einstellbaren Wert. Bei PReLU wird dieser im Laufe der Trainingsphase gelernt \cite{DBLP:journals/corr/XuWCL15}. ReLU hat gegenüber PReLU und LeakyReLU den Nachteil, dass Neuronen deaktiviert werden können, da die linke Seite der Aktivierungsfunktion 0 beträgt. Somit ergeben sich auch bei der Berechnung der Gradienten keine Veränderungen.
 
 \begin{equation}
 	\sigma(\alpha ,x) = {
@@ -157,7 +159,7 @@ Die Hardtanh Funktion wird in dieser Arbeit als abschließende Aktivierungsfunkt
 
 \pagebreak
 
-Sie ist in der Lage, die Ergebnisse auf einen festgelegten Bereich zu beschränken.
+Die Funktion ist in der Lage, die Ergebnisse auf einen festgelegten Bereich zu beschränken.
 
 \begin{figure}[H]
 	\centering
@@ -189,7 +191,7 @@ Die Ergebnisse der Sigmoid-Funktion konvergieren zu 0 und 1, erreichen diese jed
 \section{Convolutional Neural Network}
 \label{sec:conv_networks}
 
-Ein Convolutional Neural Network, auch CNN genannt, besteht aus mehreren aufeinanderfolgenden Convolutional-Layern sowie
+Ein Convolutional Neural Network \cite[326-366]{doi:10.1162/neco.1989.1.4.541, Goodfellow-et-al-2016}, auch CNN genannt, besteht aus mehreren aufeinanderfolgenden Convolutional-Layern sowie
 abschließend beliebig vielen Fully-Connected-Layern (siehe \ref{img:cnn_example_network}). Convolutional-Layer dienen der Featureextraktion. Die Fully-Connected-Layer sind für die Klassifizierung zuständig. Nachfolgend wird das Prinzip einer Convolution (zu dt. Faltung) erläutert.
 
 \begin{figure}[H]
@@ -280,13 +282,13 @@ Diese Arbeit basiert auf den bereits bestehenden Lösungen von Johnson et. al. u
 \subsection{Neural Style Transfer}
 \label{sec:neural_style_transfer}
 
-Hierbei handelt es sich um eine Technik, die den Stil von artistischen Bildern auf ein anderes willkürliches Bild überträgt.
+Bei Neural Style Transfer handelt es sich um eine Technik, die den Stil von artistischen Bildern auf ein anderes willkürliches Bild überträgt.
 Das Verfahren nutzt einen optimierenden Ansatz. Es werden die Pixel eines Eingangsbildes Schritt für Schritt den Pixeln 
 des gewünschten Ausgangsbildes angepasst. 
 
 Der Neural Style Transfer Algorithmus, beschrieben im Paper \cite{DBLP:journals/corr/GatysEB15a}, optimiert direkt die Pixel eines Bildes anhand eines sogenannten Perceptual-Loss. Die entsprechende Loss-Funktion besteht aus mehreren Teilen, einem Content-Loss und einem Style-Loss. Optional kann zusätzlich ein Total-Variation-Loss verwendet werden. Das gesamte Perceptual-Loss wird über Hyperparameter konfiguriert, welche die Gewichtung der Unterfunktionen auf das Gesamt-Loss wiederspiegeln.
 
-Content-Loss und Style-Loss benutzen ein bereits auf einem großen Datensatz vortrainiertes Modell. In dieser Arbeit wird das VGG16-Modell \cite{DBLP:journals/corr/SimonyanZ14a} verwendet. Das Content-Loss vergleicht Features eines Inhaltsbildes mit den Features des Ausgangsbild. Das Style-Loss vergleicht Features eines Stilbildes mit den Features des Ausgangsbildes.
+Content-Loss und Style-Loss benutzen ein bereits auf einem großen Datensatz vortrainiertes Modell. In dieser Arbeit wird das VGG16-Modell \cite{DBLP:journals/corr/SimonyanZ14a} verwendet. Das Content-Loss vergleicht Features eines Inhaltsbildes mit den Features des Ausgangsbildes. Das Style-Loss vergleicht Features eines Stilbildes mit den Features des Ausgangsbildes.
 
 \begin{figure}[H]
 	\centering
@@ -317,7 +319,7 @@ Zwischen den \gls{activation_map}s $ P $  des Contentbildes $ \vec{p} $ und den 
 \subsubsection{Style-Loss}
 \label{sec:style_loss}
 
-Das Style-Loss verwendet die \gls{activation_map}s nicht direkt, sondern bildet vorher deren Gram-Matrix. Das hat zur Folge, dass räumliche Informationen verworfen werden, jedoch Farben und Muster erhalten bleiben, die beim Übertragen des Stils die wichtigste Rolle spielen.
+Das Style-Loss verwendet die \gls{activation_map}s nicht direkt, sondern bildet vorher deren Gram-Matrix. Das hat zur Folge, dass räumliche Informationen verworfen werden, jedoch Farben und Muster erhalten bleiben, die beim Übertragen des Stils signifikant sind.
 
 Um die Gram-Matrix mehrerer \gls{activation_map}s zu berechnen, werden die Matrizen geflächt und Height- und Width-Dimension werden zu einer Dimension zusammengefügt. Daraus ergibt sich eine 2-dimensionale Matrix der Form $ C \times HW $. Diese wird transponiert und mit sich selbst multipliziert.
 
@@ -372,4 +374,4 @@ Im Gegensatz zum im Kapitel \ref{sec:neural_style_transfer} vorgestellten Algori
 	\label{img:fast_neural_style_transfer}
 \end{figure}
 
-Durch die Verwendung eines Image Transformer Networks kann die Berechnungszeit verbessert werden, da das neu gestylte Bild mit einem Forward-Pass durch das Netzwerk erstellt wird. Die rechenintensive Optimierung und Berechnung der Pixel-Gradienten durch den Backpropagation-Algorithmus \ref{sec:backpropagation} entfällt. Das Training eines Image Transformer Networks nimmt jedoch viel Zeit in Anspruch.
+Durch die Verwendung eines Image Transformer Networks wird die Berechnungszeit verbessert, da das neu gestylte Bild mit einem Forward-Pass durch das Netzwerk erstellt wird. Die rechenintensive Optimierung und Berechnung der Pixel-Gradienten durch den Backpropagation-Algorithmus \ref{sec:backpropagation} entfällt. Das Training eines Image Transformer Networks nimmt jedoch viel Zeit in Anspruch.
